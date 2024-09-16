@@ -13,7 +13,7 @@ package main
 
 import (
 	"github.com/hybridgroup/mechanoid/convert"
-	"wasmcv.org/x/wasm/cv/mat"
+	"wasmcv.org/wasm/cv/mat"
 )
 
 //go:wasmimport hosted println
@@ -37,7 +37,7 @@ func main() {}
 Install the `wasmcv` package into your Go package:
 
 ```shell
-go get wasmcv.org/x/wasm/cv
+go get wasmcv.org/wasm/cv
 ```
 
 You can then compile this module using the TinyGo compiler.

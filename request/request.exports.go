@@ -3,7 +3,7 @@
 package request
 
 import (
-	"wasmcv.org/x/wasm/cv/mat"
+	"wasmcv.org/wasm/cv/mat"
 )
 
 // Exports represents the caller-defined exports from "wasm:cv/request".

@@ -1,3 +1,3 @@
-module wasmcv.org/x/wasm/cv
+module wasmcv.org/wasm/cv
 
 go 1.22.0

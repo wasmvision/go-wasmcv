@@ -7,8 +7,8 @@ package cv
 
 import (
 	"github.com/bytecodealliance/wasm-tools-go/cm"
-	"wasmcv.org/x/wasm/cv/mat"
-	"wasmcv.org/x/wasm/cv/types"
+	"wasmcv.org/wasm/cv/mat"
+	"wasmcv.org/wasm/cv/types"
 )
 
 // AdaptiveThreshold represents the imported function "adaptive-threshold".

@@ -5,7 +5,7 @@ package net
 
 import (
 	"github.com/bytecodealliance/wasm-tools-go/cm"
-	"wasmcv.org/x/wasm/cv/mat"
+	"wasmcv.org/wasm/cv/mat"
 )
 
 // NetBackendType represents the enum "wasm:cv/net#net-backend-type".

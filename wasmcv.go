@@ -1,1 +1,1 @@
-package cv // import "wasmcv.org/x/wasm/cv"
+package cv // import "wasmcv.org/wasm/cv"

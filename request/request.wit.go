@@ -7,7 +7,7 @@ package request
 
 import (
 	"github.com/bytecodealliance/wasm-tools-go/cm"
-	"wasmcv.org/x/wasm/cv/mat"
+	"wasmcv.org/wasm/cv/mat"
 )
 
 //go:wasmexport wasm:cv/request#process
