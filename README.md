@@ -26,7 +26,7 @@ func process(image mat.Mat) mat.Mat {
 		" Rows: " +
 		convert.IntToString(int(image.Rows())) +
 		" Type: " +
-		convert.IntToString(int(image.Type()))))
+		convert.IntToString(int(image.Mattype()))))
 
 	return image
 }

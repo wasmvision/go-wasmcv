@@ -217,20 +217,27 @@ func (self Net) ResourceDrop() {
 //go:noescape
 func wasmimport_NetResourceDrop(self0 uint32)
 
-// NewNet represents the imported constructor for resource "net".
+// NetReadNet represents the imported static function "read-net".
 //
-//	constructor()
+// ReadNet read deep learning network represented in one of the supported formats.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga138439da76f26266fdefec9723f6c5cd
+//
+//	read-net: static func(model: string, config: string) -> net
 //
 //go:nosplit
-func NewNet() (result Net) {
-	result0 := wasmimport_NewNet()
+func NetReadNet(model string, config string) (result Net) {
+	model0, model1 := cm.LowerString(model)
+	config0, config1 := cm.LowerString(config)
+	result0 := wasmimport_NetReadNet((*uint8)(model0), (uint32)(model1), (*uint8)(config0), (uint32)(config1))
 	result = cm.Reinterpret[Net]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/net [constructor]net
+//go:wasmimport wasm:cv/net [static]net.read-net
 //go:noescape
-func wasmimport_NewNet() (result0 uint32)
+func wasmimport_NetReadNet(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32) (result0 uint32)
 
 // NetReadNetFromOnnx represents the imported static function "read-net-from-onnx".
 //
@@ -255,7 +262,7 @@ func wasmimport_NetReadNetFromOnnx(model0 *uint8, model1 uint32) (result0 uint32
 
 // Close represents the imported method "close".
 //
-// close the network
+// Close the network
 //
 //	close: func()
 //

@@ -14,6 +14,47 @@ type Size struct {
 	Y int32
 }
 
+// Scalar represents the record "wasm:cv/types#scalar".
+//
+//	record scalar {
+//		val1: f32,
+//		val2: f32,
+//		val3: f32,
+//		val4: f32,
+//	}
+type Scalar struct {
+	Val1 float32
+	Val2 float32
+	Val3 float32
+	Val4 float32
+}
+
+// Rect represents the record "wasm:cv/types#rect".
+//
+//	record rect {
+//		min: size,
+//		max: size,
+//	}
+type Rect struct {
+	Min Size
+	Max Size
+}
+
+// Rgba represents the record "wasm:cv/types#rgba".
+//
+//	record rgba {
+//		r: u8,
+//		g: u8,
+//		b: u8,
+//		a: u8,
+//	}
+type Rgba struct {
+	R uint8
+	G uint8
+	B uint8
+	A uint8
+}
+
 // BorderType represents the enum "wasm:cv/types#border-type".
 //
 //	enum border-type {
@@ -117,4 +158,150 @@ var stringsThresholdType = [8]string{
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e ThresholdType) String() string {
 	return stringsThresholdType[e]
+}
+
+// DataLayoutType represents the enum "wasm:cv/types#data-layout-type".
+//
+//	enum data-layout-type {
+//		data-layout-unknown,
+//		data-layout-nd,
+//		data-layout-nchw,
+//		data-layout-ncdhw,
+//		data-layout-nhwc,
+//		data-layout-ndhwc,
+//		data-layout-planar
+//	}
+type DataLayoutType uint8
+
+const (
+	DataLayoutTypeDataLayoutUnknown DataLayoutType = iota
+	DataLayoutTypeDataLayoutNd
+	DataLayoutTypeDataLayoutNchw
+	DataLayoutTypeDataLayoutNcdhw
+	DataLayoutTypeDataLayoutNhwc
+	DataLayoutTypeDataLayoutNdhwc
+	DataLayoutTypeDataLayoutPlanar
+)
+
+var stringsDataLayoutType = [7]string{
+	"data-layout-unknown",
+	"data-layout-nd",
+	"data-layout-nchw",
+	"data-layout-ncdhw",
+	"data-layout-nhwc",
+	"data-layout-ndhwc",
+	"data-layout-planar",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e DataLayoutType) String() string {
+	return stringsDataLayoutType[e]
+}
+
+// PaddingModeType represents the enum "wasm:cv/types#padding-mode-type".
+//
+//	enum padding-mode-type {
+//		padding-mode-null,
+//		padding-mode-crop-center,
+//		padding-mode-letterbox
+//	}
+type PaddingModeType uint8
+
+const (
+	PaddingModeTypePaddingModeNull PaddingModeType = iota
+	PaddingModeTypePaddingModeCropCenter
+	PaddingModeTypePaddingModeLetterbox
+)
+
+var stringsPaddingModeType = [3]string{
+	"padding-mode-null",
+	"padding-mode-crop-center",
+	"padding-mode-letterbox",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e PaddingModeType) String() string {
+	return stringsPaddingModeType[e]
+}
+
+// BlobParams represents the record "wasm:cv/types#blob-params".
+//
+//	record blob-params {
+//		scale-factor: f32,
+//		size: size,
+//		mean: scalar,
+//		swap-rb: bool,
+//		ddepth: u8,
+//		data-layout: data-layout-type,
+//		padding-mode: padding-mode-type,
+//		border: scalar,
+//	}
+type BlobParams struct {
+	ScaleFactor float32
+	Size        Size
+	Mean        Scalar
+	SwapRb      bool
+	Ddepth      uint8
+	DataLayout  DataLayoutType
+	PaddingMode PaddingModeType
+	Border      Scalar
+}
+
+// MixMaxLocResult represents the record "wasm:cv/types#mix-max-loc-result".
+//
+//	record mix-max-loc-result {
+//		min-val: f32,
+//		max-val: f32,
+//		min-loc: size,
+//		max-loc: size,
+//	}
+type MixMaxLocResult struct {
+	MinVal float32
+	MaxVal float32
+	MinLoc Size
+	MaxLoc Size
+}
+
+// HersheyFontType represents the enum "wasm:cv/types#hershey-font-type".
+//
+//	enum hershey-font-type {
+//		hershey-font-simplex,
+//		hershey-font-plain,
+//		hershey-font-duplex,
+//		hershey-font-complex,
+//		hershey-font-triplex,
+//		hershey-font-complex-small,
+//		hershey-font-script-simplex,
+//		hershey-font-script-complex,
+//		hershey-font-italic
+//	}
+type HersheyFontType uint8
+
+const (
+	HersheyFontTypeHersheyFontSimplex HersheyFontType = iota
+	HersheyFontTypeHersheyFontPlain
+	HersheyFontTypeHersheyFontDuplex
+	HersheyFontTypeHersheyFontComplex
+	HersheyFontTypeHersheyFontTriplex
+	HersheyFontTypeHersheyFontComplexSmall
+	HersheyFontTypeHersheyFontScriptSimplex
+	HersheyFontTypeHersheyFontScriptComplex
+	HersheyFontTypeHersheyFontItalic
+)
+
+var stringsHersheyFontType = [9]string{
+	"hershey-font-simplex",
+	"hershey-font-plain",
+	"hershey-font-duplex",
+	"hershey-font-complex",
+	"hershey-font-triplex",
+	"hershey-font-complex-small",
+	"hershey-font-script-simplex",
+	"hershey-font-script-complex",
+	"hershey-font-italic",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e HersheyFontType) String() string {
+	return stringsHersheyFontType[e]
 }

@@ -7,6 +7,7 @@ package mat
 
 import (
 	"github.com/bytecodealliance/wasm-tools-go/cm"
+	"wasmcv.org/wasm/cv/types"
 )
 
 // Mattype represents the enum "wasm:cv/mat#mattype".
@@ -67,27 +68,46 @@ func (self Mat) ResourceDrop() {
 //go:noescape
 func wasmimport_MatResourceDrop(self0 uint32)
 
-// NewMat represents the imported constructor for resource "mat".
+// MatNewMat represents the imported static function "new-mat".
 //
-//	constructor(cols: u32, rows: u32, %type: mattype)
+// Create a new Mat.
+//
+//	new-mat: static func() -> mat
 //
 //go:nosplit
-func NewMat(cols uint32, rows uint32, type_ Mattype) (result Mat) {
-	cols0 := (uint32)(cols)
-	rows0 := (uint32)(rows)
-	type0 := (uint32)(type_)
-	result0 := wasmimport_NewMat((uint32)(cols0), (uint32)(rows0), (uint32)(type0))
+func MatNewMat() (result Mat) {
+	result0 := wasmimport_MatNewMat()
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/mat [constructor]mat
+//go:wasmimport wasm:cv/mat [static]mat.new-mat
 //go:noescape
-func wasmimport_NewMat(cols0 uint32, rows0 uint32, type0 uint32) (result0 uint32)
+func wasmimport_MatNewMat() (result0 uint32)
+
+// MatNewMatWithSize represents the imported static function "new-mat-with-size".
+//
+// Create a new Mat with the specified size and type.
+//
+//	new-mat-with-size: static func(cols: u32, rows: u32, mattype: mattype) -> mat
+//
+//go:nosplit
+func MatNewMatWithSize(cols uint32, rows uint32, mattype Mattype) (result Mat) {
+	cols0 := (uint32)(cols)
+	rows0 := (uint32)(rows)
+	mattype0 := (uint32)(mattype)
+	result0 := wasmimport_MatNewMatWithSize((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [static]mat.new-mat-with-size
+//go:noescape
+func wasmimport_MatNewMatWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
 
 // Close represents the imported method "close".
 //
-// close the Mat
+// Close the Mat
 //
 //	close: func()
 //
@@ -101,6 +121,29 @@ func (self Mat) Close() {
 //go:wasmimport wasm:cv/mat [method]mat.close
 //go:noescape
 func wasmimport_MatClose(self0 uint32)
+
+// ColRange represents the imported method "col-range".
+//
+// ColRange creates a matrix header for the specified column span.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aadc8f9210fe4dec50513746c246fa8d9
+//
+//	col-range: func(start: u32, end: u32) -> mat
+//
+//go:nosplit
+func (self Mat) ColRange(start uint32, end uint32) (result Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	start0 := (uint32)(start)
+	end0 := (uint32)(end)
+	result0 := wasmimport_MatColRange((uint32)(self0), (uint32)(start0), (uint32)(end0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.col-range
+//go:noescape
+func wasmimport_MatColRange(self0 uint32, start0 uint32, end0 uint32) (result0 uint32)
 
 // Cols represents the imported method "cols".
 //
@@ -122,7 +165,7 @@ func wasmimport_MatCols(self0 uint32) (result0 uint32)
 
 // Empty represents the imported method "empty".
 //
-// empty returns true if the Mat is empty.
+// Empty returns true if the Mat is empty.
 //
 //	empty: func() -> bool
 //
@@ -137,6 +180,84 @@ func (self Mat) Empty() (result bool) {
 //go:wasmimport wasm:cv/mat [method]mat.empty
 //go:noescape
 func wasmimport_MatEmpty(self0 uint32) (result0 uint32)
+
+// GetFloatAt represents the imported method "get-float-at".
+//
+// GetFloatAt returns the value at the specified row and column as a f32.
+//
+//	get-float-at: func(row: u32, col: u32) -> f32
+//
+//go:nosplit
+func (self Mat) GetFloatAt(row uint32, col uint32) (result float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	result0 := wasmimport_MatGetFloatAt((uint32)(self0), (uint32)(row0), (uint32)(col0))
+	result = (float32)((float32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-float-at
+//go:noescape
+func wasmimport_MatGetFloatAt(self0 uint32, row0 uint32, col0 uint32) (result0 float32)
+
+// GetUcharAt represents the imported method "get-uchar-at".
+//
+// GetUCharAt returns the value at the specified row and column as a u8.
+//
+//	get-uchar-at: func(row: u32, col: u32) -> u8
+//
+//go:nosplit
+func (self Mat) GetUcharAt(row uint32, col uint32) (result uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	result0 := wasmimport_MatGetUcharAt((uint32)(self0), (uint32)(row0), (uint32)(col0))
+	result = (uint8)((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-uchar-at
+//go:noescape
+func wasmimport_MatGetUcharAt(self0 uint32, row0 uint32, col0 uint32) (result0 uint32)
+
+// Mattype represents the imported method "mattype".
+//
+// MatType returns the type of the Mat.
+//
+//	mattype: func() -> mattype
+//
+//go:nosplit
+func (self Mat) Mattype() (result Mattype) {
+	self0 := cm.Reinterpret[uint32](self)
+	result0 := wasmimport_MatMattype((uint32)(self0))
+	result = (Mattype)((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.mattype
+//go:noescape
+func wasmimport_MatMattype(self0 uint32) (result0 uint32)
+
+// MinMaxLoc represents the imported method "min-max-loc".
+//
+// MinMaxLoc finds the global minimum and maximum in an array.
+//
+// For further details, please see:
+// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
+//
+//	min-max-loc: func() -> mix-max-loc-result
+//
+//go:nosplit
+func (self Mat) MinMaxLoc() (result types.MixMaxLocResult) {
+	self0 := cm.Reinterpret[uint32](self)
+	wasmimport_MatMinMaxLoc((uint32)(self0), &result)
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.min-max-loc
+//go:noescape
+func wasmimport_MatMinMaxLoc(self0 uint32, result *types.MixMaxLocResult)
 
 // Reshape represents the imported method "reshape".
 //
@@ -162,6 +283,29 @@ func (self Mat) Reshape(channels uint32, rows uint32) (result Mat) {
 //go:noescape
 func wasmimport_MatReshape(self0 uint32, channels0 uint32, rows0 uint32) (result0 uint32)
 
+// RowRange represents the imported method "row-range".
+//
+// RowRange creates a matrix header for the specified row span.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aa6542193430356ad631a9beabc624107
+//
+//	row-range: func(start: u32, end: u32) -> mat
+//
+//go:nosplit
+func (self Mat) RowRange(start uint32, end uint32) (result Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	start0 := (uint32)(start)
+	end0 := (uint32)(end)
+	result0 := wasmimport_MatRowRange((uint32)(self0), (uint32)(start0), (uint32)(end0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.row-range
+//go:noescape
+func wasmimport_MatRowRange(self0 uint32, start0 uint32, end0 uint32) (result0 uint32)
+
 // Rows represents the imported method "rows".
 //
 // Rows returns the number of rows for this Mat.
@@ -180,6 +324,46 @@ func (self Mat) Rows() (result uint32) {
 //go:noescape
 func wasmimport_MatRows(self0 uint32) (result0 uint32)
 
+// SetFloatAt represents the imported method "set-float-at".
+//
+// SetFloatAt sets the value at the specified row and column as a f32.
+//
+//	set-float-at: func(row: u32, col: u32, val: f32)
+//
+//go:nosplit
+func (self Mat) SetFloatAt(row uint32, col uint32, val float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	val0 := (float32)(val)
+	wasmimport_MatSetFloatAt((uint32)(self0), (uint32)(row0), (uint32)(col0), (float32)(val0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.set-float-at
+//go:noescape
+func wasmimport_MatSetFloatAt(self0 uint32, row0 uint32, col0 uint32, val0 float32)
+
+// SetUcharAt represents the imported method "set-uchar-at".
+//
+// SetUCharAt sets the value at the specified row and column as a u8.
+//
+//	set-uchar-at: func(row: u32, col: u32, val: u8)
+//
+//go:nosplit
+func (self Mat) SetUcharAt(row uint32, col uint32, val uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	val0 := (uint32)(val)
+	wasmimport_MatSetUcharAt((uint32)(self0), (uint32)(row0), (uint32)(col0), (uint32)(val0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.set-uchar-at
+//go:noescape
+func wasmimport_MatSetUcharAt(self0 uint32, row0 uint32, col0 uint32, val0 uint32)
+
 // Size represents the imported method "size".
 //
 // Size returns an array with one element for each dimension containing the size of
@@ -197,21 +381,3 @@ func (self Mat) Size() (result cm.List[uint32]) {
 //go:wasmimport wasm:cv/mat [method]mat.size
 //go:noescape
 func wasmimport_MatSize(self0 uint32, result *cm.List[uint32])
-
-// Type represents the imported method "type".
-//
-// type returns the type of the Mat.
-//
-//	%type: func() -> mattype
-//
-//go:nosplit
-func (self Mat) Type() (result Mattype) {
-	self0 := cm.Reinterpret[uint32](self)
-	result0 := wasmimport_MatType((uint32)(self0))
-	result = (Mattype)((uint32)(result0))
-	return
-}
-
-//go:wasmimport wasm:cv/mat [method]mat.type
-//go:noescape
-func wasmimport_MatType(self0 uint32) (result0 uint32)
