@@ -31,7 +31,7 @@ func Rectangle(img mat.Mat, r types.Rect, c types.Rgba, thickness uint8) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv rectangle
+//go:wasmimport $root rectangle
 //go:noescape
 func wasmimport_Rectangle(img0 uint32, r0 uint32, r1 uint32, r2 uint32, r3 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
 
@@ -61,7 +61,7 @@ func PutText(img mat.Mat, text string, org types.Size, fontFace types.HersheyFon
 	return
 }
 
-//go:wasmimport wasm:cv/cv put-text
+//go:wasmimport $root put-text
 //go:noescape
 func wasmimport_PutText(img0 uint32, text0 *uint8, text1 uint32, org0 uint32, org1 uint32, fontFace0 uint32, fontScale0 float64, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
 
@@ -89,7 +89,7 @@ func AdaptiveThreshold(src mat.Mat, maxValue float32, adaptiveType types.Adaptiv
 	return
 }
 
-//go:wasmimport wasm:cv/cv adaptive-threshold
+//go:wasmimport $root adaptive-threshold
 //go:noescape
 func wasmimport_AdaptiveThreshold(src0 uint32, maxValue0 float32, adaptiveType0 uint32, thresholdType0 uint32, blockSize0 uint32, c0 float32) (result0 uint32)
 
@@ -111,7 +111,7 @@ func Blur(src mat.Mat, kSize types.Size) (result mat.Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv blur
+//go:wasmimport $root blur
 //go:noescape
 func wasmimport_Blur(src0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
 
@@ -134,7 +134,7 @@ func BoxFilter(src mat.Mat, depth uint32, kSize types.Size) (result mat.Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv box-filter
+//go:wasmimport $root box-filter
 //go:noescape
 func wasmimport_BoxFilter(src0 uint32, depth0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
 
@@ -160,7 +160,7 @@ func GaussianBlur(src mat.Mat, size types.Size, sigmaX float32, sigmaY float32, 
 	return
 }
 
-//go:wasmimport wasm:cv/cv gaussian-blur
+//go:wasmimport $root gaussian-blur
 //go:noescape
 func wasmimport_GaussianBlur(src0 uint32, size0 uint32, size1 uint32, sigmaX0 float32, sigmaY0 float32, border0 uint32) (result0 uint32)
 
@@ -185,7 +185,7 @@ func Threshold(src mat.Mat, thresh float32, maxValue float32, thresholdType type
 	return
 }
 
-//go:wasmimport wasm:cv/cv threshold
+//go:wasmimport $root threshold
 //go:noescape
 func wasmimport_Threshold(src0 uint32, thresh0 float32, maxValue0 float32, thresholdType0 uint32) (result0 uint32)
 
@@ -207,7 +207,7 @@ func TransposeNd(src mat.Mat, order cm.List[int32]) (result mat.Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv transpose-nd
+//go:wasmimport $root transpose-nd
 //go:noescape
 func wasmimport_TransposeNd(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)
 
@@ -237,7 +237,7 @@ func BlobFromImage(image mat.Mat, scaleFactor float32, size types.Size, mean typ
 	return
 }
 
-//go:wasmimport wasm:cv/cv blob-from-image
+//go:wasmimport $root blob-from-image
 //go:noescape
 func wasmimport_BlobFromImage(image0 uint32, scaleFactor0 float32, size0 uint32, size1 uint32, mean0 float32, mean1 float32, mean2 float32, mean3 float32, swapRb0 uint32, crop0 uint32) (result0 uint32)
 
@@ -261,7 +261,7 @@ func BlobFromImageWithParams(image mat.Mat, params types.BlobParams) (result mat
 	return
 }
 
-//go:wasmimport wasm:cv/cv blob-from-image-with-params
+//go:wasmimport $root blob-from-image-with-params
 //go:noescape
 func wasmimport_BlobFromImageWithParams(image0 uint32, params0 float32, params1 uint32, params2 uint32, params3 float32, params4 float32, params5 float32, params6 float32, params7 uint32, params8 uint32, params9 uint32, params10 uint32, params11 float32, params12 float32, params13 float32, params14 float32) (result0 uint32)
 
@@ -277,18 +277,19 @@ func wasmimport_BlobFromImageWithParams(image0 uint32, params0 float32, params1 
 //
 //go:nosplit
 func BlobRectsToImageRects(params types.BlobParams, blobRects cm.List[types.Rect], imageSize types.Size) (result cm.List[types.Rect]) {
-	params_ := wasmimport_BlobRectsToImageRects_params{params, blobRects, imageSize}
+	params_ := wasmimport_BlobRectsToImageRects_params{params: params, blobRects: blobRects, imageSize: imageSize}
 	wasmimport_BlobRectsToImageRects(&params_, &result)
 	return
 }
 
-//go:wasmimport wasm:cv/cv blob-rects-to-image-rects
+//go:wasmimport $root blob-rects-to-image-rects
 //go:noescape
 func wasmimport_BlobRectsToImageRects(params *wasmimport_BlobRectsToImageRects_params, result *cm.List[types.Rect])
 
 // wasmimport_BlobRectsToImageRects_params represents the flattened function params for [wasmimport_BlobRectsToImageRects].
 // See the Canonical ABI flattening rules for more information.
 type wasmimport_BlobRectsToImageRects_params struct {
+	_         cm.HostLayout
 	params    types.BlobParams
 	blobRects cm.List[types.Rect]
 	imageSize types.Size
@@ -314,6 +315,6 @@ func NmsBoxes(bboxes cm.List[types.Rect], scores cm.List[float32], scoreThreshol
 	return
 }
 
-//go:wasmimport wasm:cv/cv nms-boxes
+//go:wasmimport $root nms-boxes
 //go:noescape
 func wasmimport_NmsBoxes(bboxes0 *types.Rect, bboxes1 uint32, scores0 *float32, scores1 uint32, scoreThreshold0 float32, nmsThreshold0 float32, result *cm.List[int32])

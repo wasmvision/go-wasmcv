@@ -105,6 +105,24 @@ func MatNewMatWithSize(cols uint32, rows uint32, mattype Mattype) (result Mat) {
 //go:noescape
 func wasmimport_MatNewMatWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
 
+// Clone represents the imported method "clone".
+//
+// Clone returns a cloned full copy of the Mat.
+//
+//	clone: func() -> mat
+//
+//go:nosplit
+func (self Mat) Clone() (result Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	result0 := wasmimport_MatClone((uint32)(self0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.clone
+//go:noescape
+func wasmimport_MatClone(self0 uint32) (result0 uint32)
+
 // Close represents the imported method "close".
 //
 // Close the Mat
@@ -162,6 +180,24 @@ func (self Mat) Cols() (result uint32) {
 //go:wasmimport wasm:cv/mat [method]mat.cols
 //go:noescape
 func wasmimport_MatCols(self0 uint32) (result0 uint32)
+
+// CopyTo represents the imported method "copy-to".
+//
+// CopyTo copies Mat into destination Mat.
+//
+//	copy-to: func(dst: mat)
+//
+//go:nosplit
+func (self Mat) CopyTo(dst Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	dst0 := cm.Reinterpret[uint32](dst)
+	wasmimport_MatCopyTo((uint32)(self0), (uint32)(dst0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.copy-to
+//go:noescape
+func wasmimport_MatCopyTo(self0 uint32, dst0 uint32)
 
 // Empty represents the imported method "empty".
 //
@@ -258,6 +294,27 @@ func (self Mat) MinMaxLoc() (result types.MixMaxLocResult) {
 //go:wasmimport wasm:cv/mat [method]mat.min-max-loc
 //go:noescape
 func wasmimport_MatMinMaxLoc(self0 uint32, result *types.MixMaxLocResult)
+
+// Region represents the imported method "region".
+//
+// Region returns a new Mat that points to a region of this Mat. Changes made to the
+// region Mat will affect the original Mat, since they are pointers to the underlying
+// OpenCV Mat object.
+//
+//	region: func(rect: rect) -> mat
+//
+//go:nosplit
+func (self Mat) Region(rect types.Rect) (result Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	rect0, rect1, rect2, rect3 := lower_Rect(rect)
+	result0 := wasmimport_MatRegion((uint32)(self0), (uint32)(rect0), (uint32)(rect1), (uint32)(rect2), (uint32)(rect3))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.region
+//go:noescape
+func wasmimport_MatRegion(self0 uint32, rect0 uint32, rect1 uint32, rect2 uint32, rect3 uint32) (result0 uint32)
 
 // Reshape represents the imported method "reshape".
 //

@@ -3,6 +3,10 @@
 // Package types represents the imported interface "wasm:cv/types".
 package types
 
+import (
+	"github.com/bytecodealliance/wasm-tools-go/cm"
+)
+
 // Size represents the record "wasm:cv/types#size".
 //
 //	record size {
@@ -10,6 +14,7 @@ package types
 //		y: s32,
 //	}
 type Size struct {
+	_ cm.HostLayout
 	X int32
 	Y int32
 }
@@ -23,6 +28,7 @@ type Size struct {
 //		val4: f32,
 //	}
 type Scalar struct {
+	_    cm.HostLayout
 	Val1 float32
 	Val2 float32
 	Val3 float32
@@ -36,6 +42,7 @@ type Scalar struct {
 //		max: size,
 //	}
 type Rect struct {
+	_   cm.HostLayout
 	Min Size
 	Max Size
 }
@@ -49,6 +56,7 @@ type Rect struct {
 //		a: u8,
 //	}
 type Rgba struct {
+	_ cm.HostLayout
 	R uint8
 	G uint8
 	B uint8
@@ -237,6 +245,7 @@ func (e PaddingModeType) String() string {
 //		border: scalar,
 //	}
 type BlobParams struct {
+	_           cm.HostLayout
 	ScaleFactor float32
 	Size        Size
 	Mean        Scalar
@@ -256,6 +265,7 @@ type BlobParams struct {
 //		max-loc: size,
 //	}
 type MixMaxLocResult struct {
+	_      cm.HostLayout
 	MinVal float32
 	MaxVal float32
 	MinLoc Size
