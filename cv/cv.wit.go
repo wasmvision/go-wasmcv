@@ -208,3 +208,34 @@ func TransposeNd(src mat.Mat, order cm.List[int32]) (result mat.Mat) {
 //go:wasmimport wasm:cv/cv transpose-nd
 //go:noescape
 func wasmimport_TransposeNd(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)
+
+// Resize represents the imported function "resize".
+//
+// Resize resizes an image.
+// It resizes the image src down to or up to the specified size, storing the
+// result in dst. Note that src and dst may be the same image. If you wish to
+// scale by factor, an empty sz may be passed and non-zero fx and fy. Likewise,
+// if you wish to scale to an explicit size, a non-empty sz may be passed with
+// zero for both fx and fy.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga47a974309e9102f5f08231edc7e7529d
+//
+//	resize: func(src: mat, size: size, fx: f32, fy: f32, interp: interpolation-type)
+//	-> mat
+//
+//go:nosplit
+func Resize(src mat.Mat, size types.Size, fx float32, fy float32, interp types.InterpolationType) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	size0, size1 := lower_Size(size)
+	fx0 := (float32)(fx)
+	fy0 := (float32)(fy)
+	interp0 := (uint32)(interp)
+	result0 := wasmimport_Resize((uint32)(src0), (uint32)(size0), (uint32)(size1), (float32)(fx0), (float32)(fy0), (uint32)(interp0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv resize
+//go:noescape
+func wasmimport_Resize(src0 uint32, size0 uint32, size1 uint32, fx0 float32, fy0 float32, interp0 uint32) (result0 uint32)

@@ -237,6 +237,68 @@ func (self Mat) GetFloatAt(row uint32, col uint32) (result float32) {
 //go:noescape
 func wasmimport_MatGetFloatAt(self0 uint32, row0 uint32, col0 uint32) (result0 float32)
 
+// GetFloatAt3 represents the imported method "get-float-at3".
+//
+// GetFloatAt3 returns the value at the specified x, y, z as a f32.
+//
+//	get-float-at3: func(x: u32, y: u32, z: u32) -> f32
+//
+//go:nosplit
+func (self Mat) GetFloatAt3(x uint32, y uint32, z uint32) (result float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	x0 := (uint32)(x)
+	y0 := (uint32)(y)
+	z0 := (uint32)(z)
+	result0 := wasmimport_MatGetFloatAt3((uint32)(self0), (uint32)(x0), (uint32)(y0), (uint32)(z0))
+	result = (float32)((float32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-float-at3
+//go:noescape
+func wasmimport_MatGetFloatAt3(self0 uint32, x0 uint32, y0 uint32, z0 uint32) (result0 float32)
+
+// GetIntAt represents the imported method "get-int-at".
+//
+// GetIntAt returns the value at the specified row and column as a s32.
+//
+//	get-int-at: func(row: u32, col: u32) -> s32
+//
+//go:nosplit
+func (self Mat) GetIntAt(row uint32, col uint32) (result int32) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	result0 := wasmimport_MatGetIntAt((uint32)(self0), (uint32)(row0), (uint32)(col0))
+	result = (int32)((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-int-at
+//go:noescape
+func wasmimport_MatGetIntAt(self0 uint32, row0 uint32, col0 uint32) (result0 uint32)
+
+// GetIntAt3 represents the imported method "get-int-at3".
+//
+// GetIntAt3 returns the value at the specified x, y, z as a s32.
+//
+//	get-int-at3: func(x: u32, y: u32, z: u32) -> s32
+//
+//go:nosplit
+func (self Mat) GetIntAt3(x uint32, y uint32, z uint32) (result int32) {
+	self0 := cm.Reinterpret[uint32](self)
+	x0 := (uint32)(x)
+	y0 := (uint32)(y)
+	z0 := (uint32)(z)
+	result0 := wasmimport_MatGetIntAt3((uint32)(self0), (uint32)(x0), (uint32)(y0), (uint32)(z0))
+	result = (int32)((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-int-at3
+//go:noescape
+func wasmimport_MatGetIntAt3(self0 uint32, x0 uint32, y0 uint32, z0 uint32) (result0 uint32)
+
 // GetUcharAt represents the imported method "get-uchar-at".
 //
 // GetUCharAt returns the value at the specified row and column as a u8.
@@ -256,6 +318,87 @@ func (self Mat) GetUcharAt(row uint32, col uint32) (result uint8) {
 //go:wasmimport wasm:cv/mat [method]mat.get-uchar-at
 //go:noescape
 func wasmimport_MatGetUcharAt(self0 uint32, row0 uint32, col0 uint32) (result0 uint32)
+
+// GetUcharAt3 represents the imported method "get-uchar-at3".
+//
+// GetUCharAt3 returns the value at the specified x, y, z as a u8.
+//
+//	get-uchar-at3: func(x: u32, y: u32, z: u32) -> u8
+//
+//go:nosplit
+func (self Mat) GetUcharAt3(x uint32, y uint32, z uint32) (result uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	x0 := (uint32)(x)
+	y0 := (uint32)(y)
+	z0 := (uint32)(z)
+	result0 := wasmimport_MatGetUcharAt3((uint32)(self0), (uint32)(x0), (uint32)(y0), (uint32)(z0))
+	result = (uint8)((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-uchar-at3
+//go:noescape
+func wasmimport_MatGetUcharAt3(self0 uint32, x0 uint32, y0 uint32, z0 uint32) (result0 uint32)
+
+// GetVecbAt represents the imported method "get-vecb-at".
+//
+// GetVecbAt returns a vector of bytes. Its size corresponds to the number of channels
+// of the Mat.
+//
+//	get-vecb-at: func(row: u32, col: u32) -> list<u8>
+//
+//go:nosplit
+func (self Mat) GetVecbAt(row uint32, col uint32) (result cm.List[uint8]) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	wasmimport_MatGetVecbAt((uint32)(self0), (uint32)(row0), (uint32)(col0), &result)
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-vecb-at
+//go:noescape
+func wasmimport_MatGetVecbAt(self0 uint32, row0 uint32, col0 uint32, result *cm.List[uint8])
+
+// GetVecfAt represents the imported method "get-vecf-at".
+//
+// GetVecfAt returns a vector of floats. Its size corresponds to the number of channels
+// of the Mat.
+//
+//	get-vecf-at: func(row: u32, col: u32) -> list<f32>
+//
+//go:nosplit
+func (self Mat) GetVecfAt(row uint32, col uint32) (result cm.List[float32]) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	wasmimport_MatGetVecfAt((uint32)(self0), (uint32)(row0), (uint32)(col0), &result)
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-vecf-at
+//go:noescape
+func wasmimport_MatGetVecfAt(self0 uint32, row0 uint32, col0 uint32, result *cm.List[float32])
+
+// GetVeciAt represents the imported method "get-veci-at".
+//
+// GetVeciAt returns a vector of s32. Its size corresponds to the number of channels
+// of the Mat.
+//
+//	get-veci-at: func(row: u32, col: u32) -> list<s32>
+//
+//go:nosplit
+func (self Mat) GetVeciAt(row uint32, col uint32) (result cm.List[int32]) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	wasmimport_MatGetVeciAt((uint32)(self0), (uint32)(row0), (uint32)(col0), &result)
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.get-veci-at
+//go:noescape
+func wasmimport_MatGetVeciAt(self0 uint32, row0 uint32, col0 uint32, result *cm.List[int32])
 
 // Mattype represents the imported method "mattype".
 //
@@ -401,6 +544,68 @@ func (self Mat) SetFloatAt(row uint32, col uint32, val float32) {
 //go:noescape
 func wasmimport_MatSetFloatAt(self0 uint32, row0 uint32, col0 uint32, val0 float32)
 
+// SetFloatAt3 represents the imported method "set-float-at3".
+//
+// SetFloatAt3 sets the value at the specified x, y, z as a f32.
+//
+//	set-float-at3: func(x: u32, y: u32, z: u32, val: f32)
+//
+//go:nosplit
+func (self Mat) SetFloatAt3(x uint32, y uint32, z uint32, val float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	x0 := (uint32)(x)
+	y0 := (uint32)(y)
+	z0 := (uint32)(z)
+	val0 := (float32)(val)
+	wasmimport_MatSetFloatAt3((uint32)(self0), (uint32)(x0), (uint32)(y0), (uint32)(z0), (float32)(val0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.set-float-at3
+//go:noescape
+func wasmimport_MatSetFloatAt3(self0 uint32, x0 uint32, y0 uint32, z0 uint32, val0 float32)
+
+// SetIntAt represents the imported method "set-int-at".
+//
+// SetIntAt sets the value at the specified row and column as a s32.
+//
+//	set-int-at: func(row: u32, col: u32, val: s32)
+//
+//go:nosplit
+func (self Mat) SetIntAt(row uint32, col uint32, val int32) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	col0 := (uint32)(col)
+	val0 := (uint32)(val)
+	wasmimport_MatSetIntAt((uint32)(self0), (uint32)(row0), (uint32)(col0), (uint32)(val0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.set-int-at
+//go:noescape
+func wasmimport_MatSetIntAt(self0 uint32, row0 uint32, col0 uint32, val0 uint32)
+
+// SetIntAt3 represents the imported method "set-int-at3".
+//
+// SetIntAt3 sets the value at the specified x, y, z as a s32.
+//
+//	set-int-at3: func(x: u32, y: u32, z: u32, val: s32)
+//
+//go:nosplit
+func (self Mat) SetIntAt3(x uint32, y uint32, z uint32, val int32) {
+	self0 := cm.Reinterpret[uint32](self)
+	x0 := (uint32)(x)
+	y0 := (uint32)(y)
+	z0 := (uint32)(z)
+	val0 := (uint32)(val)
+	wasmimport_MatSetIntAt3((uint32)(self0), (uint32)(x0), (uint32)(y0), (uint32)(z0), (uint32)(val0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.set-int-at3
+//go:noescape
+func wasmimport_MatSetIntAt3(self0 uint32, x0 uint32, y0 uint32, z0 uint32, val0 uint32)
+
 // SetUcharAt represents the imported method "set-uchar-at".
 //
 // SetUCharAt sets the value at the specified row and column as a u8.
@@ -420,6 +625,27 @@ func (self Mat) SetUcharAt(row uint32, col uint32, val uint8) {
 //go:wasmimport wasm:cv/mat [method]mat.set-uchar-at
 //go:noescape
 func wasmimport_MatSetUcharAt(self0 uint32, row0 uint32, col0 uint32, val0 uint32)
+
+// SetUcharAt3 represents the imported method "set-uchar-at3".
+//
+// SetUCharAt3 sets the value at the specified x, y, z as a u8.
+//
+//	set-uchar-at3: func(x: u32, y: u32, z: u32, val: u8)
+//
+//go:nosplit
+func (self Mat) SetUcharAt3(x uint32, y uint32, z uint32, val uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	x0 := (uint32)(x)
+	y0 := (uint32)(y)
+	z0 := (uint32)(z)
+	val0 := (uint32)(val)
+	wasmimport_MatSetUcharAt3((uint32)(self0), (uint32)(x0), (uint32)(y0), (uint32)(z0), (uint32)(val0))
+	return
+}
+
+//go:wasmimport wasm:cv/mat [method]mat.set-uchar-at3
+//go:noescape
+func wasmimport_MatSetUcharAt3(self0 uint32, x0 uint32, y0 uint32, z0 uint32, val0 uint32)
 
 // Size represents the imported method "size".
 //

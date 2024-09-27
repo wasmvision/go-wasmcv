@@ -315,3 +315,35 @@ var stringsHersheyFontType = [9]string{
 func (e HersheyFontType) String() string {
 	return stringsHersheyFontType[e]
 }
+
+// InterpolationType represents the enum "wasm:cv/types#interpolation-type".
+//
+//	enum interpolation-type {
+//		interpolation-nearest,
+//		interpolation-linear,
+//		interpolation-cubic,
+//		interpolation-area,
+//		interpolation-lanczos4
+//	}
+type InterpolationType uint8
+
+const (
+	InterpolationTypeInterpolationNearest InterpolationType = iota
+	InterpolationTypeInterpolationLinear
+	InterpolationTypeInterpolationCubic
+	InterpolationTypeInterpolationArea
+	InterpolationTypeInterpolationLanczos4
+)
+
+var stringsInterpolationType = [5]string{
+	"interpolation-nearest",
+	"interpolation-linear",
+	"interpolation-cubic",
+	"interpolation-area",
+	"interpolation-lanczos4",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e InterpolationType) String() string {
+	return stringsInterpolationType[e]
+}
