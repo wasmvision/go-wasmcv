@@ -12,16 +12,16 @@ func lower_Size(v types.Size) (f0 uint32, f1 uint32) {
 	return
 }
 
-func lower_Rect(v types.Rect) (f0 uint32, f1 uint32, f2 uint32, f3 uint32) {
-	f0, f1 = lower_Size(v.Min)
-	f2, f3 = lower_Size(v.Max)
-	return
-}
-
-func lower_Rgba(v types.Rgba) (f0 uint32, f1 uint32, f2 uint32, f3 uint32) {
+func lower_RGBA(v types.RGBA) (f0 uint32, f1 uint32, f2 uint32, f3 uint32) {
 	f0 = (uint32)(v.R)
 	f1 = (uint32)(v.G)
 	f2 = (uint32)(v.B)
 	f3 = (uint32)(v.A)
+	return
+}
+
+func lower_Rect(v types.Rect) (f0 uint32, f1 uint32, f2 uint32, f3 uint32) {
+	f0, f1 = lower_Size(v.Min)
+	f2, f3 = lower_Size(v.Max)
 	return
 }

@@ -47,15 +47,15 @@ type Rect struct {
 	Max Size
 }
 
-// Rgba represents the record "wasm:cv/types#rgba".
+// RGBA represents the record "wasm:cv/types#RGBA".
 //
-//	record rgba {
+//	record RGBA {
 //		r: u8,
 //		g: u8,
 //		b: u8,
 //		a: u8,
 //	}
-type Rgba struct {
+type RGBA struct {
 	_ cm.HostLayout
 	R uint8
 	G uint8
@@ -238,7 +238,7 @@ func (e PaddingModeType) String() string {
 //		scale-factor: f32,
 //		size: size,
 //		mean: scalar,
-//		swap-rb: bool,
+//		swap-RB: bool,
 //		ddepth: u8,
 //		data-layout: data-layout-type,
 //		padding-mode: padding-mode-type,
@@ -249,7 +249,7 @@ type BlobParams struct {
 	ScaleFactor float32
 	Size        Size
 	Mean        Scalar
-	SwapRb      bool
+	SwapRB      bool
 	Ddepth      uint8
 	DataLayout  DataLayoutType
 	PaddingMode PaddingModeType
@@ -346,4 +346,81 @@ var stringsInterpolationType = [5]string{
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e InterpolationType) String() string {
 	return stringsInterpolationType[e]
+}
+
+// ColorCoversionType represents the enum "wasm:cv/types#color-coversion-type".
+//
+//	enum color-coversion-type {
+//		color-BGR-to-BGRA,
+//		color-RGB-to-RGBA,
+//		color-BGRA-to-BGR,
+//		color-RGBA-to-RGB,
+//		color-BGR-to-RGBA,
+//		color-RGB-to-BGRA,
+//		color-RGBA-to-BGR,
+//		color-BGRA-to-RGB,
+//		color-BGR-to-RGB,
+//		color-RGB-to-BGR,
+//		color-BGRA-to-RGBA,
+//		color-RGBA-to-BGRA,
+//		color-BGR-to-gray,
+//		color-RGB-to-gray,
+//		color-gray-to-BGR,
+//		color-gray-to-RGB,
+//		color-gray-to-BGRA,
+//		color-gray-to-RGBA,
+//		color-BGRA-to-gray,
+//		color-RGBA-to-gray
+//	}
+type ColorCoversionType uint8
+
+const (
+	ColorCoversionTypeColorBGRToBGRA ColorCoversionType = iota
+	ColorCoversionTypeColorRGBToRGBA
+	ColorCoversionTypeColorBGRAToBGR
+	ColorCoversionTypeColorRGBAToRGB
+	ColorCoversionTypeColorBGRToRGBA
+	ColorCoversionTypeColorRGBToBGRA
+	ColorCoversionTypeColorRGBAToBGR
+	ColorCoversionTypeColorBGRAToRGB
+	ColorCoversionTypeColorBGRToRGB
+	ColorCoversionTypeColorRGBToBGR
+	ColorCoversionTypeColorBGRAToRGBA
+	ColorCoversionTypeColorRGBAToBGRA
+	ColorCoversionTypeColorBGRToGray
+	ColorCoversionTypeColorRGBToGray
+	ColorCoversionTypeColorGrayToBGR
+	ColorCoversionTypeColorGrayToRGB
+	ColorCoversionTypeColorGrayToBGRA
+	ColorCoversionTypeColorGrayToRGBA
+	ColorCoversionTypeColorBGRAToGray
+	ColorCoversionTypeColorRGBAToGray
+)
+
+var stringsColorCoversionType = [20]string{
+	"color-BGR-to-BGRA",
+	"color-RGB-to-RGBA",
+	"color-BGRA-to-BGR",
+	"color-RGBA-to-RGB",
+	"color-BGR-to-RGBA",
+	"color-RGB-to-BGRA",
+	"color-RGBA-to-BGR",
+	"color-BGRA-to-RGB",
+	"color-BGR-to-RGB",
+	"color-RGB-to-BGR",
+	"color-BGRA-to-RGBA",
+	"color-RGBA-to-BGRA",
+	"color-BGR-to-gray",
+	"color-RGB-to-gray",
+	"color-gray-to-BGR",
+	"color-gray-to-RGB",
+	"color-gray-to-BGRA",
+	"color-gray-to-RGBA",
+	"color-BGRA-to-gray",
+	"color-RGBA-to-gray",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e ColorCoversionType) String() string {
+	return stringsColorCoversionType[e]
 }

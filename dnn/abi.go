@@ -25,7 +25,7 @@ func lower_BlobParams(v types.BlobParams) (f0 float32, f1 uint32, f2 uint32, f3 
 	f0 = (float32)(v.ScaleFactor)
 	f1, f2 = lower_Size(v.Size)
 	f3, f4, f5, f6 = lower_Scalar(v.Mean)
-	f7 = cm.BoolToU32(v.SwapRb)
+	f7 = cm.BoolToU32(v.SwapRB)
 	f8 = (uint32)(v.Ddepth)
 	f9 = (uint32)(v.DataLayout)
 	f10 = (uint32)(v.PaddingMode)

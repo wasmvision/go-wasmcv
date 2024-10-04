@@ -9,21 +9,45 @@ import (
 	"wasmcv.org/wasm/cv/types"
 )
 
-// Rectangle represents the imported function "rectangle".
+// ArrowedLine represents the imported function "arrowed-line".
 //
 // drawing functions
+// ArrowedLine draws a arrow segment pointing from the first point to the second one.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga0a165a3ca093fd488ac709fdf10c05b2
+//
+//	arrowed-line: func(img: mat, point1: size, point2: size, c: RGBA, thickness: u8)
+//
+//go:nosplit
+func ArrowedLine(img mat.Mat, point1 types.Size, point2 types.Size, c types.RGBA, thickness uint8) {
+	img0 := cm.Reinterpret[uint32](img)
+	point10, point11 := lower_Size(point1)
+	point20, point21 := lower_Size(point2)
+	c0, c1, c2, c3 := lower_RGBA(c)
+	thickness0 := (uint32)(thickness)
+	wasmimport_ArrowedLine((uint32)(img0), (uint32)(point10), (uint32)(point11), (uint32)(point20), (uint32)(point21), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv arrowed-line
+//go:noescape
+func wasmimport_ArrowedLine(img0 uint32, point10 uint32, point11 uint32, point20 uint32, point21 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
+
+// Rectangle represents the imported function "rectangle".
+//
 // Rectangle draws a simple, thick, or filled up-right rectangle.
 //
 // For further details, please see:
 // https://docs.opencv.org/4.x/d6/d6e/group__imgproc__draw.html#ga07d2f74cadcf8e305e810ce8f3d1e1b7
 //
-//	rectangle: func(img: mat, r: rect, c: rgba, thickness: u8)
+//	rectangle: func(img: mat, r: rect, c: RGBA, thickness: u8)
 //
 //go:nosplit
-func Rectangle(img mat.Mat, r types.Rect, c types.Rgba, thickness uint8) {
+func Rectangle(img mat.Mat, r types.Rect, c types.RGBA, thickness uint8) {
 	img0 := cm.Reinterpret[uint32](img)
 	r0, r1, r2, r3 := lower_Rect(r)
-	c0, c1, c2, c3 := lower_Rgba(c)
+	c0, c1, c2, c3 := lower_RGBA(c)
 	thickness0 := (uint32)(thickness)
 	wasmimport_Rectangle((uint32)(img0), (uint32)(r0), (uint32)(r1), (uint32)(r2), (uint32)(r3), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
 	return
@@ -32,6 +56,54 @@ func Rectangle(img mat.Mat, r types.Rect, c types.Rgba, thickness uint8) {
 //go:wasmimport wasm:cv/cv rectangle
 //go:noescape
 func wasmimport_Rectangle(img0 uint32, r0 uint32, r1 uint32, r2 uint32, r3 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
+
+// Circle represents the imported function "circle".
+//
+// Circle draws a circle.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf10604b069374903dbd0f0488cb43670
+//
+//	circle: func(img: mat, center: size, radius: u32, c: RGBA, thickness: u8)
+//
+//go:nosplit
+func Circle(img mat.Mat, center types.Size, radius uint32, c types.RGBA, thickness uint8) {
+	img0 := cm.Reinterpret[uint32](img)
+	center0, center1 := lower_Size(center)
+	radius0 := (uint32)(radius)
+	c0, c1, c2, c3 := lower_RGBA(c)
+	thickness0 := (uint32)(thickness)
+	wasmimport_Circle((uint32)(img0), (uint32)(center0), (uint32)(center1), (uint32)(radius0), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv circle
+//go:noescape
+func wasmimport_Circle(img0 uint32, center0 uint32, center1 uint32, radius0 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
+
+// Line represents the imported function "line".
+//
+// Line draws a line segment connecting two points.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga7078a9fae8c7e7d13d24dac2520ae4a2
+//
+//	line: func(img: mat, point1: size, point2: size, c: RGBA, thickness: u8)
+//
+//go:nosplit
+func Line(img mat.Mat, point1 types.Size, point2 types.Size, c types.RGBA, thickness uint8) {
+	img0 := cm.Reinterpret[uint32](img)
+	point10, point11 := lower_Size(point1)
+	point20, point21 := lower_Size(point2)
+	c0, c1, c2, c3 := lower_RGBA(c)
+	thickness0 := (uint32)(thickness)
+	wasmimport_Line((uint32)(img0), (uint32)(point10), (uint32)(point11), (uint32)(point20), (uint32)(point21), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv line
+//go:noescape
+func wasmimport_Line(img0 uint32, point10 uint32, point11 uint32, point20 uint32, point21 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
 
 // PutText represents the imported function "put-text".
 //
@@ -44,16 +116,16 @@ func wasmimport_Rectangle(img0 uint32, r0 uint32, r1 uint32, r2 uint32, r3 uint3
 // http://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga5126f47f883d730f633d74f07456c576
 //
 //	put-text: func(img: mat, text: string, org: size, font-face: hershey-font-type,
-//	font-scale: f64, c: rgba, thickness: s32)
+//	font-scale: f64, c: RGBA, thickness: s32)
 //
 //go:nosplit
-func PutText(img mat.Mat, text string, org types.Size, fontFace types.HersheyFontType, fontScale float64, c types.Rgba, thickness int32) {
+func PutText(img mat.Mat, text string, org types.Size, fontFace types.HersheyFontType, fontScale float64, c types.RGBA, thickness int32) {
 	img0 := cm.Reinterpret[uint32](img)
 	text0, text1 := cm.LowerString(text)
 	org0, org1 := lower_Size(org)
 	fontFace0 := (uint32)(fontFace)
 	fontScale0 := (float64)(fontScale)
-	c0, c1, c2, c3 := lower_Rgba(c)
+	c0, c1, c2, c3 := lower_RGBA(c)
 	thickness0 := (uint32)(thickness)
 	wasmimport_PutText((uint32)(img0), (*uint8)(text0), (uint32)(text1), (uint32)(org0), (uint32)(org1), (uint32)(fontFace0), (float64)(fontScale0), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
 	return
@@ -162,6 +234,28 @@ func GaussianBlur(src mat.Mat, size types.Size, sigmaX float32, sigmaY float32, 
 //go:noescape
 func wasmimport_GaussianBlur(src0 uint32, size0 uint32, size1 uint32, sigmaX0 float32, sigmaY0 float32, border0 uint32) (result0 uint32)
 
+// MedianBlur represents the imported function "median-blur".
+//
+// MedianBlur blurs an image using the median filter.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9
+//
+//	median-blur: func(src: mat, k-size: size) -> mat
+//
+//go:nosplit
+func MedianBlur(src mat.Mat, kSize types.Size) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	kSize0, kSize1 := lower_Size(kSize)
+	result0 := wasmimport_MedianBlur((uint32)(src0), (uint32)(kSize0), (uint32)(kSize1))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv median-blur
+//go:noescape
+func wasmimport_MedianBlur(src0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
+
 // Threshold represents the imported function "threshold".
 //
 // Threshold applies a fixed-level threshold to each array element.
@@ -187,27 +281,49 @@ func Threshold(src mat.Mat, thresh float32, maxValue float32, thresholdType type
 //go:noescape
 func wasmimport_Threshold(src0 uint32, thresh0 float32, maxValue0 float32, thresholdType0 uint32) (result0 uint32)
 
-// TransposeNd represents the imported function "transpose-nd".
+// CvtColor represents the imported function "cvt-color".
+//
+// CvtColor converts an image from one color space to another.
+//
+// For further details, please see:
+// http://docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
+//
+//	cvt-color: func(src: mat, code: color-coversion-type) -> mat
+//
+//go:nosplit
+func CvtColor(src mat.Mat, code types.ColorCoversionType) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	code0 := (uint32)(code)
+	result0 := wasmimport_CvtColor((uint32)(src0), (uint32)(code0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv cvt-color
+//go:noescape
+func wasmimport_CvtColor(src0 uint32, code0 uint32) (result0 uint32)
+
+// TransposeND represents the imported function "transpose-ND".
 //
 // Transpose for n-dimensional matrices.
 //
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab1b1274b4a563be34cdfa55b8919a4ec
 //
-//	transpose-nd: func(src: mat, order: list<s32>) -> mat
+//	transpose-ND: func(src: mat, order: list<s32>) -> mat
 //
 //go:nosplit
-func TransposeNd(src mat.Mat, order cm.List[int32]) (result mat.Mat) {
+func TransposeND(src mat.Mat, order cm.List[int32]) (result mat.Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	order0, order1 := cm.LowerList(order)
-	result0 := wasmimport_TransposeNd((uint32)(src0), (*int32)(order0), (uint32)(order1))
+	result0 := wasmimport_TransposeND((uint32)(src0), (*int32)(order0), (uint32)(order1))
 	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/cv transpose-nd
+//go:wasmimport wasm:cv/cv transpose-ND
 //go:noescape
-func wasmimport_TransposeNd(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)
+func wasmimport_TransposeND(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)
 
 // Resize represents the imported function "resize".
 //

@@ -68,42 +68,42 @@ func (self Mat) ResourceDrop() {
 //go:noescape
 func wasmimport_MatResourceDrop(self0 uint32)
 
-// MatNewMat represents the imported static function "new-mat".
+// NewMat represents the imported constructor for resource "mat".
 //
 // Create a new Mat.
 //
-//	new-mat: static func() -> mat
+//	constructor()
 //
 //go:nosplit
-func MatNewMat() (result Mat) {
-	result0 := wasmimport_MatNewMat()
+func NewMat() (result Mat) {
+	result0 := wasmimport_NewMat()
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/mat [static]mat.new-mat
+//go:wasmimport wasm:cv/mat [constructor]mat
 //go:noescape
-func wasmimport_MatNewMat() (result0 uint32)
+func wasmimport_NewMat() (result0 uint32)
 
-// MatNewMatWithSize represents the imported static function "new-mat-with-size".
+// MatNewWithSize represents the imported static function "new-with-size".
 //
 // Create a new Mat with the specified size and type.
 //
-//	new-mat-with-size: static func(cols: u32, rows: u32, mattype: mattype) -> mat
+//	new-with-size: static func(cols: u32, rows: u32, mattype: mattype) -> mat
 //
 //go:nosplit
-func MatNewMatWithSize(cols uint32, rows uint32, mattype Mattype) (result Mat) {
+func MatNewWithSize(cols uint32, rows uint32, mattype Mattype) (result Mat) {
 	cols0 := (uint32)(cols)
 	rows0 := (uint32)(rows)
 	mattype0 := (uint32)(mattype)
-	result0 := wasmimport_MatNewMatWithSize((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0))
+	result0 := wasmimport_MatNewWithSize((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0))
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/mat [static]mat.new-mat-with-size
+//go:wasmimport wasm:cv/mat [static]mat.new-with-size
 //go:noescape
-func wasmimport_MatNewMatWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
+func wasmimport_MatNewWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
 
 // Clone represents the imported method "clone".
 //

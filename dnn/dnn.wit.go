@@ -218,48 +218,48 @@ func (self Net) ResourceDrop() {
 //go:noescape
 func wasmimport_NetResourceDrop(self0 uint32)
 
-// NetReadNet represents the imported static function "read-net".
+// NetRead represents the imported static function "read".
 //
 // ReadNet read deep learning network represented in one of the supported formats.
 //
 // For further details, please see:
 // https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga138439da76f26266fdefec9723f6c5cd
 //
-//	read-net: static func(model: string, config: string) -> net
+//	read: static func(model: string, config: string) -> net
 //
 //go:nosplit
-func NetReadNet(model string, config string) (result Net) {
+func NetRead(model string, config string) (result Net) {
 	model0, model1 := cm.LowerString(model)
 	config0, config1 := cm.LowerString(config)
-	result0 := wasmimport_NetReadNet((*uint8)(model0), (uint32)(model1), (*uint8)(config0), (uint32)(config1))
+	result0 := wasmimport_NetRead((*uint8)(model0), (uint32)(model1), (*uint8)(config0), (uint32)(config1))
 	result = cm.Reinterpret[Net]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [static]net.read-net
+//go:wasmimport wasm:cv/dnn [static]net.read
 //go:noescape
-func wasmimport_NetReadNet(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32) (result0 uint32)
+func wasmimport_NetRead(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32) (result0 uint32)
 
-// NetReadNetFromOnnx represents the imported static function "read-net-from-onnx".
+// NetReadFromONNX represents the imported static function "read-from-ONNX".
 //
 // ReadNetFromONNX reads a network model stored in ONNX framework's format.
 //
 // For further details, please see:
 // https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga9198ecaac7c32ddf0aa7a1bcbd359567
 //
-//	read-net-from-onnx: static func(model: string) -> net
+//	read-from-ONNX: static func(model: string) -> net
 //
 //go:nosplit
-func NetReadNetFromOnnx(model string) (result Net) {
+func NetReadFromONNX(model string) (result Net) {
 	model0, model1 := cm.LowerString(model)
-	result0 := wasmimport_NetReadNetFromOnnx((*uint8)(model0), (uint32)(model1))
+	result0 := wasmimport_NetReadFromONNX((*uint8)(model0), (uint32)(model1))
 	result = cm.Reinterpret[Net]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [static]net.read-net-from-onnx
+//go:wasmimport wasm:cv/dnn [static]net.read-from-ONNX
 //go:noescape
-func wasmimport_NetReadNetFromOnnx(model0 *uint8, model1 uint32) (result0 uint32)
+func wasmimport_NetReadFromONNX(model0 *uint8, model1 uint32) (result0 uint32)
 
 // Close represents the imported method "close".
 //
@@ -320,6 +320,27 @@ func (self Net) Forward(outputName string) (result mat.Mat) {
 //go:wasmimport wasm:cv/dnn [method]net.forward
 //go:noescape
 func wasmimport_NetForward(self0 uint32, outputName0 *uint8, outputName1 uint32) (result0 uint32)
+
+// ForwardLayers represents the imported method "forward-layers".
+//
+// ForwardLayers forward pass to compute outputs of layers listed in outBlobNames.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#afe22e099b60a2883e220645391f68d4c
+//
+//	forward-layers: func(output-names: list<string>) -> list<mat>
+//
+//go:nosplit
+func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.List[mat.Mat]) {
+	self0 := cm.Reinterpret[uint32](self)
+	outputNames0, outputNames1 := cm.LowerList(outputNames)
+	wasmimport_NetForwardLayers((uint32)(self0), (*string)(outputNames0), (uint32)(outputNames1), &result)
+	return
+}
+
+//go:wasmimport wasm:cv/dnn [method]net.forward-layers
+//go:noescape
+func wasmimport_NetForwardLayers(self0 uint32, outputNames0 *string, outputNames1 uint32, result *cm.List[mat.Mat])
 
 // GetLayer represents the imported method "get-layer".
 //
@@ -488,26 +509,26 @@ type wasmimport_BlobRectsToImageRects_params struct {
 	imageSize types.Size
 }
 
-// NmsBoxes represents the imported function "nms-boxes".
+// NMSBoxes represents the imported function "NMS-boxes".
 //
 // NMSBoxes performs non maximum suppression given boxes and corresponding scores.
 //
 // For futher details, please see:
 // https://docs.opencv.org/4.4.0/d6/d0f/group__dnn.html#ga9d118d70a1659af729d01b10233213ee
 //
-//	nms-boxes: func(bboxes: list<rect>, scores: list<f32>, score-threshold: f32, nms-threshold:
+//	NMS-boxes: func(bboxes: list<rect>, scores: list<f32>, score-threshold: f32, nms-threshold:
 //	f32) -> list<s32>
 //
 //go:nosplit
-func NmsBoxes(bboxes cm.List[types.Rect], scores cm.List[float32], scoreThreshold float32, nmsThreshold float32) (result cm.List[int32]) {
+func NMSBoxes(bboxes cm.List[types.Rect], scores cm.List[float32], scoreThreshold float32, nmsThreshold float32) (result cm.List[int32]) {
 	bboxes0, bboxes1 := cm.LowerList(bboxes)
 	scores0, scores1 := cm.LowerList(scores)
 	scoreThreshold0 := (float32)(scoreThreshold)
 	nmsThreshold0 := (float32)(nmsThreshold)
-	wasmimport_NmsBoxes((*types.Rect)(bboxes0), (uint32)(bboxes1), (*float32)(scores0), (uint32)(scores1), (float32)(scoreThreshold0), (float32)(nmsThreshold0), &result)
+	wasmimport_NMSBoxes((*types.Rect)(bboxes0), (uint32)(bboxes1), (*float32)(scores0), (uint32)(scores1), (float32)(scoreThreshold0), (float32)(nmsThreshold0), &result)
 	return
 }
 
-//go:wasmimport wasm:cv/dnn nms-boxes
+//go:wasmimport wasm:cv/dnn NMS-boxes
 //go:noescape
-func wasmimport_NmsBoxes(bboxes0 *types.Rect, bboxes1 uint32, scores0 *float32, scores1 uint32, scoreThreshold0 float32, nmsThreshold0 float32, result *cm.List[int32])
+func wasmimport_NMSBoxes(bboxes0 *types.Rect, bboxes1 uint32, scores0 *float32, scores1 uint32, scoreThreshold0 float32, nmsThreshold0 float32, result *cm.List[int32])
