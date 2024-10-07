@@ -31,25 +31,25 @@ func (self CascadeClassifier) ResourceDrop() {
 //go:noescape
 func wasmimport_CascadeClassifierResourceDrop(self0 uint32)
 
-// NewCascadeClassifier represents the imported constructor for resource "cascade-classifier".
+// CascadeClassifierNew represents the imported static function "new".
 //
 // NewCascadeClassifier returns a new CascadeClassifier.
 //
 // For further details, please see:
 // https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5f7fb43c60c95ca5ebab78483de02516
 //
-//	constructor()
+//	new: static func() -> cascade-classifier
 //
 //go:nosplit
-func NewCascadeClassifier() (result CascadeClassifier) {
-	result0 := wasmimport_NewCascadeClassifier()
+func CascadeClassifierNew() (result CascadeClassifier) {
+	result0 := wasmimport_CascadeClassifierNew()
 	result = cm.Reinterpret[CascadeClassifier]((uint32)(result0))
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [constructor]cascade-classifier
+//go:wasmimport wasm:cv/objdetect [static]cascade-classifier.new
 //go:noescape
-func wasmimport_NewCascadeClassifier() (result0 uint32)
+func wasmimport_CascadeClassifierNew() (result0 uint32)
 
 // Close represents the imported method "close".
 //
