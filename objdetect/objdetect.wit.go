@@ -351,20 +351,20 @@ func wasmimport_FaceDetectorYNClose(self0 uint32)
 // For further details, please see:
 // https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#ac05bd075ca3e6edc0e328927aae6f45b
 //
-//	detect: func(input: string) -> mat
+//	detect: func(input: mat) -> mat
 //
 //go:nosplit
-func (self FaceDetectorYN) Detect(input string) (result mat.Mat) {
+func (self FaceDetectorYN) Detect(input mat.Mat) (result mat.Mat) {
 	self0 := cm.Reinterpret[uint32](self)
-	input0, input1 := cm.LowerString(input)
-	result0 := wasmimport_FaceDetectorYNDetect((uint32)(self0), (*uint8)(input0), (uint32)(input1))
+	input0 := cm.Reinterpret[uint32](input)
+	result0 := wasmimport_FaceDetectorYNDetect((uint32)(self0), (uint32)(input0))
 	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
 	return
 }
 
 //go:wasmimport wasm:cv/objdetect [method]face-detector-YN.detect
 //go:noescape
-func wasmimport_FaceDetectorYNDetect(self0 uint32, input0 *uint8, input1 uint32) (result0 uint32)
+func wasmimport_FaceDetectorYNDetect(self0 uint32, input0 uint32) (result0 uint32)
 
 // GetInputSize represents the imported method "get-input-size".
 //
