@@ -38,18 +38,19 @@ func wasmimport_CascadeClassifierResourceDrop(self0 uint32)
 // For further details, please see:
 // https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5f7fb43c60c95ca5ebab78483de02516
 //
-//	constructor()
+//	constructor(name: string)
 //
 //go:nosplit
-func NewCascadeClassifier() (result CascadeClassifier) {
-	result0 := wasmimport_NewCascadeClassifier()
+func NewCascadeClassifier(name string) (result CascadeClassifier) {
+	name0, name1 := cm.LowerString(name)
+	result0 := wasmimport_NewCascadeClassifier((*uint8)(name0), (uint32)(name1))
 	result = cm.Reinterpret[CascadeClassifier]((uint32)(result0))
 	return
 }
 
 //go:wasmimport wasm:cv/objdetect [constructor]cascade-classifier
 //go:noescape
-func wasmimport_NewCascadeClassifier() (result0 uint32)
+func wasmimport_NewCascadeClassifier(name0 *uint8, name1 uint32) (result0 uint32)
 
 // Close represents the imported method "close".
 //
@@ -170,18 +171,19 @@ func wasmimport_HOGDescriptorResourceDrop(self0 uint32)
 //
 // NewHOGDescriptor returns a new HOGDescriptor.
 //
-//	constructor()
+//	constructor(name: string)
 //
 //go:nosplit
-func NewHOGDescriptor() (result HOGDescriptor) {
-	result0 := wasmimport_NewHOGDescriptor()
+func NewHOGDescriptor(name string) (result HOGDescriptor) {
+	name0, name1 := cm.LowerString(name)
+	result0 := wasmimport_NewHOGDescriptor((*uint8)(name0), (uint32)(name1))
 	result = cm.Reinterpret[HOGDescriptor]((uint32)(result0))
 	return
 }
 
 //go:wasmimport wasm:cv/objdetect [constructor]HOG-descriptor
 //go:noescape
-func wasmimport_NewHOGDescriptor() (result0 uint32)
+func wasmimport_NewHOGDescriptor(name0 *uint8, name1 uint32) (result0 uint32)
 
 // Close represents the imported method "close".
 //
@@ -298,7 +300,6 @@ func wasmimport_NewFaceDetectorYN(model0 *uint8, model1 uint32, config0 *uint8, 
 
 // FaceDetectorYNNewWithParams represents the imported static function "new-with-params".
 //
-// new: static func(model: string, config: string, input-size: size) -> face-detector-YN;
 // Creates an instance of face detector YN with given parameters.
 //
 // For further details, please see:
