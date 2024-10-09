@@ -85,67 +85,6 @@ func (e NetTargetType) String() string {
 	return stringsNetTargetType[e]
 }
 
-// DataLayoutType represents the enum "wasm:cv/dnn#data-layout-type".
-//
-//	enum data-layout-type {
-//		data-layout-unknown,
-//		data-layout-nd,
-//		data-layout-nchw,
-//		data-layout-nhwc,
-//		data-layout-ndhwc,
-//		data-layout-planar
-//	}
-type DataLayoutType uint8
-
-const (
-	DataLayoutTypeDataLayoutUnknown DataLayoutType = iota
-	DataLayoutTypeDataLayoutNd
-	DataLayoutTypeDataLayoutNchw
-	DataLayoutTypeDataLayoutNhwc
-	DataLayoutTypeDataLayoutNdhwc
-	DataLayoutTypeDataLayoutPlanar
-)
-
-var stringsDataLayoutType = [6]string{
-	"data-layout-unknown",
-	"data-layout-nd",
-	"data-layout-nchw",
-	"data-layout-nhwc",
-	"data-layout-ndhwc",
-	"data-layout-planar",
-}
-
-// String implements [fmt.Stringer], returning the enum case name of e.
-func (e DataLayoutType) String() string {
-	return stringsDataLayoutType[e]
-}
-
-// PaddingModeType represents the enum "wasm:cv/dnn#padding-mode-type".
-//
-//	enum padding-mode-type {
-//		padding-mode-null,
-//		padding-mode-crop-center,
-//		padding-mode-letterbox
-//	}
-type PaddingModeType uint8
-
-const (
-	PaddingModeTypePaddingModeNull PaddingModeType = iota
-	PaddingModeTypePaddingModeCropCenter
-	PaddingModeTypePaddingModeLetterbox
-)
-
-var stringsPaddingModeType = [3]string{
-	"padding-mode-null",
-	"padding-mode-crop-center",
-	"padding-mode-letterbox",
-}
-
-// String implements [fmt.Stringer], returning the enum case name of e.
-func (e PaddingModeType) String() string {
-	return stringsPaddingModeType[e]
-}
-
 // Layer represents the imported resource "wasm:cv/dnn#layer".
 //
 //	resource layer

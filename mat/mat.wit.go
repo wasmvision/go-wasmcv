@@ -70,20 +70,21 @@ func wasmimport_MatResourceDrop(self0 uint32)
 
 // NewMat represents the imported constructor for resource "mat".
 //
-// Create a new Mat.
+// Create a new Mat. id does not currently do anything.
 //
-//	constructor()
+//	constructor(id: u32)
 //
 //go:nosplit
-func NewMat() (result Mat) {
-	result0 := wasmimport_NewMat()
+func NewMat(id uint32) (result Mat) {
+	id0 := (uint32)(id)
+	result0 := wasmimport_NewMat((uint32)(id0))
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
 //go:wasmimport wasm:cv/mat [constructor]mat
 //go:noescape
-func wasmimport_NewMat() (result0 uint32)
+func wasmimport_NewMat(id0 uint32) (result0 uint32)
 
 // MatNewWithSize represents the imported static function "new-with-size".
 //

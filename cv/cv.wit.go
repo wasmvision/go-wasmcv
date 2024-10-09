@@ -17,7 +17,8 @@ import (
 // For further details, please see:
 // https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga0a165a3ca093fd488ac709fdf10c05b2
 //
-//	arrowed-line: func(img: mat, point1: size, point2: size, c: RGBA, thickness: u8)
+//	arrowed-line: func(img: mat, point1: point, point2: point, c: RGBA, thickness:
+//	u8)
 //
 //go:nosplit
 func ArrowedLine(img mat.Mat, point1 types.Size, point2 types.Size, c types.RGBA, thickness uint8) {
@@ -64,7 +65,7 @@ func wasmimport_Rectangle(img0 uint32, r0 uint32, r1 uint32, r2 uint32, r3 uint3
 // For further details, please see:
 // https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf10604b069374903dbd0f0488cb43670
 //
-//	circle: func(img: mat, center: size, radius: u32, c: RGBA, thickness: u8)
+//	circle: func(img: mat, center: point, radius: u32, c: RGBA, thickness: u8)
 //
 //go:nosplit
 func Circle(img mat.Mat, center types.Size, radius uint32, c types.RGBA, thickness uint8) {
@@ -88,7 +89,7 @@ func wasmimport_Circle(img0 uint32, center0 uint32, center1 uint32, radius0 uint
 // For further details, please see:
 // https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga7078a9fae8c7e7d13d24dac2520ae4a2
 //
-//	line: func(img: mat, point1: size, point2: size, c: RGBA, thickness: u8)
+//	line: func(img: mat, point1: point, point2: point, c: RGBA, thickness: u8)
 //
 //go:nosplit
 func Line(img mat.Mat, point1 types.Size, point2 types.Size, c types.RGBA, thickness uint8) {
@@ -115,7 +116,7 @@ func wasmimport_Line(img0 uint32, point10 uint32, point11 uint32, point20 uint32
 // For further details, please see:
 // http://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga5126f47f883d730f633d74f07456c576
 //
-//	put-text: func(img: mat, text: string, org: size, font-face: hershey-font-type,
+//	put-text: func(img: mat, text: string, org: point, font-face: hershey-font-type,
 //	font-scale: f64, c: RGBA, thickness: s32)
 //
 //go:nosplit
@@ -208,6 +209,122 @@ func BoxFilter(src mat.Mat, depth uint32, kSize types.Size) (result mat.Mat) {
 //go:noescape
 func wasmimport_BoxFilter(src0 uint32, depth0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
 
+// Canny represents the imported function "canny".
+//
+// Canny finds edges in an image using the Canny algorithm.
+// The function finds edges in the input image image and marks
+// them in the output map edges using the Canny algorithm.
+// The smallest value between threshold1 and threshold2 is used
+// for edge linking. The largest value is used to
+// find initial segments of strong edges.
+// See http://en.wikipedia.org/wiki/Canny_edge_detector
+//
+// For further details, please see:
+// http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga04723e007ed888ddf11d9ba04e2232de
+//
+//	canny: func(src: mat, threshold1: f32, threshold2: f32) -> mat
+//
+//go:nosplit
+func Canny(src mat.Mat, threshold1 float32, threshold2 float32) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	threshold10 := (float32)(threshold1)
+	threshold20 := (float32)(threshold2)
+	result0 := wasmimport_Canny((uint32)(src0), (float32)(threshold10), (float32)(threshold20))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv canny
+//go:noescape
+func wasmimport_Canny(src0 uint32, threshold10 float32, threshold20 float32) (result0 uint32)
+
+// CvtColor represents the imported function "cvt-color".
+//
+// CvtColor converts an image from one color space to another.
+//
+// For further details, please see:
+// http://docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
+//
+//	cvt-color: func(src: mat, code: color-coversion-type) -> mat
+//
+//go:nosplit
+func CvtColor(src mat.Mat, code types.ColorCoversionType) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	code0 := (uint32)(code)
+	result0 := wasmimport_CvtColor((uint32)(src0), (uint32)(code0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv cvt-color
+//go:noescape
+func wasmimport_CvtColor(src0 uint32, code0 uint32) (result0 uint32)
+
+// Dilate represents the imported function "dilate".
+//
+// Dilate dilates an image by using a specific structuring element.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga4ff0f3318642c4f469d0e11f242f3b6c
+//
+//	dilate: func(src: mat, kernel: mat) -> mat
+//
+//go:nosplit
+func Dilate(src mat.Mat, kernel mat.Mat) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	kernel0 := cm.Reinterpret[uint32](kernel)
+	result0 := wasmimport_Dilate((uint32)(src0), (uint32)(kernel0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv dilate
+//go:noescape
+func wasmimport_Dilate(src0 uint32, kernel0 uint32) (result0 uint32)
+
+// Erode represents the imported function "erode".
+//
+// Erode erodes an image by using a specific structuring element.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaeb1e0c1033e3f6b891a25d0511362aeb
+//
+//	erode: func(src: mat, kernel: mat) -> mat
+//
+//go:nosplit
+func Erode(src mat.Mat, kernel mat.Mat) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	kernel0 := cm.Reinterpret[uint32](kernel)
+	result0 := wasmimport_Erode((uint32)(src0), (uint32)(kernel0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv erode
+//go:noescape
+func wasmimport_Erode(src0 uint32, kernel0 uint32) (result0 uint32)
+
+// EqualizeHist represents the imported function "equalize-hist".
+//
+// EqualizeHist normalizes the brightness and increases the contrast of the image.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga7e54091f0c937d49bf84152a16f76d6e
+//
+//	equalize-hist: func(src: mat) -> mat
+//
+//go:nosplit
+func EqualizeHist(src mat.Mat) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	result0 := wasmimport_EqualizeHist((uint32)(src0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv equalize-hist
+//go:noescape
+func wasmimport_EqualizeHist(src0 uint32) (result0 uint32)
+
 // GaussianBlur represents the imported function "gaussian-blur".
 //
 // GaussianBlur blurs an image using a Gaussian filter.
@@ -234,6 +351,81 @@ func GaussianBlur(src mat.Mat, size types.Size, sigmaX float32, sigmaY float32, 
 //go:noescape
 func wasmimport_GaussianBlur(src0 uint32, size0 uint32, size1 uint32, sigmaX0 float32, sigmaY0 float32, border0 uint32) (result0 uint32)
 
+// GetStructuringElement represents the imported function "get-structuring-element".
+//
+// GetStructuringElement returns a structuring element of the specified size
+// and shape for morphological operations.
+//
+// For further details, please see:
+// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
+//
+//	get-structuring-element: func(shape: morph-shape, size: size) -> mat
+//
+//go:nosplit
+func GetStructuringElement(shape types.MorphShape, size types.Size) (result mat.Mat) {
+	shape0 := (uint32)(shape)
+	size0, size1 := lower_Size(size)
+	result0 := wasmimport_GetStructuringElement((uint32)(shape0), (uint32)(size0), (uint32)(size1))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv get-structuring-element
+//go:noescape
+func wasmimport_GetStructuringElement(shape0 uint32, size0 uint32, size1 uint32) (result0 uint32)
+
+// HoughLines represents the imported function "hough-lines".
+//
+// HoughLines implements the standard or standard multi-scale Hough transform
+// algorithm for line detection. For a good explanation of Hough transform, see:
+// http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm
+//
+// For further details, please see:
+// http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga46b4e588934f6c8dfd509cc6e0e4545a
+//
+//	hough-lines: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat
+//
+//go:nosplit
+func HoughLines(src mat.Mat, rho float64, theta float64, threshold int32) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	rho0 := (float64)(rho)
+	theta0 := (float64)(theta)
+	threshold0 := (uint32)(threshold)
+	result0 := wasmimport_HoughLines((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv hough-lines
+//go:noescape
+func wasmimport_HoughLines(src0 uint32, rho0 float64, theta0 float64, threshold0 uint32) (result0 uint32)
+
+// HoughLinesP represents the imported function "hough-lines-p".
+//
+// HoughLinesP implements the probabilistic Hough transform
+// algorithm for line detection. For a good explanation of Hough transform, see:
+// http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm
+//
+// For further details, please see:
+// http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb
+//
+//	hough-lines-p: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat
+//
+//go:nosplit
+func HoughLinesP(src mat.Mat, rho float64, theta float64, threshold int32) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	rho0 := (float64)(rho)
+	theta0 := (float64)(theta)
+	threshold0 := (uint32)(threshold)
+	result0 := wasmimport_HoughLinesP((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv hough-lines-p
+//go:noescape
+func wasmimport_HoughLinesP(src0 uint32, rho0 float64, theta0 float64, threshold0 uint32) (result0 uint32)
+
 // MedianBlur represents the imported function "median-blur".
 //
 // MedianBlur blurs an image using the median filter.
@@ -255,75 +447,6 @@ func MedianBlur(src mat.Mat, kSize types.Size) (result mat.Mat) {
 //go:wasmimport wasm:cv/cv median-blur
 //go:noescape
 func wasmimport_MedianBlur(src0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
-
-// Threshold represents the imported function "threshold".
-//
-// Threshold applies a fixed-level threshold to each array element.
-//
-// For further details, please see:
-// https://docs.opencv.org/3.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
-//
-//	threshold: func(src: mat, thresh: f32, max-value: f32, threshold-type: threshold-type)
-//	-> mat
-//
-//go:nosplit
-func Threshold(src mat.Mat, thresh float32, maxValue float32, thresholdType types.ThresholdType) (result mat.Mat) {
-	src0 := cm.Reinterpret[uint32](src)
-	thresh0 := (float32)(thresh)
-	maxValue0 := (float32)(maxValue)
-	thresholdType0 := (uint32)(thresholdType)
-	result0 := wasmimport_Threshold((uint32)(src0), (float32)(thresh0), (float32)(maxValue0), (uint32)(thresholdType0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
-	return
-}
-
-//go:wasmimport wasm:cv/cv threshold
-//go:noescape
-func wasmimport_Threshold(src0 uint32, thresh0 float32, maxValue0 float32, thresholdType0 uint32) (result0 uint32)
-
-// CvtColor represents the imported function "cvt-color".
-//
-// CvtColor converts an image from one color space to another.
-//
-// For further details, please see:
-// http://docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
-//
-//	cvt-color: func(src: mat, code: color-coversion-type) -> mat
-//
-//go:nosplit
-func CvtColor(src mat.Mat, code types.ColorCoversionType) (result mat.Mat) {
-	src0 := cm.Reinterpret[uint32](src)
-	code0 := (uint32)(code)
-	result0 := wasmimport_CvtColor((uint32)(src0), (uint32)(code0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
-	return
-}
-
-//go:wasmimport wasm:cv/cv cvt-color
-//go:noescape
-func wasmimport_CvtColor(src0 uint32, code0 uint32) (result0 uint32)
-
-// TransposeND represents the imported function "transpose-ND".
-//
-// Transpose for n-dimensional matrices.
-//
-// For further details, please see:
-// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab1b1274b4a563be34cdfa55b8919a4ec
-//
-//	transpose-ND: func(src: mat, order: list<s32>) -> mat
-//
-//go:nosplit
-func TransposeND(src mat.Mat, order cm.List[int32]) (result mat.Mat) {
-	src0 := cm.Reinterpret[uint32](src)
-	order0, order1 := cm.LowerList(order)
-	result0 := wasmimport_TransposeND((uint32)(src0), (*int32)(order0), (uint32)(order1))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
-	return
-}
-
-//go:wasmimport wasm:cv/cv transpose-ND
-//go:noescape
-func wasmimport_TransposeND(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)
 
 // Resize represents the imported function "resize".
 //
@@ -355,3 +478,50 @@ func Resize(src mat.Mat, size types.Size, fx float32, fy float32, interp types.I
 //go:wasmimport wasm:cv/cv resize
 //go:noescape
 func wasmimport_Resize(src0 uint32, size0 uint32, size1 uint32, fx0 float32, fy0 float32, interp0 uint32) (result0 uint32)
+
+// Threshold represents the imported function "threshold".
+//
+// Threshold applies a fixed-level threshold to each array element.
+//
+// For further details, please see:
+// https://docs.opencv.org/3.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
+//
+//	threshold: func(src: mat, thresh: f32, max-value: f32, threshold-type: threshold-type)
+//	-> mat
+//
+//go:nosplit
+func Threshold(src mat.Mat, thresh float32, maxValue float32, thresholdType types.ThresholdType) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	thresh0 := (float32)(thresh)
+	maxValue0 := (float32)(maxValue)
+	thresholdType0 := (uint32)(thresholdType)
+	result0 := wasmimport_Threshold((uint32)(src0), (float32)(thresh0), (float32)(maxValue0), (uint32)(thresholdType0))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv threshold
+//go:noescape
+func wasmimport_Threshold(src0 uint32, thresh0 float32, maxValue0 float32, thresholdType0 uint32) (result0 uint32)
+
+// TransposeND represents the imported function "transpose-ND".
+//
+// Transpose for n-dimensional matrices.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab1b1274b4a563be34cdfa55b8919a4ec
+//
+//	transpose-ND: func(src: mat, order: list<s32>) -> mat
+//
+//go:nosplit
+func TransposeND(src mat.Mat, order cm.List[int32]) (result mat.Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	order0, order1 := cm.LowerList(order)
+	result0 := wasmimport_TransposeND((uint32)(src0), (*int32)(order0), (uint32)(order1))
+	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	return
+}
+
+//go:wasmimport wasm:cv/cv transpose-ND
+//go:noescape
+func wasmimport_TransposeND(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)

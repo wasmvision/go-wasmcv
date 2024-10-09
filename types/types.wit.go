@@ -9,6 +9,9 @@ import (
 
 // Size represents the record "wasm:cv/types#size".
 //
+// size is a 2-element integer vector.
+// It represents a width and height.
+//
 //	record size {
 //		x: s32,
 //		y: s32,
@@ -20,6 +23,8 @@ type Size struct {
 }
 
 // Scalar represents the record "wasm:cv/types#scalar".
+//
+// scalar is a 4-element floating point vector.
 //
 //	record scalar {
 //		val1: f32,
@@ -37,6 +42,9 @@ type Scalar struct {
 
 // Rect represents the record "wasm:cv/types#rect".
 //
+// rect is a rectangle with integer coordinates.
+// It is represented by the top-left corner and the bottom-right corner.
+//
 //	record rect {
 //		min: size,
 //		max: size,
@@ -48,6 +56,8 @@ type Rect struct {
 }
 
 // RGBA represents the record "wasm:cv/types#RGBA".
+//
+// RGBA is a color with red, green, blue, and alpha channels.
 //
 //	record RGBA {
 //		r: u8,
@@ -64,6 +74,8 @@ type RGBA struct {
 }
 
 // BorderType represents the enum "wasm:cv/types#border-type".
+//
+// border-type is a type of border to add to an image.
 //
 //	enum border-type {
 //		border-constant,
@@ -106,6 +118,8 @@ func (e BorderType) String() string {
 
 // AdaptiveThresholdType represents the enum "wasm:cv/types#adaptive-threshold-type".
 //
+// adaptive-threshold-type is a type of adaptive thresholding.
+//
 //	enum adaptive-threshold-type {
 //		adaptive-threshold-mean,
 //		adaptive-threshold-gaussian
@@ -128,6 +142,8 @@ func (e AdaptiveThresholdType) String() string {
 }
 
 // ThresholdType represents the enum "wasm:cv/types#threshold-type".
+//
+// threshold-type is a type of thresholding.
 //
 //	enum threshold-type {
 //		threshold-binary,
@@ -169,6 +185,8 @@ func (e ThresholdType) String() string {
 }
 
 // DataLayoutType represents the enum "wasm:cv/types#data-layout-type".
+//
+// data-layout-type is a type of data layout.
 //
 //	enum data-layout-type {
 //		data-layout-unknown,
@@ -423,4 +441,30 @@ var stringsColorCoversionType = [20]string{
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e ColorCoversionType) String() string {
 	return stringsColorCoversionType[e]
+}
+
+// MorphShape represents the enum "wasm:cv/types#morph-shape".
+//
+//	enum morph-shape {
+//		morph-rect,
+//		morph-cross,
+//		morph-ellipse
+//	}
+type MorphShape uint8
+
+const (
+	MorphShapeMorphRect MorphShape = iota
+	MorphShapeMorphCross
+	MorphShapeMorphEllipse
+)
+
+var stringsMorphShape = [3]string{
+	"morph-rect",
+	"morph-cross",
+	"morph-ellipse",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e MorphShape) String() string {
+	return stringsMorphShape[e]
 }
