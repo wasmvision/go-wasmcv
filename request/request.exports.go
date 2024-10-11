@@ -2,14 +2,10 @@
 
 package request
 
-import (
-	"wasmcv.org/wasm/cv/mat"
-)
-
 // Exports represents the caller-defined exports from "wasm:cv/request".
 var Exports struct {
 	// Process represents the caller-defined, exported function "process".
 	//
 	//	process: func(image: mat) -> mat
-	Process func(image mat.Mat) (result mat.Mat)
+	Process func(image Mat) (result Mat)
 }

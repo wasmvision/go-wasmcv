@@ -9,6 +9,21 @@ import (
 	"wasmcv.org/wasm/cv/types"
 )
 
+// Mat represents the imported type alias "wasm:cv/objdetect#mat".
+//
+// See [mat.Mat] for more information.
+type Mat = mat.Mat
+
+// Size represents the type alias "wasm:cv/objdetect#size".
+//
+// See [types.Size] for more information.
+type Size = types.Size
+
+// Rect represents the type alias "wasm:cv/objdetect#rect".
+//
+// See [types.Rect] for more information.
+type Rect = types.Rect
+
 // CascadeClassifier represents the imported resource "wasm:cv/objdetect#cascade-classifier".
 //
 // CascadeClassifier is a cascade classifier class for object detection.
@@ -80,7 +95,7 @@ func wasmimport_CascadeClassifierClose(self0 uint32)
 //	detect-multi-scale: func(image: mat) -> list<rect>
 //
 //go:nosplit
-func (self CascadeClassifier) DetectMultiScale(image mat.Mat) (result cm.List[types.Rect]) {
+func (self CascadeClassifier) DetectMultiScale(image Mat) (result cm.List[Rect]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	wasmimport_CascadeClassifierDetectMultiScale((uint32)(self0), (uint32)(image0), &result)
@@ -89,7 +104,7 @@ func (self CascadeClassifier) DetectMultiScale(image mat.Mat) (result cm.List[ty
 
 //go:wasmimport wasm:cv/objdetect [method]cascade-classifier.detect-multi-scale
 //go:noescape
-func wasmimport_CascadeClassifierDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[types.Rect])
+func wasmimport_CascadeClassifierDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[Rect])
 
 // DetectMultiScaleWithParams represents the imported method "detect-multi-scale-with-params".
 //
@@ -104,7 +119,7 @@ func wasmimport_CascadeClassifierDetectMultiScale(self0 uint32, image0 uint32, r
 //	%flags: u32, min-size: size, max-size: size) -> list<rect>
 //
 //go:nosplit
-func (self CascadeClassifier) DetectMultiScaleWithParams(image mat.Mat, scale float64, minNeighbors uint32, flags uint32, minSize types.Size, maxSize types.Size) (result cm.List[types.Rect]) {
+func (self CascadeClassifier) DetectMultiScaleWithParams(image Mat, scale float64, minNeighbors uint32, flags uint32, minSize Size, maxSize Size) (result cm.List[Rect]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	scale0 := (float64)(scale)
@@ -118,7 +133,7 @@ func (self CascadeClassifier) DetectMultiScaleWithParams(image mat.Mat, scale fl
 
 //go:wasmimport wasm:cv/objdetect [method]cascade-classifier.detect-multi-scale-with-params
 //go:noescape
-func wasmimport_CascadeClassifierDetectMultiScaleWithParams(self0 uint32, image0 uint32, scale0 float64, minNeighbors0 uint32, flags0 uint32, minSize0 uint32, minSize1 uint32, maxSize0 uint32, maxSize1 uint32, result *cm.List[types.Rect])
+func wasmimport_CascadeClassifierDetectMultiScaleWithParams(self0 uint32, image0 uint32, scale0 float64, minNeighbors0 uint32, flags0 uint32, minSize0 uint32, minSize1 uint32, maxSize0 uint32, maxSize1 uint32, result *cm.List[Rect])
 
 // Load represents the imported method "load".
 //
@@ -213,7 +228,7 @@ func wasmimport_HOGDescriptorClose(self0 uint32)
 //	detect-multi-scale: func(image: mat) -> list<rect>
 //
 //go:nosplit
-func (self HOGDescriptor) DetectMultiScale(image mat.Mat) (result cm.List[types.Rect]) {
+func (self HOGDescriptor) DetectMultiScale(image Mat) (result cm.List[Rect]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	wasmimport_HOGDescriptorDetectMultiScale((uint32)(self0), (uint32)(image0), &result)
@@ -222,7 +237,7 @@ func (self HOGDescriptor) DetectMultiScale(image mat.Mat) (result cm.List[types.
 
 //go:wasmimport wasm:cv/objdetect [method]HOG-descriptor.detect-multi-scale
 //go:noescape
-func wasmimport_HOGDescriptorDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[types.Rect])
+func wasmimport_HOGDescriptorDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[Rect])
 
 // DetectMultiScaleWithParams represents the imported method "detect-multi-scale-with-params".
 //
@@ -238,7 +253,7 @@ func wasmimport_HOGDescriptorDetectMultiScale(self0 uint32, image0 uint32, resul
 //	bool) -> list<rect>
 //
 //go:nosplit
-func (self HOGDescriptor) DetectMultiScaleWithParams(image mat.Mat, hitThreshold float64, winStride types.Size, padding types.Size, scale float64, finalThreshold float64, useMeanshiftGrouping bool) (result cm.List[types.Rect]) {
+func (self HOGDescriptor) DetectMultiScaleWithParams(image Mat, hitThreshold float64, winStride Size, padding Size, scale float64, finalThreshold float64, useMeanshiftGrouping bool) (result cm.List[Rect]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	hitThreshold0 := (float64)(hitThreshold)
@@ -253,7 +268,7 @@ func (self HOGDescriptor) DetectMultiScaleWithParams(image mat.Mat, hitThreshold
 
 //go:wasmimport wasm:cv/objdetect [method]HOG-descriptor.detect-multi-scale-with-params
 //go:noescape
-func wasmimport_HOGDescriptorDetectMultiScaleWithParams(self0 uint32, image0 uint32, hitThreshold0 float64, winStride0 uint32, winStride1 uint32, padding0 uint32, padding1 uint32, scale0 float64, finalThreshold0 float64, useMeanshiftGrouping0 uint32, result *cm.List[types.Rect])
+func wasmimport_HOGDescriptorDetectMultiScaleWithParams(self0 uint32, image0 uint32, hitThreshold0 float64, winStride0 uint32, winStride1 uint32, padding0 uint32, padding1 uint32, scale0 float64, finalThreshold0 float64, useMeanshiftGrouping0 uint32, result *cm.List[Rect])
 
 // FaceDetectorYN represents the imported resource "wasm:cv/objdetect#face-detector-YN".
 //
@@ -285,7 +300,7 @@ func wasmimport_FaceDetectorYNResourceDrop(self0 uint32)
 //	constructor(model: string, config: string, input-size: size)
 //
 //go:nosplit
-func NewFaceDetectorYN(model string, config string, inputSize types.Size) (result FaceDetectorYN) {
+func NewFaceDetectorYN(model string, config string, inputSize Size) (result FaceDetectorYN) {
 	model0, model1 := cm.LowerString(model)
 	config0, config1 := cm.LowerString(config)
 	inputSize0, inputSize1 := lower_Size(inputSize)
@@ -309,7 +324,7 @@ func wasmimport_NewFaceDetectorYN(model0 *uint8, model1 uint32, config0 *uint8, 
 //	f32, nms-threshold: f32, top-k: u32, backend-id: u32, target-id: u32) -> face-detector-YN
 //
 //go:nosplit
-func FaceDetectorYNNewWithParams(model string, config string, inputSize types.Size, scoreThreshold float32, nmsThreshold float32, topK uint32, backendID uint32, targetID uint32) (result FaceDetectorYN) {
+func FaceDetectorYNNewWithParams(model string, config string, inputSize Size, scoreThreshold float32, nmsThreshold float32, topK uint32, backendID uint32, targetID uint32) (result FaceDetectorYN) {
 	model0, model1 := cm.LowerString(model)
 	config0, config1 := cm.LowerString(config)
 	inputSize0, inputSize1 := lower_Size(inputSize)
@@ -354,11 +369,11 @@ func wasmimport_FaceDetectorYNClose(self0 uint32)
 //	detect: func(input: mat) -> mat
 //
 //go:nosplit
-func (self FaceDetectorYN) Detect(input mat.Mat) (result mat.Mat) {
+func (self FaceDetectorYN) Detect(input Mat) (result Mat) {
 	self0 := cm.Reinterpret[uint32](self)
 	input0 := cm.Reinterpret[uint32](input)
 	result0 := wasmimport_FaceDetectorYNDetect((uint32)(self0), (uint32)(input0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -371,7 +386,7 @@ func wasmimport_FaceDetectorYNDetect(self0 uint32, input0 uint32) (result0 uint3
 //	get-input-size: func() -> size
 //
 //go:nosplit
-func (self FaceDetectorYN) GetInputSize() (result types.Size) {
+func (self FaceDetectorYN) GetInputSize() (result Size) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_FaceDetectorYNGetInputSize((uint32)(self0), &result)
 	return
@@ -379,7 +394,7 @@ func (self FaceDetectorYN) GetInputSize() (result types.Size) {
 
 //go:wasmimport wasm:cv/objdetect [method]face-detector-YN.get-input-size
 //go:noescape
-func wasmimport_FaceDetectorYNGetInputSize(self0 uint32, result *types.Size)
+func wasmimport_FaceDetectorYNGetInputSize(self0 uint32, result *Size)
 
 // GetNmsThreshold represents the imported method "get-nms-threshold".
 //
@@ -434,7 +449,7 @@ func wasmimport_FaceDetectorYNGetTopk(self0 uint32) (result0 uint32)
 //	set-input-size: func(size: size)
 //
 //go:nosplit
-func (self FaceDetectorYN) SetInputSize(size types.Size) {
+func (self FaceDetectorYN) SetInputSize(size Size) {
 	self0 := cm.Reinterpret[uint32](self)
 	size0, size1 := lower_Size(size)
 	wasmimport_FaceDetectorYNSetInputSize((uint32)(self0), (uint32)(size0), (uint32)(size1))
@@ -593,12 +608,12 @@ func wasmimport_FaceRecognizerSFNewWithParams(model0 *uint8, model1 uint32, conf
 //	align-crop: func(src: mat, face-box: mat) -> mat
 //
 //go:nosplit
-func (self FaceRecognizerSF) AlignCrop(src mat.Mat, faceBox mat.Mat) (result mat.Mat) {
+func (self FaceRecognizerSF) AlignCrop(src Mat, faceBox Mat) (result Mat) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	faceBox0 := cm.Reinterpret[uint32](faceBox)
 	result0 := wasmimport_FaceRecognizerSFAlignCrop((uint32)(self0), (uint32)(src0), (uint32)(faceBox0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -633,11 +648,11 @@ func wasmimport_FaceRecognizerSFClose(self0 uint32)
 //	feature: func(aligned: mat) -> mat
 //
 //go:nosplit
-func (self FaceRecognizerSF) Feature(aligned mat.Mat) (result mat.Mat) {
+func (self FaceRecognizerSF) Feature(aligned Mat) (result Mat) {
 	self0 := cm.Reinterpret[uint32](self)
 	aligned0 := cm.Reinterpret[uint32](aligned)
 	result0 := wasmimport_FaceRecognizerSFFeature((uint32)(self0), (uint32)(aligned0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -655,7 +670,7 @@ func wasmimport_FaceRecognizerSFFeature(self0 uint32, aligned0 uint32) (result0 
 //	match: func(face1: mat, face2: mat) -> f32
 //
 //go:nosplit
-func (self FaceRecognizerSF) Match(face1 mat.Mat, face2 mat.Mat) (result float32) {
+func (self FaceRecognizerSF) Match(face1 Mat, face2 Mat) (result float32) {
 	self0 := cm.Reinterpret[uint32](self)
 	face10 := cm.Reinterpret[uint32](face1)
 	face20 := cm.Reinterpret[uint32](face2)
@@ -679,7 +694,7 @@ func wasmimport_FaceRecognizerSFMatch(self0 uint32, face10 uint32, face20 uint32
 //	f32
 //
 //go:nosplit
-func (self FaceRecognizerSF) MatchWithParams(face1 mat.Mat, face2 mat.Mat, distance FaceDistanceType) (result float32) {
+func (self FaceRecognizerSF) MatchWithParams(face1 Mat, face2 Mat, distance FaceDistanceType) (result float32) {
 	self0 := cm.Reinterpret[uint32](self)
 	face10 := cm.Reinterpret[uint32](face1)
 	face20 := cm.Reinterpret[uint32](face2)

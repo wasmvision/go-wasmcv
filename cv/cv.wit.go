@@ -9,6 +9,76 @@ import (
 	"wasmcv.org/wasm/cv/types"
 )
 
+// BorderType represents the type alias "wasm:cv/cv#border-type".
+//
+// See [types.BorderType] for more information.
+type BorderType = types.BorderType
+
+// Size represents the type alias "wasm:cv/cv#size".
+//
+// See [types.Size] for more information.
+type Size = types.Size
+
+// Point represents the type alias "wasm:cv/cv#point".
+//
+// See [types.Point] for more information.
+type Point = types.Point
+
+// AdaptiveThresholdType represents the type alias "wasm:cv/cv#adaptive-threshold-type".
+//
+// See [types.AdaptiveThresholdType] for more information.
+type AdaptiveThresholdType = types.AdaptiveThresholdType
+
+// ThresholdType represents the type alias "wasm:cv/cv#threshold-type".
+//
+// See [types.ThresholdType] for more information.
+type ThresholdType = types.ThresholdType
+
+// Scalar represents the type alias "wasm:cv/cv#scalar".
+//
+// See [types.Scalar] for more information.
+type Scalar = types.Scalar
+
+// Rect represents the type alias "wasm:cv/cv#rect".
+//
+// See [types.Rect] for more information.
+type Rect = types.Rect
+
+// RGBA represents the type alias "wasm:cv/cv#RGBA".
+//
+// See [types.RGBA] for more information.
+type RGBA = types.RGBA
+
+// HersheyFontType represents the type alias "wasm:cv/cv#hershey-font-type".
+//
+// See [types.HersheyFontType] for more information.
+type HersheyFontType = types.HersheyFontType
+
+// InterpolationType represents the type alias "wasm:cv/cv#interpolation-type".
+//
+// See [types.InterpolationType] for more information.
+type InterpolationType = types.InterpolationType
+
+// ColorCoversionType represents the type alias "wasm:cv/cv#color-coversion-type".
+//
+// See [types.ColorCoversionType] for more information.
+type ColorCoversionType = types.ColorCoversionType
+
+// MorphShape represents the type alias "wasm:cv/cv#morph-shape".
+//
+// See [types.MorphShape] for more information.
+type MorphShape = types.MorphShape
+
+// Mat represents the imported type alias "wasm:cv/cv#mat".
+//
+// See [mat.Mat] for more information.
+type Mat = mat.Mat
+
+// Mattype represents the type alias "wasm:cv/cv#mattype".
+//
+// See [mat.Mattype] for more information.
+type Mattype = mat.Mattype
+
 // ArrowedLine represents the imported function "arrowed-line".
 //
 // drawing functions
@@ -21,7 +91,7 @@ import (
 //	u8)
 //
 //go:nosplit
-func ArrowedLine(img mat.Mat, point1 types.Size, point2 types.Size, c types.RGBA, thickness uint8) {
+func ArrowedLine(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
 	img0 := cm.Reinterpret[uint32](img)
 	point10, point11 := lower_Size(point1)
 	point20, point21 := lower_Size(point2)
@@ -45,7 +115,7 @@ func wasmimport_ArrowedLine(img0 uint32, point10 uint32, point11 uint32, point20
 //	rectangle: func(img: mat, r: rect, c: RGBA, thickness: u8)
 //
 //go:nosplit
-func Rectangle(img mat.Mat, r types.Rect, c types.RGBA, thickness uint8) {
+func Rectangle(img Mat, r Rect, c RGBA, thickness uint8) {
 	img0 := cm.Reinterpret[uint32](img)
 	r0, r1, r2, r3 := lower_Rect(r)
 	c0, c1, c2, c3 := lower_RGBA(c)
@@ -68,7 +138,7 @@ func wasmimport_Rectangle(img0 uint32, r0 uint32, r1 uint32, r2 uint32, r3 uint3
 //	circle: func(img: mat, center: point, radius: u32, c: RGBA, thickness: u8)
 //
 //go:nosplit
-func Circle(img mat.Mat, center types.Size, radius uint32, c types.RGBA, thickness uint8) {
+func Circle(img Mat, center Point, radius uint32, c RGBA, thickness uint8) {
 	img0 := cm.Reinterpret[uint32](img)
 	center0, center1 := lower_Size(center)
 	radius0 := (uint32)(radius)
@@ -92,7 +162,7 @@ func wasmimport_Circle(img0 uint32, center0 uint32, center1 uint32, radius0 uint
 //	line: func(img: mat, point1: point, point2: point, c: RGBA, thickness: u8)
 //
 //go:nosplit
-func Line(img mat.Mat, point1 types.Size, point2 types.Size, c types.RGBA, thickness uint8) {
+func Line(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
 	img0 := cm.Reinterpret[uint32](img)
 	point10, point11 := lower_Size(point1)
 	point20, point21 := lower_Size(point2)
@@ -120,7 +190,7 @@ func wasmimport_Line(img0 uint32, point10 uint32, point11 uint32, point20 uint32
 //	font-scale: f64, c: RGBA, thickness: s32)
 //
 //go:nosplit
-func PutText(img mat.Mat, text string, org types.Size, fontFace types.HersheyFontType, fontScale float64, c types.RGBA, thickness int32) {
+func PutText(img Mat, text string, org Point, fontFace HersheyFontType, fontScale float64, c RGBA, thickness int32) {
 	img0 := cm.Reinterpret[uint32](img)
 	text0, text1 := cm.LowerString(text)
 	org0, org1 := lower_Size(org)
@@ -148,7 +218,7 @@ func wasmimport_PutText(img0 uint32, text0 *uint8, text1 uint32, org0 uint32, or
 //	threshold-type: threshold-type, block-size: u32, c: f32) -> mat
 //
 //go:nosplit
-func AdaptiveThreshold(src mat.Mat, maxValue float32, adaptiveType types.AdaptiveThresholdType, thresholdType types.ThresholdType, blockSize uint32, c float32) (result mat.Mat) {
+func AdaptiveThreshold(src Mat, maxValue float32, adaptiveType AdaptiveThresholdType, thresholdType ThresholdType, blockSize uint32, c float32) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	maxValue0 := (float32)(maxValue)
 	adaptiveType0 := (uint32)(adaptiveType)
@@ -156,7 +226,7 @@ func AdaptiveThreshold(src mat.Mat, maxValue float32, adaptiveType types.Adaptiv
 	blockSize0 := (uint32)(blockSize)
 	c0 := (float32)(c)
 	result0 := wasmimport_AdaptiveThreshold((uint32)(src0), (float32)(maxValue0), (uint32)(adaptiveType0), (uint32)(thresholdType0), (uint32)(blockSize0), (float32)(c0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -174,11 +244,11 @@ func wasmimport_AdaptiveThreshold(src0 uint32, maxValue0 float32, adaptiveType0 
 //	blur: func(src: mat, k-size: size) -> mat
 //
 //go:nosplit
-func Blur(src mat.Mat, kSize types.Size) (result mat.Mat) {
+func Blur(src Mat, kSize Size) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	kSize0, kSize1 := lower_Size(kSize)
 	result0 := wasmimport_Blur((uint32)(src0), (uint32)(kSize0), (uint32)(kSize1))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -196,12 +266,12 @@ func wasmimport_Blur(src0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
 //	box-filter: func(src: mat, depth: u32, k-size: size) -> mat
 //
 //go:nosplit
-func BoxFilter(src mat.Mat, depth uint32, kSize types.Size) (result mat.Mat) {
+func BoxFilter(src Mat, depth uint32, kSize Size) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	depth0 := (uint32)(depth)
 	kSize0, kSize1 := lower_Size(kSize)
 	result0 := wasmimport_BoxFilter((uint32)(src0), (uint32)(depth0), (uint32)(kSize0), (uint32)(kSize1))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -225,12 +295,12 @@ func wasmimport_BoxFilter(src0 uint32, depth0 uint32, kSize0 uint32, kSize1 uint
 //	canny: func(src: mat, threshold1: f32, threshold2: f32) -> mat
 //
 //go:nosplit
-func Canny(src mat.Mat, threshold1 float32, threshold2 float32) (result mat.Mat) {
+func Canny(src Mat, threshold1 float32, threshold2 float32) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	threshold10 := (float32)(threshold1)
 	threshold20 := (float32)(threshold2)
 	result0 := wasmimport_Canny((uint32)(src0), (float32)(threshold10), (float32)(threshold20))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -248,11 +318,11 @@ func wasmimport_Canny(src0 uint32, threshold10 float32, threshold20 float32) (re
 //	cvt-color: func(src: mat, code: color-coversion-type) -> mat
 //
 //go:nosplit
-func CvtColor(src mat.Mat, code types.ColorCoversionType) (result mat.Mat) {
+func CvtColor(src Mat, code ColorCoversionType) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	code0 := (uint32)(code)
 	result0 := wasmimport_CvtColor((uint32)(src0), (uint32)(code0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -270,11 +340,11 @@ func wasmimport_CvtColor(src0 uint32, code0 uint32) (result0 uint32)
 //	dilate: func(src: mat, kernel: mat) -> mat
 //
 //go:nosplit
-func Dilate(src mat.Mat, kernel mat.Mat) (result mat.Mat) {
+func Dilate(src Mat, kernel Mat) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	kernel0 := cm.Reinterpret[uint32](kernel)
 	result0 := wasmimport_Dilate((uint32)(src0), (uint32)(kernel0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -292,11 +362,11 @@ func wasmimport_Dilate(src0 uint32, kernel0 uint32) (result0 uint32)
 //	erode: func(src: mat, kernel: mat) -> mat
 //
 //go:nosplit
-func Erode(src mat.Mat, kernel mat.Mat) (result mat.Mat) {
+func Erode(src Mat, kernel Mat) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	kernel0 := cm.Reinterpret[uint32](kernel)
 	result0 := wasmimport_Erode((uint32)(src0), (uint32)(kernel0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -314,10 +384,10 @@ func wasmimport_Erode(src0 uint32, kernel0 uint32) (result0 uint32)
 //	equalize-hist: func(src: mat) -> mat
 //
 //go:nosplit
-func EqualizeHist(src mat.Mat) (result mat.Mat) {
+func EqualizeHist(src Mat) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	result0 := wasmimport_EqualizeHist((uint32)(src0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -336,14 +406,14 @@ func wasmimport_EqualizeHist(src0 uint32) (result0 uint32)
 //	-> mat
 //
 //go:nosplit
-func GaussianBlur(src mat.Mat, size types.Size, sigmaX float32, sigmaY float32, border types.BorderType) (result mat.Mat) {
+func GaussianBlur(src Mat, size Size, sigmaX float32, sigmaY float32, border BorderType) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	size0, size1 := lower_Size(size)
 	sigmaX0 := (float32)(sigmaX)
 	sigmaY0 := (float32)(sigmaY)
 	border0 := (uint32)(border)
 	result0 := wasmimport_GaussianBlur((uint32)(src0), (uint32)(size0), (uint32)(size1), (float32)(sigmaX0), (float32)(sigmaY0), (uint32)(border0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -362,11 +432,11 @@ func wasmimport_GaussianBlur(src0 uint32, size0 uint32, size1 uint32, sigmaX0 fl
 //	get-structuring-element: func(shape: morph-shape, size: size) -> mat
 //
 //go:nosplit
-func GetStructuringElement(shape types.MorphShape, size types.Size) (result mat.Mat) {
+func GetStructuringElement(shape MorphShape, size Size) (result Mat) {
 	shape0 := (uint32)(shape)
 	size0, size1 := lower_Size(size)
 	result0 := wasmimport_GetStructuringElement((uint32)(shape0), (uint32)(size0), (uint32)(size1))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -386,13 +456,13 @@ func wasmimport_GetStructuringElement(shape0 uint32, size0 uint32, size1 uint32)
 //	hough-lines: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat
 //
 //go:nosplit
-func HoughLines(src mat.Mat, rho float64, theta float64, threshold int32) (result mat.Mat) {
+func HoughLines(src Mat, rho float64, theta float64, threshold int32) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	rho0 := (float64)(rho)
 	theta0 := (float64)(theta)
 	threshold0 := (uint32)(threshold)
 	result0 := wasmimport_HoughLines((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -412,13 +482,13 @@ func wasmimport_HoughLines(src0 uint32, rho0 float64, theta0 float64, threshold0
 //	hough-lines-p: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat
 //
 //go:nosplit
-func HoughLinesP(src mat.Mat, rho float64, theta float64, threshold int32) (result mat.Mat) {
+func HoughLinesP(src Mat, rho float64, theta float64, threshold int32) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	rho0 := (float64)(rho)
 	theta0 := (float64)(theta)
 	threshold0 := (uint32)(threshold)
 	result0 := wasmimport_HoughLinesP((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -436,11 +506,11 @@ func wasmimport_HoughLinesP(src0 uint32, rho0 float64, theta0 float64, threshold
 //	median-blur: func(src: mat, k-size: size) -> mat
 //
 //go:nosplit
-func MedianBlur(src mat.Mat, kSize types.Size) (result mat.Mat) {
+func MedianBlur(src Mat, kSize Size) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	kSize0, kSize1 := lower_Size(kSize)
 	result0 := wasmimport_MedianBlur((uint32)(src0), (uint32)(kSize0), (uint32)(kSize1))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -464,14 +534,14 @@ func wasmimport_MedianBlur(src0 uint32, kSize0 uint32, kSize1 uint32) (result0 u
 //	-> mat
 //
 //go:nosplit
-func Resize(src mat.Mat, size types.Size, fx float32, fy float32, interp types.InterpolationType) (result mat.Mat) {
+func Resize(src Mat, size Size, fx float32, fy float32, interp InterpolationType) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	size0, size1 := lower_Size(size)
 	fx0 := (float32)(fx)
 	fy0 := (float32)(fy)
 	interp0 := (uint32)(interp)
 	result0 := wasmimport_Resize((uint32)(src0), (uint32)(size0), (uint32)(size1), (float32)(fx0), (float32)(fy0), (uint32)(interp0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -490,13 +560,13 @@ func wasmimport_Resize(src0 uint32, size0 uint32, size1 uint32, fx0 float32, fy0
 //	-> mat
 //
 //go:nosplit
-func Threshold(src mat.Mat, thresh float32, maxValue float32, thresholdType types.ThresholdType) (result mat.Mat) {
+func Threshold(src Mat, thresh float32, maxValue float32, thresholdType ThresholdType) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	thresh0 := (float32)(thresh)
 	maxValue0 := (float32)(maxValue)
 	thresholdType0 := (uint32)(thresholdType)
 	result0 := wasmimport_Threshold((uint32)(src0), (float32)(thresh0), (float32)(maxValue0), (uint32)(thresholdType0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -514,11 +584,11 @@ func wasmimport_Threshold(src0 uint32, thresh0 float32, maxValue0 float32, thres
 //	transpose-ND: func(src: mat, order: list<s32>) -> mat
 //
 //go:nosplit
-func TransposeND(src mat.Mat, order cm.List[int32]) (result mat.Mat) {
+func TransposeND(src Mat, order cm.List[int32]) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	order0, order1 := cm.LowerList(order)
 	result0 := wasmimport_TransposeND((uint32)(src0), (*int32)(order0), (uint32)(order1))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 

@@ -9,6 +9,41 @@ import (
 	"wasmcv.org/wasm/cv/types"
 )
 
+// Mat represents the imported type alias "wasm:cv/dnn#mat".
+//
+// See [mat.Mat] for more information.
+type Mat = mat.Mat
+
+// Size represents the type alias "wasm:cv/dnn#size".
+//
+// See [types.Size] for more information.
+type Size = types.Size
+
+// Scalar represents the type alias "wasm:cv/dnn#scalar".
+//
+// See [types.Scalar] for more information.
+type Scalar = types.Scalar
+
+// Rect represents the type alias "wasm:cv/dnn#rect".
+//
+// See [types.Rect] for more information.
+type Rect = types.Rect
+
+// BlobParams represents the type alias "wasm:cv/dnn#blob-params".
+//
+// See [types.BlobParams] for more information.
+type BlobParams = types.BlobParams
+
+// DataLayoutType represents the type alias "wasm:cv/dnn#data-layout-type".
+//
+// See [types.DataLayoutType] for more information.
+type DataLayoutType = types.DataLayoutType
+
+// PaddingModeType represents the type alias "wasm:cv/dnn#padding-mode-type".
+//
+// See [types.PaddingModeType] for more information.
+type PaddingModeType = types.PaddingModeType
+
 // NetBackendType represents the enum "wasm:cv/dnn#net-backend-type".
 //
 //	enum net-backend-type {
@@ -248,11 +283,11 @@ func wasmimport_NetEmpty(self0 uint32) (result0 uint32)
 //	forward: func(output-name: string) -> mat
 //
 //go:nosplit
-func (self Net) Forward(outputName string) (result mat.Mat) {
+func (self Net) Forward(outputName string) (result Mat) {
 	self0 := cm.Reinterpret[uint32](self)
 	outputName0, outputName1 := cm.LowerString(outputName)
 	result0 := wasmimport_NetForward((uint32)(self0), (*uint8)(outputName0), (uint32)(outputName1))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -270,7 +305,7 @@ func wasmimport_NetForward(self0 uint32, outputName0 *uint8, outputName1 uint32)
 //	forward-layers: func(output-names: list<string>) -> list<mat>
 //
 //go:nosplit
-func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.List[mat.Mat]) {
+func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.List[Mat]) {
 	self0 := cm.Reinterpret[uint32](self)
 	outputNames0, outputNames1 := cm.LowerList(outputNames)
 	wasmimport_NetForwardLayers((uint32)(self0), (*string)(outputNames0), (uint32)(outputNames1), &result)
@@ -279,7 +314,7 @@ func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.List[mat.M
 
 //go:wasmimport wasm:cv/dnn [method]net.forward-layers
 //go:noescape
-func wasmimport_NetForwardLayers(self0 uint32, outputNames0 *string, outputNames1 uint32, result *cm.List[mat.Mat])
+func wasmimport_NetForwardLayers(self0 uint32, outputNames0 *string, outputNames1 uint32, result *cm.List[Mat])
 
 // GetLayer represents the imported method "get-layer".
 //
@@ -353,7 +388,7 @@ func wasmimport_NetGetUnconnectedOutLayers(self0 uint32, result *cm.List[uint32]
 //	set-input: func(input: mat, name: string)
 //
 //go:nosplit
-func (self Net) SetInput(input mat.Mat, name string) {
+func (self Net) SetInput(input Mat, name string) {
 	self0 := cm.Reinterpret[uint32](self)
 	input0 := cm.Reinterpret[uint32](input)
 	name0, name1 := cm.LowerString(name)
@@ -378,7 +413,7 @@ func wasmimport_NetSetInput(self0 uint32, input0 uint32, name0 *uint8, name1 uin
 //	swap-rb: bool, crop: bool) -> mat
 //
 //go:nosplit
-func BlobFromImage(image mat.Mat, scaleFactor float32, size types.Size, mean types.Scalar, swapRb bool, crop bool) (result mat.Mat) {
+func BlobFromImage(image Mat, scaleFactor float32, size Size, mean Scalar, swapRb bool, crop bool) (result Mat) {
 	image0 := cm.Reinterpret[uint32](image)
 	scaleFactor0 := (float32)(scaleFactor)
 	size0, size1 := lower_Size(size)
@@ -386,7 +421,7 @@ func BlobFromImage(image mat.Mat, scaleFactor float32, size types.Size, mean typ
 	swapRb0 := cm.BoolToU32(swapRb)
 	crop0 := cm.BoolToU32(crop)
 	result0 := wasmimport_BlobFromImage((uint32)(image0), (float32)(scaleFactor0), (uint32)(size0), (uint32)(size1), (float32)(mean0), (float32)(mean1), (float32)(mean2), (float32)(mean3), (uint32)(swapRb0), (uint32)(crop0))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -406,11 +441,11 @@ func wasmimport_BlobFromImage(image0 uint32, scaleFactor0 float32, size0 uint32,
 //	blob-from-image-with-params: func(image: mat, params: blob-params) -> mat
 //
 //go:nosplit
-func BlobFromImageWithParams(image mat.Mat, params types.BlobParams) (result mat.Mat) {
+func BlobFromImageWithParams(image Mat, params BlobParams) (result Mat) {
 	image0 := cm.Reinterpret[uint32](image)
 	params0, params1, params2, params3, params4, params5, params6, params7, params8, params9, params10, params11, params12, params13, params14 := lower_BlobParams(params)
 	result0 := wasmimport_BlobFromImageWithParams((uint32)(image0), (float32)(params0), (uint32)(params1), (uint32)(params2), (float32)(params3), (float32)(params4), (float32)(params5), (float32)(params6), (uint32)(params7), (uint32)(params8), (uint32)(params9), (uint32)(params10), (float32)(params11), (float32)(params12), (float32)(params13), (float32)(params14))
-	result = cm.Reinterpret[mat.Mat]((uint32)(result0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -429,7 +464,7 @@ func wasmimport_BlobFromImageWithParams(image0 uint32, params0 float32, params1 
 //	size) -> list<rect>
 //
 //go:nosplit
-func BlobRectsToImageRects(params types.BlobParams, blobRects cm.List[types.Rect], imageSize types.Size) (result cm.List[types.Rect]) {
+func BlobRectsToImageRects(params BlobParams, blobRects cm.List[Rect], imageSize Size) (result cm.List[Rect]) {
 	params_ := wasmimport_BlobRectsToImageRects_params{params: params, blobRects: blobRects, imageSize: imageSize}
 	wasmimport_BlobRectsToImageRects(&params_, &result)
 	return
@@ -437,15 +472,15 @@ func BlobRectsToImageRects(params types.BlobParams, blobRects cm.List[types.Rect
 
 //go:wasmimport wasm:cv/dnn blob-rects-to-image-rects
 //go:noescape
-func wasmimport_BlobRectsToImageRects(params *wasmimport_BlobRectsToImageRects_params, result *cm.List[types.Rect])
+func wasmimport_BlobRectsToImageRects(params *wasmimport_BlobRectsToImageRects_params, result *cm.List[Rect])
 
 // wasmimport_BlobRectsToImageRects_params represents the flattened function params for [wasmimport_BlobRectsToImageRects].
 // See the Canonical ABI flattening rules for more information.
 type wasmimport_BlobRectsToImageRects_params struct {
 	_         cm.HostLayout
-	params    types.BlobParams
-	blobRects cm.List[types.Rect]
-	imageSize types.Size
+	params    BlobParams
+	blobRects cm.List[Rect]
+	imageSize Size
 }
 
 // NMSBoxes represents the imported function "NMS-boxes".
@@ -459,15 +494,15 @@ type wasmimport_BlobRectsToImageRects_params struct {
 //	f32) -> list<s32>
 //
 //go:nosplit
-func NMSBoxes(bboxes cm.List[types.Rect], scores cm.List[float32], scoreThreshold float32, nmsThreshold float32) (result cm.List[int32]) {
+func NMSBoxes(bboxes cm.List[Rect], scores cm.List[float32], scoreThreshold float32, nmsThreshold float32) (result cm.List[int32]) {
 	bboxes0, bboxes1 := cm.LowerList(bboxes)
 	scores0, scores1 := cm.LowerList(scores)
 	scoreThreshold0 := (float32)(scoreThreshold)
 	nmsThreshold0 := (float32)(nmsThreshold)
-	wasmimport_NMSBoxes((*types.Rect)(bboxes0), (uint32)(bboxes1), (*float32)(scores0), (uint32)(scores1), (float32)(scoreThreshold0), (float32)(nmsThreshold0), &result)
+	wasmimport_NMSBoxes((*Rect)(bboxes0), (uint32)(bboxes1), (*float32)(scores0), (uint32)(scores1), (float32)(scoreThreshold0), (float32)(nmsThreshold0), &result)
 	return
 }
 
 //go:wasmimport wasm:cv/dnn NMS-boxes
 //go:noescape
-func wasmimport_NMSBoxes(bboxes0 *types.Rect, bboxes1 uint32, scores0 *float32, scores1 uint32, scoreThreshold0 float32, nmsThreshold0 float32, result *cm.List[int32])
+func wasmimport_NMSBoxes(bboxes0 *Rect, bboxes1 uint32, scores0 *float32, scores1 uint32, scoreThreshold0 float32, nmsThreshold0 float32, result *cm.List[int32])

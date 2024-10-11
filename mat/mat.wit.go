@@ -10,6 +10,16 @@ import (
 	"wasmcv.org/wasm/cv/types"
 )
 
+// MixMaxLocResult represents the type alias "wasm:cv/mat#mix-max-loc-result".
+//
+// See [types.MixMaxLocResult] for more information.
+type MixMaxLocResult = types.MixMaxLocResult
+
+// Rect represents the type alias "wasm:cv/mat#rect".
+//
+// See [types.Rect] for more information.
+type Rect = types.Rect
+
 // Mattype represents the enum "wasm:cv/mat#mattype".
 //
 //	enum mattype {
@@ -429,7 +439,7 @@ func wasmimport_MatMattype(self0 uint32) (result0 uint32)
 //	min-max-loc: func() -> mix-max-loc-result
 //
 //go:nosplit
-func (self Mat) MinMaxLoc() (result types.MixMaxLocResult) {
+func (self Mat) MinMaxLoc() (result MixMaxLocResult) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_MatMinMaxLoc((uint32)(self0), &result)
 	return
@@ -437,7 +447,7 @@ func (self Mat) MinMaxLoc() (result types.MixMaxLocResult) {
 
 //go:wasmimport wasm:cv/mat [method]mat.min-max-loc
 //go:noescape
-func wasmimport_MatMinMaxLoc(self0 uint32, result *types.MixMaxLocResult)
+func wasmimport_MatMinMaxLoc(self0 uint32, result *MixMaxLocResult)
 
 // Region represents the imported method "region".
 //
@@ -448,7 +458,7 @@ func wasmimport_MatMinMaxLoc(self0 uint32, result *types.MixMaxLocResult)
 //	region: func(rect: rect) -> mat
 //
 //go:nosplit
-func (self Mat) Region(rect types.Rect) (result Mat) {
+func (self Mat) Region(rect Rect) (result Mat) {
 	self0 := cm.Reinterpret[uint32](self)
 	rect0, rect1, rect2, rect3 := lower_Rect(rect)
 	result0 := wasmimport_MatRegion((uint32)(self0), (uint32)(rect0), (uint32)(rect1), (uint32)(rect2), (uint32)(rect3))

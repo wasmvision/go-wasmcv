@@ -22,6 +22,11 @@ type Size struct {
 	Y int32
 }
 
+// Point represents the type alias "wasm:cv/types#point".
+//
+// See [Size] for more information.
+type Point = Size
+
 // Scalar represents the record "wasm:cv/types#scalar".
 //
 // scalar is a 4-element floating point vector.
