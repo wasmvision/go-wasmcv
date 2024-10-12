@@ -1,0 +1,701 @@
+package wasm:cv;
+
+interface types {
+	/// size is a 2-element integer vector.
+	/// It represents a width and height.
+	record size { x: s32, y: s32 }
+
+	/// point is a 2-element integer vector.
+	/// It represents a x and y coordinate.
+	type point = size;
+
+	/// scalar is a 4-element floating point vector.
+	record scalar {
+		val1: f32,
+		val2: f32,
+		val3: f32,
+		val4: f32,
+	}
+
+	/// rect is a rectangle with integer coordinates.
+	/// It is represented by the top-left corner and the bottom-right corner.
+	record rect { min: size, max: size }
+
+	/// RGBA is a color with red, green, blue, and alpha channels.
+	record RGBA { r: u8, g: u8, b: u8, a: u8 }
+
+	/// border-type is a type of border to add to an image.
+	enum border-type {
+		border-constant,
+		border-replicate,
+		border-reflect,
+		border-wrap,
+		border-reflect101,
+		border-transparent,
+		border-default,
+		border-isolated
+	}
+
+	/// adaptive-threshold-type is a type of adaptive thresholding.
+	enum adaptive-threshold-type {
+		adaptive-threshold-mean,
+		adaptive-threshold-gaussian
+	}
+
+	/// threshold-type is a type of thresholding.
+	enum threshold-type {
+		threshold-binary,
+		threshold-binary-inv,
+		threshold-trunc,
+		threshold-to-zero,
+		threshold-to-zero-inv,
+		threshold-mask,
+		threshold-otsu,
+		tthreshold-triangle
+	}
+
+	/// data-layout-type is a type of data layout.
+	enum data-layout-type {
+		data-layout-unknown,
+		data-layout-nd,
+		data-layout-nchw,
+		data-layout-ncdhw,
+		data-layout-nhwc,
+		data-layout-ndhwc,
+		data-layout-planar
+	}
+	enum padding-mode-type {
+		padding-mode-null,
+		padding-mode-crop-center,
+		padding-mode-letterbox
+	}
+	record blob-params {
+		scale-factor: f32,
+		size: size,
+		mean: scalar,
+		swap-RB: bool,
+		ddepth: u8,
+		data-layout: data-layout-type,
+		padding-mode: padding-mode-type,
+		border: scalar,
+	}
+	record mix-max-loc-result {
+		min-val: f32,
+		max-val: f32,
+		min-loc: size,
+		max-loc: size,
+	}
+	enum hershey-font-type {
+		hershey-font-simplex,
+		hershey-font-plain,
+		hershey-font-duplex,
+		hershey-font-complex,
+		hershey-font-triplex,
+		hershey-font-complex-small,
+		hershey-font-script-simplex,
+		hershey-font-script-complex,
+		hershey-font-italic
+	}
+	enum interpolation-type {
+		interpolation-nearest,
+		interpolation-linear,
+		interpolation-cubic,
+		interpolation-area,
+		interpolation-lanczos4
+	}
+	enum color-coversion-type {
+		color-BGR-to-BGRA,
+		color-RGB-to-RGBA,
+		color-BGRA-to-BGR,
+		color-RGBA-to-RGB,
+		color-BGR-to-RGBA,
+		color-RGB-to-BGRA,
+		color-RGBA-to-BGR,
+		color-BGRA-to-RGB,
+		color-BGR-to-RGB,
+		color-RGB-to-BGR,
+		color-BGRA-to-RGBA,
+		color-RGBA-to-BGRA,
+		color-BGR-to-gray,
+		color-RGB-to-gray,
+		color-gray-to-BGR,
+		color-gray-to-RGB,
+		color-gray-to-BGRA,
+		color-gray-to-RGBA,
+		color-BGRA-to-gray,
+		color-RGBA-to-gray
+	}
+	enum morph-shape {
+		morph-rect,
+		morph-cross,
+		morph-ellipse
+	}
+}
+
+/// mat resource is a matrix of bytes, wrapper around the cv::Mat type.
+interface mat {
+	use types.{mix-max-loc-result};
+	use types.{rect};
+	enum mattype {
+		cv8u,
+		cv8s,
+		cv16u,
+		cv16s,
+		cv32s,
+		cv32f,
+		cv64f
+	}
+	resource mat {
+		/// Create a new Mat. id does not currently do anything.
+		constructor(id: u32);
+
+		/// Clone returns a cloned full copy of the Mat.
+		clone: func() -> mat;
+
+		/// Close the Mat
+		close: func();
+
+		/// ColRange creates a matrix header for the specified column span.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aadc8f9210fe4dec50513746c246fa8d9
+		col-range: func(start: u32, end: u32) -> mat;
+
+		/// Cols returns the number of columns for this Mat.
+		cols: func() -> u32;
+
+		/// CopyTo copies Mat into destination Mat.
+		copy-to: func(dst: mat);
+
+		/// Empty returns true if the Mat is empty.
+		empty: func() -> bool;
+
+		/// GetFloatAt returns the value at the specified row and column as a f32.
+		get-float-at: func(row: u32, col: u32) -> f32;
+
+		/// GetFloatAt3 returns the value at the specified x, y, z as a f32.
+		get-float-at3: func(x: u32, y: u32, z: u32) -> f32;
+
+		/// GetIntAt returns the value at the specified row and column as a s32.
+		get-int-at: func(row: u32, col: u32) -> s32;
+
+		/// GetIntAt3 returns the value at the specified x, y, z as a s32.
+		get-int-at3: func(x: u32, y: u32, z: u32) -> s32;
+
+		/// GetUCharAt returns the value at the specified row and column as a u8.
+		get-uchar-at: func(row: u32, col: u32) -> u8;
+
+		/// GetUCharAt3 returns the value at the specified x, y, z as a u8.
+		get-uchar-at3: func(x: u32, y: u32, z: u32) -> u8;
+
+		/// GetVecbAt returns a vector of bytes. Its size corresponds to the number of channels
+		/// of the Mat.
+		get-vecb-at: func(row: u32, col: u32) -> list<u8>;
+
+		/// GetVecfAt returns a vector of floats. Its size corresponds to the number of channels
+		/// of the Mat.
+		get-vecf-at: func(row: u32, col: u32) -> list<f32>;
+
+		/// GetVeciAt returns a vector of s32. Its size corresponds to the number of channels
+		/// of the Mat.
+		get-veci-at: func(row: u32, col: u32) -> list<s32>;
+
+		/// MatType returns the type of the Mat.
+		mattype: func() -> mattype;
+
+		/// MinMaxLoc finds the global minimum and maximum in an array.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
+		min-max-loc: func() -> mix-max-loc-result;
+
+		/// Region returns a new Mat that points to a region of this Mat. Changes made to
+		/// the
+		/// region Mat will affect the original Mat, since they are pointers to the underlying
+		/// OpenCV Mat object.
+		region: func(rect: rect) -> mat;
+
+		/// Reshape changes the shape and/or the number of channels of a 2D matrix without
+		/// copying the data.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a4eb96e3251417fa88b78e2abd6cfd7d8
+		reshape: func(channels: u32, rows: u32) -> mat;
+
+		/// RowRange creates a matrix header for the specified row span.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aa6542193430356ad631a9beabc624107
+		row-range: func(start: u32, end: u32) -> mat;
+
+		/// Rows returns the number of rows for this Mat.
+		rows: func() -> u32;
+
+		/// SetFloatAt sets the value at the specified row and column as a f32.
+		set-float-at: func(row: u32, col: u32, val: f32);
+
+		/// SetFloatAt3 sets the value at the specified x, y, z as a f32.
+		set-float-at3: func(x: u32, y: u32, z: u32, val: f32);
+
+		/// SetIntAt sets the value at the specified row and column as a s32.
+		set-int-at: func(row: u32, col: u32, val: s32);
+
+		/// SetIntAt3 sets the value at the specified x, y, z as a s32.
+		set-int-at3: func(x: u32, y: u32, z: u32, val: s32);
+
+		/// SetUCharAt sets the value at the specified row and column as a u8.
+		set-uchar-at: func(row: u32, col: u32, val: u8);
+
+		/// SetUCharAt3 sets the value at the specified x, y, z as a u8.
+		set-uchar-at3: func(x: u32, y: u32, z: u32, val: u8);
+
+		/// Size returns an array with one element for each dimension containing the size
+		/// of that dimension for the Mat.
+		size: func() -> list<u32>;
+
+		/// Create a new Mat with the specified size and type.
+		new-with-size: static func(cols: u32, rows: u32, mattype: mattype) -> mat;
+	}
+}
+
+interface cv {
+	use types.{border-type};
+	use types.{size};
+	use types.{point};
+	use types.{adaptive-threshold-type};
+	use types.{threshold-type};
+	use types.{scalar};
+	use types.{rect};
+	use types.{RGBA};
+	use types.{hershey-font-type};
+	use types.{interpolation-type};
+	use types.{color-coversion-type};
+	use types.{morph-shape};
+	use mat.{mat};
+	use mat.{mattype};
+
+	/// drawing functions
+	/// ArrowedLine draws a arrow segment pointing from the first point to the second
+	/// one.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga0a165a3ca093fd488ac709fdf10c05b2
+	arrowed-line: func(img: mat, point1: point, point2: point, c: RGBA, thickness: u8);
+
+	/// Rectangle draws a simple, thick, or filled up-right rectangle.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d6/d6e/group__imgproc__draw.html#ga07d2f74cadcf8e305e810ce8f3d1e1b7
+	rectangle: func(img: mat, r: rect, c: RGBA, thickness: u8);
+
+	/// Circle draws a circle.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf10604b069374903dbd0f0488cb43670
+	circle: func(img: mat, center: point, radius: u32, c: RGBA, thickness: u8);
+
+	/// Line draws a line segment connecting two points.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga7078a9fae8c7e7d13d24dac2520ae4a2
+	line: func(img: mat, point1: point, point2: point, c: RGBA, thickness: u8);
+
+	/// PutText draws a text string.
+	/// It renders the specified text string into the img Mat at the location
+	/// passed in the "org" param, using the desired font face, font scale,
+	/// color, and line thinkness.
+	///
+	/// For further details, please see:
+	/// http://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga5126f47f883d730f633d74f07456c576
+	put-text: func(img: mat, text: string, org: point, font-face: hershey-font-type, font-scale: f64, c: RGBA, thickness: s32);
+
+	/// imgproc functions
+	/// AdaptiveThreshold applies a fixed-level threshold to each array element.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3
+	adaptive-threshold: func(src: mat, max-value: f32, adaptive-type: adaptive-threshold-type, threshold-type: threshold-type, block-size: u32, c: f32) -> mat;
+
+	/// Blur blurs an image Mat using a normalized box filter.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
+	blur: func(src: mat, k-size: size) -> mat;
+
+	/// BoxFilter blurs an image using the box filter.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gad533230ebf2d42509547d514f7d3fbc3
+	box-filter: func(src: mat, depth: u32, k-size: size) -> mat;
+
+	/// Canny finds edges in an image using the Canny algorithm.
+	/// The function finds edges in the input image image and marks
+	/// them in the output map edges using the Canny algorithm.
+	/// The smallest value between threshold1 and threshold2 is used
+	/// for edge linking. The largest value is used to
+	/// find initial segments of strong edges.
+	/// See http://en.wikipedia.org/wiki/Canny_edge_detector
+	///
+	/// For further details, please see:
+	/// http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga04723e007ed888ddf11d9ba04e2232de
+	canny: func(src: mat, threshold1: f32, threshold2: f32) -> mat;
+
+	/// CvtColor converts an image from one color space to another.
+	///
+	/// For further details, please see:
+	/// http://docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
+	cvt-color: func(src: mat, code: color-coversion-type) -> mat;
+
+	/// Dilate dilates an image by using a specific structuring element.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga4ff0f3318642c4f469d0e11f242f3b6c
+	dilate: func(src: mat, kernel: mat) -> mat;
+
+	/// Erode erodes an image by using a specific structuring element.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaeb1e0c1033e3f6b891a25d0511362aeb
+	erode: func(src: mat, kernel: mat) -> mat;
+
+	/// EqualizeHist normalizes the brightness and increases the contrast of the image.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga7e54091f0c937d49bf84152a16f76d6e
+	equalize-hist: func(src: mat) -> mat;
+
+	/// GaussianBlur blurs an image using a Gaussian filter.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#gae8bdcd9154ed5ca3cbc1766d960f45c1
+	gaussian-blur: func(src: mat, size: size, sigma-x: f32, sigma-y: f32, border: border-type) -> mat;
+
+	/// GetStructuringElement returns a structuring element of the specified size
+	/// and shape for morphological operations.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
+	get-structuring-element: func(shape: morph-shape, size: size) -> mat;
+
+	/// HoughLines implements the standard or standard multi-scale Hough transform
+	/// algorithm for line detection. For a good explanation of Hough transform, see:
+	/// http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm
+	///
+	/// For further details, please see:
+	/// http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga46b4e588934f6c8dfd509cc6e0e4545a
+	hough-lines: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat;
+
+	/// HoughLinesP implements the probabilistic Hough transform
+	/// algorithm for line detection. For a good explanation of Hough transform, see:
+	/// http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm
+	///
+	/// For further details, please see:
+	/// http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb
+	hough-lines-p: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat;
+
+	/// MedianBlur blurs an image using the median filter.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9
+	median-blur: func(src: mat, k-size: size) -> mat;
+
+	/// Resize resizes an image.
+	/// It resizes the image src down to or up to the specified size, storing the
+	/// result in dst. Note that src and dst may be the same image. If you wish to
+	/// scale by factor, an empty sz may be passed and non-zero fx and fy. Likewise,
+	/// if you wish to scale to an explicit size, a non-empty sz may be passed with
+	/// zero for both fx and fy.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga47a974309e9102f5f08231edc7e7529d
+	resize: func(src: mat, size: size, fx: f32, fy: f32, interp: interpolation-type) -> mat;
+
+	/// Threshold applies a fixed-level threshold to each array element.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/3.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
+	threshold: func(src: mat, thresh: f32, max-value: f32, threshold-type: threshold-type) -> mat;
+
+	/// Transpose for n-dimensional matrices.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab1b1274b4a563be34cdfa55b8919a4ec
+	transpose-ND: func(src: mat, order: list<s32>) -> mat;
+}
+
+interface dnn {
+	use mat.{mat};
+	use types.{size};
+	use types.{scalar};
+	use types.{rect};
+	use types.{blob-params};
+	use types.{data-layout-type};
+	use types.{padding-mode-type};
+	enum net-backend-type {
+		net-backend-default,
+		net-backend-halide,
+		net-backend-openvino,
+		net-backend-opencv,
+		net-backend-vkcom,
+		net-backend-cuda
+	}
+	enum net-target-type {
+		net-target-cpu,
+		net-target-fp32,
+		net-target-fp16,
+		net-target-vpu,
+		net-target-vulkan,
+		net-target-fpga,
+		net-target-cuda,
+		net-target-cuda-fp16
+	}
+	resource layer {
+		constructor();
+
+		/// GetName returns the name of the layer.
+		get-name: func() -> string;
+	}
+	resource net {
+
+		/// Close the network
+		close: func();
+
+		/// Empty returns true if there are no layers in the network.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#a6a5778787d5b8770deab5eda6968e66c
+		empty: func() -> bool;
+
+		/// Forward runs forward pass to compute output of layer with name outputName.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/trunk/db/d30/classcv_1_1dnn_1_1Net.html#a98ed94cb6ef7063d3697259566da310b
+		forward: func(output-name: string) -> mat;
+
+		/// ForwardLayers forward pass to compute outputs of layers listed in outBlobNames.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#afe22e099b60a2883e220645391f68d4c
+		forward-layers: func(output-names: list<string>) -> list<mat>;
+
+		/// GetLayer returns layer with specified id.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#ac944d7f2d3ead5ef9b1b2fa3885f3ff1
+		get-layer: func(id: u32) -> layer;
+
+		/// GetLayerNames returns names of layers in the network.
+		///
+		/// For further details, please see:
+		/// hhttps://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a38e67098ae4ae5906bf8d8ea72199c2e
+		get-layer-names: func() -> list<string>;
+
+		/// GetUnconnectedOutLayers returns indexes of layers with unconnected outputs.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#ae26f0c29b3733d15d0482098ef9053e3
+		get-unconnected-out-layers: func() -> list<u32>;
+
+		/// SetInput sets the new input value for the network.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/trunk/db/d30/classcv_1_1dnn_1_1Net.html#a672a08ae76444d75d05d7bfea3e4a328
+		set-input: func(input: mat, name: string);
+
+		/// ReadNet read deep learning network represented in one of the supported formats.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga138439da76f26266fdefec9723f6c5cd
+		read: static func(model: string, config: string) -> net;
+
+		/// ReadNetFromONNX reads a network model stored in ONNX framework's format.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga9198ecaac7c32ddf0aa7a1bcbd359567
+		read-from-ONNX: static func(model: string) -> net;
+	}
+
+	/// BlobFromImage creates 4-dimensional blob from image. Optionally resizes and crops
+	/// image from center,
+	/// subtract mean values, scales values by scalefactor, swap Blue and Red channels.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga29f34df9376379a603acd8df581ac8d7
+	blob-from-image: func(image: mat, scale-factor: f32, size: size, mean: scalar, swap-rb: bool, crop: bool) -> mat;
+
+	/// BlobFromImageWithParams creates 4-dimensional blob from image. Optionally resizes
+	/// and crops image from center,
+	/// subtract mean values, scales values by scalefactor, swap Blue and Red channels.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga29f34df9376379a603acd8df581ac8d7
+	blob-from-image-with-params: func(image: mat, params: blob-params) -> mat;
+
+	/// BlobRectsToImageRects converts blob rects to image rects.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.4.0/d6/d0f/group__dnn.html#ga9d118d70a1659af729d01b10233213ee
+	blob-rects-to-image-rects: func(params: blob-params, blob-rects: list<rect>, image-size: size) -> list<rect>;
+
+	/// NMSBoxes performs non maximum suppression given boxes and corresponding scores.
+	///
+	/// For futher details, please see:
+	/// https://docs.opencv.org/4.4.0/d6/d0f/group__dnn.html#ga9d118d70a1659af729d01b10233213ee
+	NMS-boxes: func(bboxes: list<rect>, scores: list<f32>, score-threshold: f32, nms-threshold: f32) -> list<s32>;
+}
+
+interface objdetect {
+	use mat.{mat};
+	use types.{size};
+	use types.{rect};
+
+	/// CascadeClassifier is a cascade classifier class for object detection.
+	resource cascade-classifier {
+		/// NewCascadeClassifier returns a new CascadeClassifier.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5f7fb43c60c95ca5ebab78483de02516
+		constructor(name: string);
+
+		/// Close the CascadeClassifier
+		close: func();
+
+		/// DetectMultiScale detects objects of different sizes in the input Mat image.
+		/// The detected objects are returned as a slice of image.Rectangle structs.
+		///
+		/// For further details, please see:
+		/// http://docs.opencv.org/master/d1/de5/classcv_1_1CascadeClassifier.html#aaf8181cb63968136476ec4204ffca498
+		detect-multi-scale: func(image: mat) -> list<rect>;
+
+		/// DetectMultiScaleWithParams detects objects of different sizes in the input Mat
+		/// image.
+		/// The detected objects are returned as a slice of image.Rectangle structs.
+		///
+		/// For further details, please see:
+		/// http://docs.opencv.org/master/d1/de5/classcv_1_1CascadeClassifier.html#aaf8181cb63968136476ec4204ffca498
+		detect-multi-scale-with-params: func(image: mat, scale: f64, min-neighbors: u32, %flags: u32, min-size: size, max-size: size) -> list<rect>;
+
+		/// Load cascade classifier from a file.
+		///
+		/// For further details, please see:
+		/// http://docs.opencv.org/master/d1/de5/classcv_1_1CascadeClassifier.html#a1a5884c8cc749422f9eb77c2471958bc
+		load: func(file: string) -> bool;
+	}
+
+	/// HOGDescriptor is a Histogram Of Gradiants (HOG) for object detection.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a723b95b709cfd3f95cf9e616de988fc8
+	resource HOG-descriptor {
+		/// NewHOGDescriptor returns a new HOGDescriptor.
+		constructor(name: string);
+
+		/// Close the HOGDescriptor
+		close: func();
+
+		/// DetectMultiScale detects objects of different sizes in the input Mat image.
+		/// The detected objects are returned as a slice of image.Rectangle structs.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a660e5cd036fd5ddf0f5767b352acd948
+		detect-multi-scale: func(image: mat) -> list<rect>;
+
+		/// DetectMultiScaleWithParams detects objects of different sizes in the input Mat
+		/// image.
+		/// The detected objects are returned as a slice of image.Rectangle structs.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a660e5cd036fd5ddf0f5767b352acd948
+		detect-multi-scale-with-params: func(image: mat, hit-threshold: f64, win-stride: size, padding: size, scale: f64, final-threshold: f64, use-meanshift-grouping: bool) -> list<rect>;
+	}
+	resource face-detector-YN {
+		/// Creates an instance of face detector YN with given parameters.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5f7fb43c60c95ca5ebab78483de02516
+		constructor(model: string, config: string, input-size: size);
+
+		/// Close the face detector
+		close: func();
+
+		/// Detects faces in the input image.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#ac05bd075ca3e6edc0e328927aae6f45b
+		detect: func(input: mat) -> mat;
+		get-input-size: func() -> size;
+		get-nms-threshold: func() -> f32;
+		get-score-threshold: func() -> f32;
+		get-topk: func() -> u32;
+		set-input-size: func(size: size);
+		set-nms-threshold: func(threshold: f32);
+		set-score-threshold: func(threshold: f32);
+		set-topk: func(topk: u32);
+
+		/// Creates an instance of face detector YN with given parameters.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5f7fb43c60c95ca5ebab78483de02516
+		new-with-params: static func(model: string, config: string, input-size: size, score-threshold: f32, nms-threshold: f32, top-k: u32, backend-id: u32, target-id: u32) -> face-detector-YN;
+	}
+	enum face-distance-type {
+		face-distance-type-cosine,
+		face-distance-norm-l2
+	}
+	resource face-recognizer-SF {
+		/// Creates an instance of FaceRecognizerSF with given parameters.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a04df90b0cd7d26d350acd92621a35743
+		constructor(model: string, config: string);
+
+		/// Aligns detected face with the source input image and crops it.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a84492908abecbc9362b4ddc8d46b8345
+		align-crop: func(src: mat, face-box: mat) -> mat;
+
+		/// Close the face FaceRecognizerSF
+		close: func();
+
+		/// Feature extracts face feature from aligned image.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#ab1b4a3c12213e89091a490c573dc5aba
+		feature: func(aligned: mat) -> mat;
+
+		/// Match calculates the distance between two face features.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a2f0362ca1e64320a1f3ba7e1386d0219
+		match: func(face1: mat, face2: mat) -> f32;
+
+		/// Match calculates the distance between two face features.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a2f0362ca1e64320a1f3ba7e1386d0219
+		match-with-params: func(face1: mat, face2: mat, distance: face-distance-type) -> f32;
+
+		/// Creates an instance of FaceRecognizerSF with given parameters.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a04df90b0cd7d26d350acd92621a35743
+		new-with-params: static func(model: string, config: string, backend-id: u32, target-id: u32) -> face-recognizer-SF;
+	}
+}
+
+/// request resource is a request from host for guest module to process an image.
+interface request {
+	use mat.{mat};
+	process: func(image: mat) -> mat;
+}
+
+/// wasmCV is a WebAssembly guest module interface for computer vision based on OpenCV.
+world imports {
+	import types;
+	import mat;
+	import cv;
+	import dnn;
+	import objdetect;
+	export request;
+}

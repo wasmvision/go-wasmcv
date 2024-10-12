@@ -101,10 +101,6 @@ func ArrowedLine(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv arrowed-line
-//go:noescape
-func wasmimport_ArrowedLine(img0 uint32, point10 uint32, point11 uint32, point20 uint32, point21 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
-
 // Rectangle represents the imported function "rectangle".
 //
 // Rectangle draws a simple, thick, or filled up-right rectangle.
@@ -123,10 +119,6 @@ func Rectangle(img Mat, r Rect, c RGBA, thickness uint8) {
 	wasmimport_Rectangle((uint32)(img0), (uint32)(r0), (uint32)(r1), (uint32)(r2), (uint32)(r3), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv rectangle
-//go:noescape
-func wasmimport_Rectangle(img0 uint32, r0 uint32, r1 uint32, r2 uint32, r3 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
 
 // Circle represents the imported function "circle".
 //
@@ -148,10 +140,6 @@ func Circle(img Mat, center Point, radius uint32, c RGBA, thickness uint8) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv circle
-//go:noescape
-func wasmimport_Circle(img0 uint32, center0 uint32, center1 uint32, radius0 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
-
 // Line represents the imported function "line".
 //
 // Line draws a line segment connecting two points.
@@ -171,10 +159,6 @@ func Line(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
 	wasmimport_Line((uint32)(img0), (uint32)(point10), (uint32)(point11), (uint32)(point20), (uint32)(point21), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv line
-//go:noescape
-func wasmimport_Line(img0 uint32, point10 uint32, point11 uint32, point20 uint32, point21 uint32, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
 
 // PutText represents the imported function "put-text".
 //
@@ -202,10 +186,6 @@ func PutText(img Mat, text string, org Point, fontFace HersheyFontType, fontScal
 	return
 }
 
-//go:wasmimport wasm:cv/cv put-text
-//go:noescape
-func wasmimport_PutText(img0 uint32, text0 *uint8, text1 uint32, org0 uint32, org1 uint32, fontFace0 uint32, fontScale0 float64, c0 uint32, c1 uint32, c2 uint32, c3 uint32, thickness0 uint32)
-
 // AdaptiveThreshold represents the imported function "adaptive-threshold".
 //
 // imgproc functions
@@ -230,10 +210,6 @@ func AdaptiveThreshold(src Mat, maxValue float32, adaptiveType AdaptiveThreshold
 	return
 }
 
-//go:wasmimport wasm:cv/cv adaptive-threshold
-//go:noescape
-func wasmimport_AdaptiveThreshold(src0 uint32, maxValue0 float32, adaptiveType0 uint32, thresholdType0 uint32, blockSize0 uint32, c0 float32) (result0 uint32)
-
 // Blur represents the imported function "blur".
 //
 // Blur blurs an image Mat using a normalized box filter.
@@ -251,10 +227,6 @@ func Blur(src Mat, kSize Size) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv blur
-//go:noescape
-func wasmimport_Blur(src0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
 
 // BoxFilter represents the imported function "box-filter".
 //
@@ -274,10 +246,6 @@ func BoxFilter(src Mat, depth uint32, kSize Size) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv box-filter
-//go:noescape
-func wasmimport_BoxFilter(src0 uint32, depth0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
 
 // Canny represents the imported function "canny".
 //
@@ -304,10 +272,6 @@ func Canny(src Mat, threshold1 float32, threshold2 float32) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv canny
-//go:noescape
-func wasmimport_Canny(src0 uint32, threshold10 float32, threshold20 float32) (result0 uint32)
-
 // CvtColor represents the imported function "cvt-color".
 //
 // CvtColor converts an image from one color space to another.
@@ -325,10 +289,6 @@ func CvtColor(src Mat, code ColorCoversionType) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv cvt-color
-//go:noescape
-func wasmimport_CvtColor(src0 uint32, code0 uint32) (result0 uint32)
 
 // Dilate represents the imported function "dilate".
 //
@@ -348,10 +308,6 @@ func Dilate(src Mat, kernel Mat) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv dilate
-//go:noescape
-func wasmimport_Dilate(src0 uint32, kernel0 uint32) (result0 uint32)
-
 // Erode represents the imported function "erode".
 //
 // Erode erodes an image by using a specific structuring element.
@@ -370,10 +326,6 @@ func Erode(src Mat, kernel Mat) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/cv erode
-//go:noescape
-func wasmimport_Erode(src0 uint32, kernel0 uint32) (result0 uint32)
-
 // EqualizeHist represents the imported function "equalize-hist".
 //
 // EqualizeHist normalizes the brightness and increases the contrast of the image.
@@ -390,10 +342,6 @@ func EqualizeHist(src Mat) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv equalize-hist
-//go:noescape
-func wasmimport_EqualizeHist(src0 uint32) (result0 uint32)
 
 // GaussianBlur represents the imported function "gaussian-blur".
 //
@@ -417,10 +365,6 @@ func GaussianBlur(src Mat, size Size, sigmaX float32, sigmaY float32, border Bor
 	return
 }
 
-//go:wasmimport wasm:cv/cv gaussian-blur
-//go:noescape
-func wasmimport_GaussianBlur(src0 uint32, size0 uint32, size1 uint32, sigmaX0 float32, sigmaY0 float32, border0 uint32) (result0 uint32)
-
 // GetStructuringElement represents the imported function "get-structuring-element".
 //
 // GetStructuringElement returns a structuring element of the specified size
@@ -439,10 +383,6 @@ func GetStructuringElement(shape MorphShape, size Size) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv get-structuring-element
-//go:noescape
-func wasmimport_GetStructuringElement(shape0 uint32, size0 uint32, size1 uint32) (result0 uint32)
 
 // HoughLines represents the imported function "hough-lines".
 //
@@ -466,10 +406,6 @@ func HoughLines(src Mat, rho float64, theta float64, threshold int32) (result Ma
 	return
 }
 
-//go:wasmimport wasm:cv/cv hough-lines
-//go:noescape
-func wasmimport_HoughLines(src0 uint32, rho0 float64, theta0 float64, threshold0 uint32) (result0 uint32)
-
 // HoughLinesP represents the imported function "hough-lines-p".
 //
 // HoughLinesP implements the probabilistic Hough transform
@@ -492,10 +428,6 @@ func HoughLinesP(src Mat, rho float64, theta float64, threshold int32) (result M
 	return
 }
 
-//go:wasmimport wasm:cv/cv hough-lines-p
-//go:noescape
-func wasmimport_HoughLinesP(src0 uint32, rho0 float64, theta0 float64, threshold0 uint32) (result0 uint32)
-
 // MedianBlur represents the imported function "median-blur".
 //
 // MedianBlur blurs an image using the median filter.
@@ -513,10 +445,6 @@ func MedianBlur(src Mat, kSize Size) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv median-blur
-//go:noescape
-func wasmimport_MedianBlur(src0 uint32, kSize0 uint32, kSize1 uint32) (result0 uint32)
 
 // Resize represents the imported function "resize".
 //
@@ -545,10 +473,6 @@ func Resize(src Mat, size Size, fx float32, fy float32, interp InterpolationType
 	return
 }
 
-//go:wasmimport wasm:cv/cv resize
-//go:noescape
-func wasmimport_Resize(src0 uint32, size0 uint32, size1 uint32, fx0 float32, fy0 float32, interp0 uint32) (result0 uint32)
-
 // Threshold represents the imported function "threshold".
 //
 // Threshold applies a fixed-level threshold to each array element.
@@ -570,10 +494,6 @@ func Threshold(src Mat, thresh float32, maxValue float32, thresholdType Threshol
 	return
 }
 
-//go:wasmimport wasm:cv/cv threshold
-//go:noescape
-func wasmimport_Threshold(src0 uint32, thresh0 float32, maxValue0 float32, thresholdType0 uint32) (result0 uint32)
-
 // TransposeND represents the imported function "transpose-ND".
 //
 // Transpose for n-dimensional matrices.
@@ -591,7 +511,3 @@ func TransposeND(src Mat, order cm.List[int32]) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/cv transpose-ND
-//go:noescape
-func wasmimport_TransposeND(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)

@@ -136,10 +136,6 @@ func (self Layer) ResourceDrop() {
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [resource-drop]layer
-//go:noescape
-func wasmimport_LayerResourceDrop(self0 uint32)
-
 // NewLayer represents the imported constructor for resource "layer".
 //
 //	constructor()
@@ -150,10 +146,6 @@ func NewLayer() (result Layer) {
 	result = cm.Reinterpret[Layer]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [constructor]layer
-//go:noescape
-func wasmimport_NewLayer() (result0 uint32)
 
 // GetName represents the imported method "get-name".
 //
@@ -167,10 +159,6 @@ func (self Layer) GetName() (result string) {
 	wasmimport_LayerGetName((uint32)(self0), &result)
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [method]layer.get-name
-//go:noescape
-func wasmimport_LayerGetName(self0 uint32, result *string)
 
 // Net represents the imported resource "wasm:cv/dnn#net".
 //
@@ -187,10 +175,6 @@ func (self Net) ResourceDrop() {
 	wasmimport_NetResourceDrop((uint32)(self0))
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [resource-drop]net
-//go:noescape
-func wasmimport_NetResourceDrop(self0 uint32)
 
 // NetRead represents the imported static function "read".
 //
@@ -210,10 +194,6 @@ func NetRead(model string, config string) (result Net) {
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [static]net.read
-//go:noescape
-func wasmimport_NetRead(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32) (result0 uint32)
-
 // NetReadFromONNX represents the imported static function "read-from-ONNX".
 //
 // ReadNetFromONNX reads a network model stored in ONNX framework's format.
@@ -231,10 +211,6 @@ func NetReadFromONNX(model string) (result Net) {
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [static]net.read-from-ONNX
-//go:noescape
-func wasmimport_NetReadFromONNX(model0 *uint8, model1 uint32) (result0 uint32)
-
 // Close represents the imported method "close".
 //
 // Close the network
@@ -247,10 +223,6 @@ func (self Net) Close() {
 	wasmimport_NetClose((uint32)(self0))
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [method]net.close
-//go:noescape
-func wasmimport_NetClose(self0 uint32)
 
 // Empty represents the imported method "empty".
 //
@@ -268,10 +240,6 @@ func (self Net) Empty() (result bool) {
 	result = cm.U32ToBool((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [method]net.empty
-//go:noescape
-func wasmimport_NetEmpty(self0 uint32) (result0 uint32)
 
 // Forward represents the imported method "forward".
 //
@@ -291,10 +259,6 @@ func (self Net) Forward(outputName string) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [method]net.forward
-//go:noescape
-func wasmimport_NetForward(self0 uint32, outputName0 *uint8, outputName1 uint32) (result0 uint32)
-
 // ForwardLayers represents the imported method "forward-layers".
 //
 // ForwardLayers forward pass to compute outputs of layers listed in outBlobNames.
@@ -311,10 +275,6 @@ func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.List[Mat])
 	wasmimport_NetForwardLayers((uint32)(self0), (*string)(outputNames0), (uint32)(outputNames1), &result)
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [method]net.forward-layers
-//go:noescape
-func wasmimport_NetForwardLayers(self0 uint32, outputNames0 *string, outputNames1 uint32, result *cm.List[Mat])
 
 // GetLayer represents the imported method "get-layer".
 //
@@ -334,10 +294,6 @@ func (self Net) GetLayer(id uint32) (result Layer) {
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [method]net.get-layer
-//go:noescape
-func wasmimport_NetGetLayer(self0 uint32, id0 uint32) (result0 uint32)
-
 // GetLayerNames represents the imported method "get-layer-names".
 //
 // GetLayerNames returns names of layers in the network.
@@ -354,10 +310,6 @@ func (self Net) GetLayerNames() (result cm.List[string]) {
 	return
 }
 
-//go:wasmimport wasm:cv/dnn [method]net.get-layer-names
-//go:noescape
-func wasmimport_NetGetLayerNames(self0 uint32, result *cm.List[string])
-
 // GetUnconnectedOutLayers represents the imported method "get-unconnected-out-layers".
 //
 // GetUnconnectedOutLayers returns indexes of layers with unconnected outputs.
@@ -373,10 +325,6 @@ func (self Net) GetUnconnectedOutLayers() (result cm.List[uint32]) {
 	wasmimport_NetGetUnconnectedOutLayers((uint32)(self0), &result)
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [method]net.get-unconnected-out-layers
-//go:noescape
-func wasmimport_NetGetUnconnectedOutLayers(self0 uint32, result *cm.List[uint32])
 
 // SetInput represents the imported method "set-input".
 //
@@ -395,10 +343,6 @@ func (self Net) SetInput(input Mat, name string) {
 	wasmimport_NetSetInput((uint32)(self0), (uint32)(input0), (*uint8)(name0), (uint32)(name1))
 	return
 }
-
-//go:wasmimport wasm:cv/dnn [method]net.set-input
-//go:noescape
-func wasmimport_NetSetInput(self0 uint32, input0 uint32, name0 *uint8, name1 uint32)
 
 // BlobFromImage represents the imported function "blob-from-image".
 //
@@ -425,10 +369,6 @@ func BlobFromImage(image Mat, scaleFactor float32, size Size, mean Scalar, swapR
 	return
 }
 
-//go:wasmimport wasm:cv/dnn blob-from-image
-//go:noescape
-func wasmimport_BlobFromImage(image0 uint32, scaleFactor0 float32, size0 uint32, size1 uint32, mean0 float32, mean1 float32, mean2 float32, mean3 float32, swapRb0 uint32, crop0 uint32) (result0 uint32)
-
 // BlobFromImageWithParams represents the imported function "blob-from-image-with-params".
 //
 // BlobFromImageWithParams creates 4-dimensional blob from image. Optionally resizes
@@ -449,10 +389,6 @@ func BlobFromImageWithParams(image Mat, params BlobParams) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/dnn blob-from-image-with-params
-//go:noescape
-func wasmimport_BlobFromImageWithParams(image0 uint32, params0 float32, params1 uint32, params2 uint32, params3 float32, params4 float32, params5 float32, params6 float32, params7 uint32, params8 uint32, params9 uint32, params10 uint32, params11 float32, params12 float32, params13 float32, params14 float32) (result0 uint32)
-
 // BlobRectsToImageRects represents the imported function "blob-rects-to-image-rects".
 //
 // BlobRectsToImageRects converts blob rects to image rects.
@@ -469,10 +405,6 @@ func BlobRectsToImageRects(params BlobParams, blobRects cm.List[Rect], imageSize
 	wasmimport_BlobRectsToImageRects(&params_, &result)
 	return
 }
-
-//go:wasmimport wasm:cv/dnn blob-rects-to-image-rects
-//go:noescape
-func wasmimport_BlobRectsToImageRects(params *wasmimport_BlobRectsToImageRects_params, result *cm.List[Rect])
 
 // wasmimport_BlobRectsToImageRects_params represents the flattened function params for [wasmimport_BlobRectsToImageRects].
 // See the Canonical ABI flattening rules for more information.
@@ -502,7 +434,3 @@ func NMSBoxes(bboxes cm.List[Rect], scores cm.List[float32], scoreThreshold floa
 	wasmimport_NMSBoxes((*Rect)(bboxes0), (uint32)(bboxes1), (*float32)(scores0), (uint32)(scores1), (float32)(scoreThreshold0), (float32)(nmsThreshold0), &result)
 	return
 }
-
-//go:wasmimport wasm:cv/dnn NMS-boxes
-//go:noescape
-func wasmimport_NMSBoxes(bboxes0 *Rect, bboxes1 uint32, scores0 *float32, scores1 uint32, scoreThreshold0 float32, nmsThreshold0 float32, result *cm.List[int32])

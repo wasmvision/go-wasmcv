@@ -6,7 +6,6 @@
 package request
 
 import (
-	"github.com/bytecodealliance/wasm-tools-go/cm"
 	"wasmcv.org/wasm/cv/mat"
 )
 
@@ -14,12 +13,3 @@ import (
 //
 // See [mat.Mat] for more information.
 type Mat = mat.Mat
-
-//go:wasmexport wasm:cv/request#process
-//export wasm:cv/request#process
-func wasmexport_Process(image0 uint32) (result0 uint32) {
-	image := cm.Reinterpret[Mat]((uint32)(image0))
-	result := Exports.Process(image)
-	result0 = cm.Reinterpret[uint32](result)
-	return
-}

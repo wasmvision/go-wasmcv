@@ -42,10 +42,6 @@ func (self CascadeClassifier) ResourceDrop() {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [resource-drop]cascade-classifier
-//go:noescape
-func wasmimport_CascadeClassifierResourceDrop(self0 uint32)
-
 // NewCascadeClassifier represents the imported constructor for resource "cascade-classifier".
 //
 // NewCascadeClassifier returns a new CascadeClassifier.
@@ -63,10 +59,6 @@ func NewCascadeClassifier(name string) (result CascadeClassifier) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [constructor]cascade-classifier
-//go:noescape
-func wasmimport_NewCascadeClassifier(name0 *uint8, name1 uint32) (result0 uint32)
-
 // Close represents the imported method "close".
 //
 // Close the CascadeClassifier
@@ -79,10 +71,6 @@ func (self CascadeClassifier) Close() {
 	wasmimport_CascadeClassifierClose((uint32)(self0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]cascade-classifier.close
-//go:noescape
-func wasmimport_CascadeClassifierClose(self0 uint32)
 
 // DetectMultiScale represents the imported method "detect-multi-scale".
 //
@@ -101,10 +89,6 @@ func (self CascadeClassifier) DetectMultiScale(image Mat) (result cm.List[Rect])
 	wasmimport_CascadeClassifierDetectMultiScale((uint32)(self0), (uint32)(image0), &result)
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]cascade-classifier.detect-multi-scale
-//go:noescape
-func wasmimport_CascadeClassifierDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[Rect])
 
 // DetectMultiScaleWithParams represents the imported method "detect-multi-scale-with-params".
 //
@@ -131,10 +115,6 @@ func (self CascadeClassifier) DetectMultiScaleWithParams(image Mat, scale float6
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]cascade-classifier.detect-multi-scale-with-params
-//go:noescape
-func wasmimport_CascadeClassifierDetectMultiScaleWithParams(self0 uint32, image0 uint32, scale0 float64, minNeighbors0 uint32, flags0 uint32, minSize0 uint32, minSize1 uint32, maxSize0 uint32, maxSize1 uint32, result *cm.List[Rect])
-
 // Load represents the imported method "load".
 //
 // Load cascade classifier from a file.
@@ -152,10 +132,6 @@ func (self CascadeClassifier) Load(file string) (result bool) {
 	result = cm.U32ToBool((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]cascade-classifier.load
-//go:noescape
-func wasmimport_CascadeClassifierLoad(self0 uint32, file0 *uint8, file1 uint32) (result0 uint32)
 
 // HOGDescriptor represents the imported resource "wasm:cv/objdetect#HOG-descriptor".
 //
@@ -178,10 +154,6 @@ func (self HOGDescriptor) ResourceDrop() {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [resource-drop]HOG-descriptor
-//go:noescape
-func wasmimport_HOGDescriptorResourceDrop(self0 uint32)
-
 // NewHOGDescriptor represents the imported constructor for resource "HOG-descriptor".
 //
 // NewHOGDescriptor returns a new HOGDescriptor.
@@ -196,10 +168,6 @@ func NewHOGDescriptor(name string) (result HOGDescriptor) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [constructor]HOG-descriptor
-//go:noescape
-func wasmimport_NewHOGDescriptor(name0 *uint8, name1 uint32) (result0 uint32)
-
 // Close represents the imported method "close".
 //
 // Close the HOGDescriptor
@@ -212,10 +180,6 @@ func (self HOGDescriptor) Close() {
 	wasmimport_HOGDescriptorClose((uint32)(self0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]HOG-descriptor.close
-//go:noescape
-func wasmimport_HOGDescriptorClose(self0 uint32)
 
 // DetectMultiScale represents the imported method "detect-multi-scale".
 //
@@ -234,10 +198,6 @@ func (self HOGDescriptor) DetectMultiScale(image Mat) (result cm.List[Rect]) {
 	wasmimport_HOGDescriptorDetectMultiScale((uint32)(self0), (uint32)(image0), &result)
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]HOG-descriptor.detect-multi-scale
-//go:noescape
-func wasmimport_HOGDescriptorDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[Rect])
 
 // DetectMultiScaleWithParams represents the imported method "detect-multi-scale-with-params".
 //
@@ -266,10 +226,6 @@ func (self HOGDescriptor) DetectMultiScaleWithParams(image Mat, hitThreshold flo
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]HOG-descriptor.detect-multi-scale-with-params
-//go:noescape
-func wasmimport_HOGDescriptorDetectMultiScaleWithParams(self0 uint32, image0 uint32, hitThreshold0 float64, winStride0 uint32, winStride1 uint32, padding0 uint32, padding1 uint32, scale0 float64, finalThreshold0 float64, useMeanshiftGrouping0 uint32, result *cm.List[Rect])
-
 // FaceDetectorYN represents the imported resource "wasm:cv/objdetect#face-detector-YN".
 //
 //	resource face-detector-YN
@@ -285,10 +241,6 @@ func (self FaceDetectorYN) ResourceDrop() {
 	wasmimport_FaceDetectorYNResourceDrop((uint32)(self0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [resource-drop]face-detector-YN
-//go:noescape
-func wasmimport_FaceDetectorYNResourceDrop(self0 uint32)
 
 // NewFaceDetectorYN represents the imported constructor for resource "face-detector-YN".
 //
@@ -308,10 +260,6 @@ func NewFaceDetectorYN(model string, config string, inputSize Size) (result Face
 	result = cm.Reinterpret[FaceDetectorYN]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [constructor]face-detector-YN
-//go:noescape
-func wasmimport_NewFaceDetectorYN(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32, inputSize0 uint32, inputSize1 uint32) (result0 uint32)
 
 // FaceDetectorYNNewWithParams represents the imported static function "new-with-params".
 //
@@ -338,10 +286,6 @@ func FaceDetectorYNNewWithParams(model string, config string, inputSize Size, sc
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [static]face-detector-YN.new-with-params
-//go:noescape
-func wasmimport_FaceDetectorYNNewWithParams(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32, inputSize0 uint32, inputSize1 uint32, scoreThreshold0 float32, nmsThreshold0 float32, topK0 uint32, backendId0 uint32, targetId0 uint32) (result0 uint32)
-
 // Close represents the imported method "close".
 //
 // Close the face detector
@@ -354,10 +298,6 @@ func (self FaceDetectorYN) Close() {
 	wasmimport_FaceDetectorYNClose((uint32)(self0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.close
-//go:noescape
-func wasmimport_FaceDetectorYNClose(self0 uint32)
 
 // Detect represents the imported method "detect".
 //
@@ -377,10 +317,6 @@ func (self FaceDetectorYN) Detect(input Mat) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.detect
-//go:noescape
-func wasmimport_FaceDetectorYNDetect(self0 uint32, input0 uint32) (result0 uint32)
-
 // GetInputSize represents the imported method "get-input-size".
 //
 //	get-input-size: func() -> size
@@ -391,10 +327,6 @@ func (self FaceDetectorYN) GetInputSize() (result Size) {
 	wasmimport_FaceDetectorYNGetInputSize((uint32)(self0), &result)
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.get-input-size
-//go:noescape
-func wasmimport_FaceDetectorYNGetInputSize(self0 uint32, result *Size)
 
 // GetNmsThreshold represents the imported method "get-nms-threshold".
 //
@@ -408,10 +340,6 @@ func (self FaceDetectorYN) GetNmsThreshold() (result float32) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.get-nms-threshold
-//go:noescape
-func wasmimport_FaceDetectorYNGetNmsThreshold(self0 uint32) (result0 float32)
-
 // GetScoreThreshold represents the imported method "get-score-threshold".
 //
 //	get-score-threshold: func() -> f32
@@ -423,10 +351,6 @@ func (self FaceDetectorYN) GetScoreThreshold() (result float32) {
 	result = (float32)((float32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.get-score-threshold
-//go:noescape
-func wasmimport_FaceDetectorYNGetScoreThreshold(self0 uint32) (result0 float32)
 
 // GetTopk represents the imported method "get-topk".
 //
@@ -440,10 +364,6 @@ func (self FaceDetectorYN) GetTopk() (result uint32) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.get-topk
-//go:noescape
-func wasmimport_FaceDetectorYNGetTopk(self0 uint32) (result0 uint32)
-
 // SetInputSize represents the imported method "set-input-size".
 //
 //	set-input-size: func(size: size)
@@ -455,10 +375,6 @@ func (self FaceDetectorYN) SetInputSize(size Size) {
 	wasmimport_FaceDetectorYNSetInputSize((uint32)(self0), (uint32)(size0), (uint32)(size1))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.set-input-size
-//go:noescape
-func wasmimport_FaceDetectorYNSetInputSize(self0 uint32, size0 uint32, size1 uint32)
 
 // SetNmsThreshold represents the imported method "set-nms-threshold".
 //
@@ -472,10 +388,6 @@ func (self FaceDetectorYN) SetNmsThreshold(threshold float32) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.set-nms-threshold
-//go:noescape
-func wasmimport_FaceDetectorYNSetNmsThreshold(self0 uint32, threshold0 float32)
-
 // SetScoreThreshold represents the imported method "set-score-threshold".
 //
 //	set-score-threshold: func(threshold: f32)
@@ -488,10 +400,6 @@ func (self FaceDetectorYN) SetScoreThreshold(threshold float32) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.set-score-threshold
-//go:noescape
-func wasmimport_FaceDetectorYNSetScoreThreshold(self0 uint32, threshold0 float32)
-
 // SetTopk represents the imported method "set-topk".
 //
 //	set-topk: func(topk: u32)
@@ -503,10 +411,6 @@ func (self FaceDetectorYN) SetTopk(topk uint32) {
 	wasmimport_FaceDetectorYNSetTopk((uint32)(self0), (uint32)(topk0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-detector-YN.set-topk
-//go:noescape
-func wasmimport_FaceDetectorYNSetTopk(self0 uint32, topk0 uint32)
 
 // FaceDistanceType represents the enum "wasm:cv/objdetect#face-distance-type".
 //
@@ -547,10 +451,6 @@ func (self FaceRecognizerSF) ResourceDrop() {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [resource-drop]face-recognizer-SF
-//go:noescape
-func wasmimport_FaceRecognizerSFResourceDrop(self0 uint32)
-
 // NewFaceRecognizerSF represents the imported constructor for resource "face-recognizer-SF".
 //
 // Creates an instance of FaceRecognizerSF with given parameters.
@@ -568,10 +468,6 @@ func NewFaceRecognizerSF(model string, config string) (result FaceRecognizerSF) 
 	result = cm.Reinterpret[FaceRecognizerSF]((uint32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [constructor]face-recognizer-SF
-//go:noescape
-func wasmimport_NewFaceRecognizerSF(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32) (result0 uint32)
 
 // FaceRecognizerSFNewWithParams represents the imported static function "new-with-params".
 //
@@ -594,10 +490,6 @@ func FaceRecognizerSFNewWithParams(model string, config string, backendID uint32
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [static]face-recognizer-SF.new-with-params
-//go:noescape
-func wasmimport_FaceRecognizerSFNewWithParams(model0 *uint8, model1 uint32, config0 *uint8, config1 uint32, backendId0 uint32, targetId0 uint32) (result0 uint32)
-
 // AlignCrop represents the imported method "align-crop".
 //
 // Aligns detected face with the source input image and crops it.
@@ -617,10 +509,6 @@ func (self FaceRecognizerSF) AlignCrop(src Mat, faceBox Mat) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.align-crop
-//go:noescape
-func wasmimport_FaceRecognizerSFAlignCrop(self0 uint32, src0 uint32, faceBox0 uint32) (result0 uint32)
-
 // Close represents the imported method "close".
 //
 // Close the face FaceRecognizerSF
@@ -633,10 +521,6 @@ func (self FaceRecognizerSF) Close() {
 	wasmimport_FaceRecognizerSFClose((uint32)(self0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.close
-//go:noescape
-func wasmimport_FaceRecognizerSFClose(self0 uint32)
 
 // Feature represents the imported method "feature".
 //
@@ -656,10 +540,6 @@ func (self FaceRecognizerSF) Feature(aligned Mat) (result Mat) {
 	return
 }
 
-//go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.feature
-//go:noescape
-func wasmimport_FaceRecognizerSFFeature(self0 uint32, aligned0 uint32) (result0 uint32)
-
 // Match represents the imported method "match".
 //
 // Match calculates the distance between two face features.
@@ -678,10 +558,6 @@ func (self FaceRecognizerSF) Match(face1 Mat, face2 Mat) (result float32) {
 	result = (float32)((float32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.match
-//go:noescape
-func wasmimport_FaceRecognizerSFMatch(self0 uint32, face10 uint32, face20 uint32) (result0 float32)
 
 // MatchWithParams represents the imported method "match-with-params".
 //
@@ -703,7 +579,3 @@ func (self FaceRecognizerSF) MatchWithParams(face1 Mat, face2 Mat, distance Face
 	result = (float32)((float32)(result0))
 	return
 }
-
-//go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.match-with-params
-//go:noescape
-func wasmimport_FaceRecognizerSFMatchWithParams(self0 uint32, face10 uint32, face20 uint32, distance0 uint32) (result0 float32)
