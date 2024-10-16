@@ -168,7 +168,7 @@ func (self Mat) Cols() (result uint32) {
 //
 // CopyTo copies Mat into destination Mat.
 //
-//	copy-to: func(dst: mat)
+//	copy-to: func(dst: borrow<mat>)
 //
 //go:nosplit
 func (self Mat) CopyTo(dst Mat) {
