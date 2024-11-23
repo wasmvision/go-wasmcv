@@ -6,7 +6,7 @@
 package mat
 
 import (
-	"github.com/bytecodealliance/wasm-tools-go/cm"
+	"go.bytecodealliance.org/cm"
 	"wasmcv.org/wasm/cv/types"
 )
 
@@ -161,6 +161,21 @@ func (self Mat) Cols() (result uint32) {
 	self0 := cm.Reinterpret[uint32](self)
 	result0 := wasmimport_MatCols((uint32)(self0))
 	result = (uint32)((uint32)(result0))
+	return
+}
+
+// ConvertTo represents the imported method "convert-to".
+//
+// ConvertTo converts Mat into destination Mat.
+//
+//	convert-to: func(mattype: mattype) -> mat
+//
+//go:nosplit
+func (self Mat) ConvertTo(mattype Mattype) (result Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	mattype0 := (uint32)(mattype)
+	result0 := wasmimport_MatConvertTo((uint32)(self0), (uint32)(mattype0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 

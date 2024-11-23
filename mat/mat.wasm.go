@@ -3,7 +3,7 @@
 package mat
 
 import (
-	"github.com/bytecodealliance/wasm-tools-go/cm"
+	"go.bytecodealliance.org/cm"
 )
 
 // This file contains wasmimport and wasmexport declarations for "wasm:cv".
@@ -35,6 +35,10 @@ func wasmimport_MatColRange(self0 uint32, start0 uint32, end0 uint32) (result0 u
 //go:wasmimport wasm:cv/mat [method]mat.cols
 //go:noescape
 func wasmimport_MatCols(self0 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/mat [method]mat.convert-to
+//go:noescape
+func wasmimport_MatConvertTo(self0 uint32, mattype0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.copy-to
 //go:noescape

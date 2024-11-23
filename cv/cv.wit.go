@@ -4,7 +4,7 @@
 package cv
 
 import (
-	"github.com/bytecodealliance/wasm-tools-go/cm"
+	"go.bytecodealliance.org/cm"
 	"wasmcv.org/wasm/cv/mat"
 	"wasmcv.org/wasm/cv/types"
 )
@@ -510,6 +510,44 @@ func TransposeND(src Mat, order cm.List[int32]) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	order0, order1 := cm.LowerList(order)
 	result0 := wasmimport_TransposeND((uint32)(src0), (*int32)(order0), (uint32)(order1))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// EstimateAffine2d represents the imported function "estimate-affine2d".
+//
+// estimate-affine2d computes an optimal affine transformation between two 2D point
+// sets.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.0.0/d9/d0c/group__calib3d.html#ga27865b1d26bac9ce91efaee83e94d4dd
+//
+//	estimate-affine2d: func(frm: mat, to: mat) -> mat
+//
+//go:nosplit
+func EstimateAffine2d(frm Mat, to Mat) (result Mat) {
+	frm0 := cm.Reinterpret[uint32](frm)
+	to0 := cm.Reinterpret[uint32](to)
+	result0 := wasmimport_EstimateAffine2d((uint32)(frm0), (uint32)(to0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// WarpAffine represents the imported function "warp-affine".
+//
+// warp-affine applies an affine transformation to an image.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga0203d9ee5fcd28d40dbc4a1ea4451983
+//
+//	warp-affine: func(src: mat, m: mat, size: size) -> mat
+//
+//go:nosplit
+func WarpAffine(src Mat, m Mat, size Size) (result Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	m0 := cm.Reinterpret[uint32](m)
+	size0, size1 := lower_Size(size)
+	result0 := wasmimport_WarpAffine((uint32)(src0), (uint32)(m0), (uint32)(size0), (uint32)(size1))
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }

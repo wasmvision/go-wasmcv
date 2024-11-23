@@ -87,3 +87,11 @@ func wasmimport_Threshold(src0 uint32, thresh0 float32, maxValue0 float32, thres
 //go:wasmimport wasm:cv/cv transpose-ND
 //go:noescape
 func wasmimport_TransposeND(src0 uint32, order0 *int32, order1 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv estimate-affine2d
+//go:noescape
+func wasmimport_EstimateAffine2d(frm0 uint32, to0 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv warp-affine
+//go:noescape
+func wasmimport_WarpAffine(src0 uint32, m0 uint32, size0 uint32, size1 uint32) (result0 uint32)

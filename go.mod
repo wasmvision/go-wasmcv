@@ -2,4 +2,4 @@ module wasmcv.org/wasm/cv
 
 go 1.22.0
 
-require github.com/bytecodealliance/wasm-tools-go v0.3.0
+require go.bytecodealliance.org v0.4.0

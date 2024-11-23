@@ -4,7 +4,7 @@
 package types
 
 import (
-	"github.com/bytecodealliance/wasm-tools-go/cm"
+	"go.bytecodealliance.org/cm"
 )
 
 // Size represents the record "wasm:cv/types#size".

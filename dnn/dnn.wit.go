@@ -4,7 +4,7 @@
 package dnn
 
 import (
-	"github.com/bytecodealliance/wasm-tools-go/cm"
+	"go.bytecodealliance.org/cm"
 	"wasmcv.org/wasm/cv/mat"
 	"wasmcv.org/wasm/cv/types"
 )
