@@ -473,3 +473,46 @@ var stringsMorphShape = [3]string{
 func (e MorphShape) String() string {
 	return stringsMorphShape[e]
 }
+
+// KeyPoint represents the record "wasm:cv/types#key-point".
+//
+//	record key-point {
+//		x: f32,
+//		y: f32,
+//		size: f32,
+//		angle: f32,
+//		response: f32,
+//		octave: s32,
+//		class-id: s32,
+//	}
+type KeyPoint struct {
+	_        cm.HostLayout
+	X        float32
+	Y        float32
+	Size     float32
+	Angle    float32
+	Response float32
+	Octave   int32
+	ClassID  int32
+}
+
+// DMatch represents the record "wasm:cv/types#d-match".
+//
+// DMatch is data structure for matching keypoint descriptors.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d4/de0/classcv_1_1DMatch.html#a546ddb9a87898f06e510e015a6de596e
+//
+//	record d-match {
+//		query-idx: u32,
+//		train-idx: u32,
+//		img-idx: u32,
+//		distance: f64,
+//	}
+type DMatch struct {
+	_        cm.HostLayout
+	QueryIdx uint32
+	TrainIdx uint32
+	ImgIdx   uint32
+	Distance float64
+}

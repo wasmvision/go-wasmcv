@@ -130,6 +130,26 @@ interface types {
 		morph-cross,
 		morph-ellipse
 	}
+	record key-point {
+		x: f32,
+		y: f32,
+		size: f32,
+		angle: f32,
+		response: f32,
+		octave: s32,
+		class-id: s32,
+	}
+
+	/// DMatch is data structure for matching keypoint descriptors.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d4/de0/classcv_1_1DMatch.html#a546ddb9a87898f06e510e015a6de596e
+	record d-match {
+		query-idx: u32,
+		train-idx: u32,
+		img-idx: u32,
+		distance: f64,
+	}
 }
 
 /// mat resource is a matrix of bytes, wrapper around the cv::Mat type.
@@ -634,6 +654,211 @@ interface dnn {
 	NMS-boxes: func(bboxes: list<rect>, scores: list<f32>, score-threshold: f32, nms-threshold: f32) -> list<s32>;
 }
 
+interface features2d {
+	use mat.{mat};
+	use types.{key-point};
+	use types.{d-match};
+
+	/// rect is a rectangle with integer coordinates.
+	/// It is represented by the top-left corner and the bottom-right corner.
+	record detector-result {
+		kps: list<key-point>,
+		desc: mat,
+	}
+
+	/// AKAZE-detector is a wrapper around the cv::AKAZE algorithm.
+	resource AKAZE-detector {
+		/// Returns a new akaze-detector.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d8/d30/classcv_1_1AKAZE.html
+		constructor(name: string);
+
+		/// Close the akaze-detector
+		close: func();
+
+		/// Compute keypoints in an image using AKAZE.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
+		compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result;
+
+		/// Detect keypoints in an image using AKAZE.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
+		detect: func(src: mat) -> list<key-point>;
+
+		/// DetectAndCompute keypoints and compute in an image using AKAZE.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
+	}
+
+	/// BRISK-detector is a wrapper around the cv::BRISK algorithm.
+	resource BRISK-detector {
+		/// Returns a new BRISK-detector.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/de/dbf/classcv_1_1BRISK.html
+		constructor(name: string);
+
+		/// Close the BRISK-detector
+		close: func();
+
+		/// Compute keypoints in an image using BRISK.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
+		compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result;
+
+		/// Detect keypoints in an image using BRISK.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
+		detect: func(src: mat) -> list<key-point>;
+
+		/// DetectAndCompute keypoints and compute in an image using BRISK.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
+	}
+
+	/// KAZE-detector is a wrapper around the cv::KAZE algorithm.
+	resource KAZE-detector {
+		/// Returns a new KAZE-detector.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d3/d61/classcv_1_1KAZE.html
+		constructor(name: string);
+
+		/// Close the KAZE-detector
+		close: func();
+
+		/// Compute keypoints in an image using KAZE.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
+		compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result;
+
+		/// Detect keypoints in an image using KAZE.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
+		detect: func(src: mat) -> list<key-point>;
+
+		/// DetectAndCompute keypoints and compute in an image using KAZE.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
+	}
+
+	/// ORB-detector is a wrapper around the cv::ORB algorithm.
+	resource ORB-detector {
+		/// Returns a new ORB-detector.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d95/classcv_1_1ORB.html
+		constructor(name: string);
+
+		/// Close the ORB-detector
+		close: func();
+
+		/// Compute keypoints in an image using ORB.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
+		compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result;
+
+		/// Detect keypoints in an image using ORB.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
+		detect: func(src: mat) -> list<key-point>;
+
+		/// DetectAndCompute keypoints and compute in an image using ORB.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
+	}
+
+	/// SIFT-detector is a wrapper around the cv::SIFT algorithm.
+	resource SIFT-detector {
+		/// Returns a new SIFT-detector.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d7/d60/classcv_1_1SIFT.html
+		constructor(name: string);
+
+		/// Close the SIFT-detector
+		close: func();
+
+		/// Compute keypoints in an image using SIFT.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
+		compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result;
+
+		/// Detect keypoints in an image using SIFT.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
+		detect: func(src: mat) -> list<key-point>;
+
+		/// DetectAndCompute keypoints and compute in an image using SIFT.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
+	}
+
+	/// BF-matcher is a wrapper around the cv::BFMatcher algorithm.
+	resource BF-matcher {
+		/// Returns a new BF-matcher.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d3/da1/classcv_1_1BFMatcher.html#abe0bb11749b30d97f60d6ade665617bd
+		constructor(name: string);
+
+		/// KNNMatch finds the k best matches for each descriptor from a query set.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
+		KNN-match: func(query: mat, train: mat, k: u32) -> list<list<d-match>>;
+
+		/// Close the BF-matcher
+		close: func();
+
+		/// Match Finds the best match for each descriptor from a query set.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
+		match: func(query: mat, train: mat) -> list<d-match>;
+	}
+
+	/// Flann-based-matcher is a wrapper around the cv::BFMatcher algorithm.
+	resource flann-based-matcher {
+		/// Returns a new flann-based-matcher.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/dc/de2/classcv_1_1FlannBasedMatcher.html#ab9114a6471e364ad221f89068ca21382
+		constructor(name: string);
+
+		/// KNNMatch finds the k best matches for each descriptor from a query set.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
+		KNN-match: func(query: mat, train: mat, k: u32) -> list<list<d-match>>;
+
+		/// Close the flann-based-matcher
+		close: func();
+	}
+}
+
 interface objdetect {
 	use mat.{mat};
 	use types.{size};
@@ -787,5 +1012,6 @@ world imports {
 	import cv;
 	import dnn;
 	import objdetect;
+	import features2d;
 	export request;
 }
