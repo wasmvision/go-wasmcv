@@ -95,3 +95,35 @@ func wasmimport_EstimateAffine2d(frm0 uint32, to0 uint32) (result0 uint32)
 //go:wasmimport wasm:cv/cv warp-affine
 //go:noescape
 func wasmimport_WarpAffine(src0 uint32, m0 uint32, size0 uint32, size1 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv get-rotation-matrix2d
+//go:noescape
+func wasmimport_GetRotationMatrix2d(center0 uint32, center1 uint32, angle0 float64, scale0 float64) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv add
+//go:noescape
+func wasmimport_Add(src10 uint32, src20 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv add-weighted
+//go:noescape
+func wasmimport_AddWeighted(src10 uint32, alpha0 float64, src20 uint32, beta0 float64, gamma0 float64) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv exp
+//go:noescape
+func wasmimport_Exp(src0 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv hconcat
+//go:noescape
+func wasmimport_Hconcat(src10 uint32, src20 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv vconcat
+//go:noescape
+func wasmimport_Vconcat(src10 uint32, src20 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv lut
+//go:noescape
+func wasmimport_Lut(src0 uint32, wblut0 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/cv reduce-arg-max
+//go:noescape
+func wasmimport_ReduceArgMax(src0 uint32, axis0 uint32, lastIndex0 uint32) (result0 uint32)

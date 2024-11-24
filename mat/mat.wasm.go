@@ -16,9 +16,17 @@ func wasmimport_MatResourceDrop(self0 uint32)
 //go:noescape
 func wasmimport_NewMat(id0 uint32) (result0 uint32)
 
+//go:wasmimport wasm:cv/mat [static]mat.merge
+//go:noescape
+func wasmimport_MatMerge(mv0 *Mat, mv1 uint32) (result0 uint32)
+
 //go:wasmimport wasm:cv/mat [static]mat.new-with-size
 //go:noescape
 func wasmimport_MatNewWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/mat [static]mat.zeros
+//go:noescape
+func wasmimport_MatZeros(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.clone
 //go:noescape
@@ -27,6 +35,10 @@ func wasmimport_MatClone(self0 uint32) (result0 uint32)
 //go:wasmimport wasm:cv/mat [method]mat.close
 //go:noescape
 func wasmimport_MatClose(self0 uint32)
+
+//go:wasmimport wasm:cv/mat [method]mat.col
+//go:noescape
+func wasmimport_MatCol(self0 uint32, col0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.col-range
 //go:noescape
@@ -43,6 +55,10 @@ func wasmimport_MatConvertTo(self0 uint32, mattype0 uint32) (result0 uint32)
 //go:wasmimport wasm:cv/mat [method]mat.copy-to
 //go:noescape
 func wasmimport_MatCopyTo(self0 uint32, dst0 uint32)
+
+//go:wasmimport wasm:cv/mat [method]mat.elemsize
+//go:noescape
+func wasmimport_MatElemsize(self0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.empty
 //go:noescape
@@ -100,6 +116,10 @@ func wasmimport_MatRegion(self0 uint32, rect0 uint32, rect1 uint32, rect2 uint32
 //go:noescape
 func wasmimport_MatReshape(self0 uint32, channels0 uint32, rows0 uint32) (result0 uint32)
 
+//go:wasmimport wasm:cv/mat [method]mat.row
+//go:noescape
+func wasmimport_MatRow(self0 uint32, row0 uint32) (result0 uint32)
+
 //go:wasmimport wasm:cv/mat [method]mat.row-range
 //go:noescape
 func wasmimport_MatRowRange(self0 uint32, start0 uint32, end0 uint32) (result0 uint32)
@@ -135,3 +155,7 @@ func wasmimport_MatSetUcharAt3(self0 uint32, x0 uint32, y0 uint32, z0 uint32, va
 //go:wasmimport wasm:cv/mat [method]mat.size
 //go:noescape
 func wasmimport_MatSize(self0 uint32, result *cm.List[uint32])
+
+//go:wasmimport wasm:cv/mat [method]mat.step
+//go:noescape
+func wasmimport_MatStep(self0 uint32) (result0 uint32)

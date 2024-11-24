@@ -155,6 +155,10 @@ interface mat {
 		/// Close the Mat
 		close: func();
 
+		/// col creates a matrix header for the specified matrix column.
+		/// The underlying data of the new matrix is shared with the original matrix.
+		col: func(col: u32) -> mat;
+
 		/// ColRange creates a matrix header for the specified column span.
 		///
 		/// For further details, please see:
@@ -169,6 +173,9 @@ interface mat {
 
 		/// CopyTo copies Mat into destination Mat.
 		copy-to: func(dst: borrow<mat>);
+
+		/// ElemSize returns the matrix element size in bytes.
+		elemsize: func() -> u32;
 
 		/// Empty returns true if the Mat is empty.
 		empty: func() -> bool;
@@ -225,6 +232,10 @@ interface mat {
 		/// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a4eb96e3251417fa88b78e2abd6cfd7d8
 		reshape: func(channels: u32, rows: u32) -> mat;
 
+		/// row creates a matrix header for the specified matrix row.
+		/// The underlying data of the new matrix is shared with the original matrix.
+		row: func(row: u32) -> mat;
+
 		/// RowRange creates a matrix header for the specified row span.
 		///
 		/// For further details, please see:
@@ -256,8 +267,20 @@ interface mat {
 		/// of that dimension for the Mat.
 		size: func() -> list<u32>;
 
+		/// Step returns the number of bytes each matrix row occupies.
+		step: func() -> u32;
+
+		/// Merge creates one multi-channel array out of several single-channel ones.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
+		merge: static func(mv: list<mat>) -> mat;
+
 		/// Create a new Mat with the specified size and type.
 		new-with-size: static func(cols: u32, rows: u32, mattype: mattype) -> mat;
+
+		/// zeros returns a zero array of the specified size and type.
+		zeros: static func(cols: u32, rows: u32, mattype: mattype) -> mat;
 	}
 }
 
@@ -437,6 +460,57 @@ interface cv {
 	/// For further details, please see:
 	/// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga0203d9ee5fcd28d40dbc4a1ea4451983
 	warp-affine: func(src: mat, m: mat, size: size) -> mat;
+
+	/// get-rotation-matrix2d calculates an affine matrix of 2D rotation.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
+	get-rotation-matrix2d: func(center: point, angle: f64, scale: f64) -> mat;
+
+	/// add calculates the per-element sum of two arrays.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
+	add: func(src1: mat, src2: mat) -> mat;
+
+	/// add-weighted calculates the weighted sum of two arrays.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gafafb2513349db3bcff51f54ee5592a19
+	add-weighted: func(src1: mat, alpha: f64, src2: mat, beta: f64, gamma: f64) -> mat;
+
+	/// exp calculates the exponent of every array element.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
+	exp: func(src: mat) -> mat;
+
+	/// hconcat applies horizontal concatenation to given matrices.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
+	hconcat: func(src1: mat, src2: mat) -> mat;
+
+	/// vconcat applies vertical concatenation to given matrices.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga744f53b69f6e4f12156cdde4e76aed27
+	vconcat: func(src1: mat, src2: mat) -> mat;
+
+	/// lut performs a look-up table transform of an array.
+	///
+	/// The function LUT fills the output array with values from the look-up table.
+	/// Indices of the entries are taken from the input array.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
+	lut: func(src: mat, wblut: mat) -> mat;
+
+	/// reduce-arg-max finds indices of max elements along provided axis.
+	///
+	/// For further details, please see:
+	/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
+	reduce-arg-max: func(src: mat, axis: u32, last-index: bool) -> mat;
 }
 
 interface dnn {

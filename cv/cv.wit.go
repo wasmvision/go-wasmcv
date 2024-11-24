@@ -551,3 +551,155 @@ func WarpAffine(src Mat, m Mat, size Size) (result Mat) {
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
+
+// GetRotationMatrix2d represents the imported function "get-rotation-matrix2d".
+//
+// get-rotation-matrix2d calculates an affine matrix of 2D rotation.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
+//
+//	get-rotation-matrix2d: func(center: point, angle: f64, scale: f64) -> mat
+//
+//go:nosplit
+func GetRotationMatrix2d(center Point, angle float64, scale float64) (result Mat) {
+	center0, center1 := lower_Size(center)
+	angle0 := (float64)(angle)
+	scale0 := (float64)(scale)
+	result0 := wasmimport_GetRotationMatrix2d((uint32)(center0), (uint32)(center1), (float64)(angle0), (float64)(scale0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// Add represents the imported function "add".
+//
+// add calculates the per-element sum of two arrays.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
+//
+//	add: func(src1: mat, src2: mat) -> mat
+//
+//go:nosplit
+func Add(src1 Mat, src2 Mat) (result Mat) {
+	src10 := cm.Reinterpret[uint32](src1)
+	src20 := cm.Reinterpret[uint32](src2)
+	result0 := wasmimport_Add((uint32)(src10), (uint32)(src20))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// AddWeighted represents the imported function "add-weighted".
+//
+// add-weighted calculates the weighted sum of two arrays.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gafafb2513349db3bcff51f54ee5592a19
+//
+//	add-weighted: func(src1: mat, alpha: f64, src2: mat, beta: f64, gamma: f64) ->
+//	mat
+//
+//go:nosplit
+func AddWeighted(src1 Mat, alpha float64, src2 Mat, beta float64, gamma float64) (result Mat) {
+	src10 := cm.Reinterpret[uint32](src1)
+	alpha0 := (float64)(alpha)
+	src20 := cm.Reinterpret[uint32](src2)
+	beta0 := (float64)(beta)
+	gamma0 := (float64)(gamma)
+	result0 := wasmimport_AddWeighted((uint32)(src10), (float64)(alpha0), (uint32)(src20), (float64)(beta0), (float64)(gamma0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// Exp represents the imported function "exp".
+//
+// exp calculates the exponent of every array element.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
+//
+//	exp: func(src: mat) -> mat
+//
+//go:nosplit
+func Exp(src Mat) (result Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	result0 := wasmimport_Exp((uint32)(src0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// Hconcat represents the imported function "hconcat".
+//
+// hconcat applies horizontal concatenation to given matrices.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
+//
+//	hconcat: func(src1: mat, src2: mat) -> mat
+//
+//go:nosplit
+func Hconcat(src1 Mat, src2 Mat) (result Mat) {
+	src10 := cm.Reinterpret[uint32](src1)
+	src20 := cm.Reinterpret[uint32](src2)
+	result0 := wasmimport_Hconcat((uint32)(src10), (uint32)(src20))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// Vconcat represents the imported function "vconcat".
+//
+// vconcat applies vertical concatenation to given matrices.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga744f53b69f6e4f12156cdde4e76aed27
+//
+//	vconcat: func(src1: mat, src2: mat) -> mat
+//
+//go:nosplit
+func Vconcat(src1 Mat, src2 Mat) (result Mat) {
+	src10 := cm.Reinterpret[uint32](src1)
+	src20 := cm.Reinterpret[uint32](src2)
+	result0 := wasmimport_Vconcat((uint32)(src10), (uint32)(src20))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// Lut represents the imported function "lut".
+//
+// lut performs a look-up table transform of an array.
+//
+// The function LUT fills the output array with values from the look-up table.
+// Indices of the entries are taken from the input array.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
+//
+//	lut: func(src: mat, wblut: mat) -> mat
+//
+//go:nosplit
+func Lut(src Mat, wblut Mat) (result Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	wblut0 := cm.Reinterpret[uint32](wblut)
+	result0 := wasmimport_Lut((uint32)(src0), (uint32)(wblut0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// ReduceArgMax represents the imported function "reduce-arg-max".
+//
+// reduce-arg-max finds indices of max elements along provided axis.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
+//
+//	reduce-arg-max: func(src: mat, axis: u32, last-index: bool) -> mat
+//
+//go:nosplit
+func ReduceArgMax(src Mat, axis uint32, lastIndex bool) (result Mat) {
+	src0 := cm.Reinterpret[uint32](src)
+	axis0 := (uint32)(axis)
+	lastIndex0 := cm.BoolToU32(lastIndex)
+	result0 := wasmimport_ReduceArgMax((uint32)(src0), (uint32)(axis0), (uint32)(lastIndex0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}

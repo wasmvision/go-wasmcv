@@ -88,6 +88,23 @@ func NewMat(id uint32) (result Mat) {
 	return
 }
 
+// MatMerge represents the imported static function "merge".
+//
+// Merge creates one multi-channel array out of several single-channel ones.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
+//
+//	merge: static func(mv: list<mat>) -> mat
+//
+//go:nosplit
+func MatMerge(mv cm.List[Mat]) (result Mat) {
+	mv0, mv1 := cm.LowerList(mv)
+	result0 := wasmimport_MatMerge((*Mat)(mv0), (uint32)(mv1))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
 // MatNewWithSize represents the imported static function "new-with-size".
 //
 // Create a new Mat with the specified size and type.
@@ -100,6 +117,22 @@ func MatNewWithSize(cols uint32, rows uint32, mattype Mattype) (result Mat) {
 	rows0 := (uint32)(rows)
 	mattype0 := (uint32)(mattype)
 	result0 := wasmimport_MatNewWithSize((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
+// MatZeros represents the imported static function "zeros".
+//
+// zeros returns a zero array of the specified size and type.
+//
+//	zeros: static func(cols: u32, rows: u32, mattype: mattype) -> mat
+//
+//go:nosplit
+func MatZeros(cols uint32, rows uint32, mattype Mattype) (result Mat) {
+	cols0 := (uint32)(cols)
+	rows0 := (uint32)(rows)
+	mattype0 := (uint32)(mattype)
+	result0 := wasmimport_MatZeros((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0))
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
@@ -128,6 +161,22 @@ func (self Mat) Clone() (result Mat) {
 func (self Mat) Close() {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_MatClose((uint32)(self0))
+	return
+}
+
+// Col represents the imported method "col".
+//
+// col creates a matrix header for the specified matrix column.
+// The underlying data of the new matrix is shared with the original matrix.
+//
+//	col: func(col: u32) -> mat
+//
+//go:nosplit
+func (self Mat) Col(col uint32) (result Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	col0 := (uint32)(col)
+	result0 := wasmimport_MatCol((uint32)(self0), (uint32)(col0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
 }
 
@@ -190,6 +239,20 @@ func (self Mat) CopyTo(dst Mat) {
 	self0 := cm.Reinterpret[uint32](self)
 	dst0 := cm.Reinterpret[uint32](dst)
 	wasmimport_MatCopyTo((uint32)(self0), (uint32)(dst0))
+	return
+}
+
+// Elemsize represents the imported method "elemsize".
+//
+// ElemSize returns the matrix element size in bytes.
+//
+//	elemsize: func() -> u32
+//
+//go:nosplit
+func (self Mat) Elemsize() (result uint32) {
+	self0 := cm.Reinterpret[uint32](self)
+	result0 := wasmimport_MatElemsize((uint32)(self0))
+	result = (uint32)((uint32)(result0))
 	return
 }
 
@@ -421,6 +484,22 @@ func (self Mat) Reshape(channels uint32, rows uint32) (result Mat) {
 	return
 }
 
+// Row represents the imported method "row".
+//
+// row creates a matrix header for the specified matrix row.
+// The underlying data of the new matrix is shared with the original matrix.
+//
+//	row: func(row: u32) -> mat
+//
+//go:nosplit
+func (self Mat) Row(row uint32) (result Mat) {
+	self0 := cm.Reinterpret[uint32](self)
+	row0 := (uint32)(row)
+	result0 := wasmimport_MatRow((uint32)(self0), (uint32)(row0))
+	result = cm.Reinterpret[Mat]((uint32)(result0))
+	return
+}
+
 // RowRange represents the imported method "row-range".
 //
 // RowRange creates a matrix header for the specified row span.
@@ -564,5 +643,19 @@ func (self Mat) SetUcharAt3(x uint32, y uint32, z uint32, val uint8) {
 func (self Mat) Size() (result cm.List[uint32]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_MatSize((uint32)(self0), &result)
+	return
+}
+
+// Step represents the imported method "step".
+//
+// Step returns the number of bytes each matrix row occupies.
+//
+//	step: func() -> u32
+//
+//go:nosplit
+func (self Mat) Step() (result uint32) {
+	self0 := cm.Reinterpret[uint32](self)
+	result0 := wasmimport_MatStep((uint32)(self0))
+	result = (uint32)((uint32)(result0))
 	return
 }
