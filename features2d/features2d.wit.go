@@ -345,6 +345,29 @@ func (self KAZEDetector) DetectAndCompute(src Mat, mask Mat) (result DetectorRes
 	return
 }
 
+// ORBScoreType represents the enum "wasm:cv/features2d#ORB-score-type".
+//
+//	enum ORB-score-type {
+//		ORB-HARRIS,
+//		ORB-FAST
+//	}
+type ORBScoreType uint8
+
+const (
+	ORBScoreTypeORBHARRIS ORBScoreType = iota
+	ORBScoreTypeORBFAST
+)
+
+var stringsORBScoreType = [2]string{
+	"ORB-HARRIS",
+	"ORB-FAST",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e ORBScoreType) String() string {
+	return stringsORBScoreType[e]
+}
+
 // ORBDetector represents the imported resource "wasm:cv/features2d#ORB-detector".
 //
 // ORB-detector is a wrapper around the cv::ORB algorithm.
@@ -376,6 +399,33 @@ func (self ORBDetector) ResourceDrop() {
 func NewORBDetector(name string) (result ORBDetector) {
 	name0, name1 := cm.LowerString(name)
 	result0 := wasmimport_NewORBDetector((*uint8)(name0), (uint32)(name1))
+	result = cm.Reinterpret[ORBDetector]((uint32)(result0))
+	return
+}
+
+// ORBDetectorNewWithParams represents the imported static function "new-with-params".
+//
+// Returns a new ORB-detector.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/db/d95/classcv_1_1ORB.html
+//
+//	new-with-params: static func(features: u32, scale: f32, levels: u32, edge-threshold:
+//	u32, first: u32, WTAK: u32, score-type: ORB-score-type, patch-size: u32, fast-threshold:
+//	u32) -> ORB-detector
+//
+//go:nosplit
+func ORBDetectorNewWithParams(features uint32, scale float32, levels uint32, edgeThreshold uint32, first uint32, wtak uint32, scoreType ORBScoreType, patchSize uint32, fastThreshold uint32) (result ORBDetector) {
+	features0 := (uint32)(features)
+	scale0 := (float32)(scale)
+	levels0 := (uint32)(levels)
+	edgeThreshold0 := (uint32)(edgeThreshold)
+	first0 := (uint32)(first)
+	wtak0 := (uint32)(wtak)
+	scoreType0 := (uint32)(scoreType)
+	patchSize0 := (uint32)(patchSize)
+	fastThreshold0 := (uint32)(fastThreshold)
+	result0 := wasmimport_ORBDetectorNewWithParams((uint32)(features0), (float32)(scale0), (uint32)(levels0), (uint32)(edgeThreshold0), (uint32)(first0), (uint32)(wtak0), (uint32)(scoreType0), (uint32)(patchSize0), (uint32)(fastThreshold0))
 	result = cm.Reinterpret[ORBDetector]((uint32)(result0))
 	return
 }
@@ -549,6 +599,50 @@ func (self SIFTDetector) DetectAndCompute(src Mat, mask Mat) (result DetectorRes
 	return
 }
 
+// NormType represents the enum "wasm:cv/features2d#norm-type".
+//
+//	enum norm-type {
+//		NORM-NONE,
+//		NONE-INF,
+//		NORM-L1,
+//		NORM-NONE2,
+//		NORM-L2,
+//		NORM-L2SQR,
+//		NORM-HAMMING,
+//		NORM-HAMMING2,
+//		NORM-RELATIVE
+//	}
+type NormType uint8
+
+const (
+	NormTypeNORMNONE NormType = iota
+	NormTypeNONEINF
+	NormTypeNORML1
+	NormTypeNORMNONE2
+	NormTypeNORML2
+	NormTypeNORML2SQR
+	NormTypeNORMHAMMING
+	NormTypeNORMHAMMING2
+	NormTypeNORMRELATIVE
+)
+
+var stringsNormType = [9]string{
+	"NORM-NONE",
+	"NONE-INF",
+	"NORM-L1",
+	"NORM-NONE2",
+	"NORM-L2",
+	"NORM-L2SQR",
+	"NORM-HAMMING",
+	"NORM-HAMMING2",
+	"NORM-RELATIVE",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e NormType) String() string {
+	return stringsNormType[e]
+}
+
 // BFMatcher represents the imported resource "wasm:cv/features2d#BF-matcher".
 //
 // BF-matcher is a wrapper around the cv::BFMatcher algorithm.
@@ -580,6 +674,24 @@ func (self BFMatcher) ResourceDrop() {
 func NewBFMatcher(name string) (result BFMatcher) {
 	name0, name1 := cm.LowerString(name)
 	result0 := wasmimport_NewBFMatcher((*uint8)(name0), (uint32)(name1))
+	result = cm.Reinterpret[BFMatcher]((uint32)(result0))
+	return
+}
+
+// BFMatcherNewWithParams represents the imported static function "new-with-params".
+//
+// Returns a new BF-matcher.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d3/da1/classcv_1_1BFMatcher.html#abe0bb11749b30d97f60d6ade665617bd
+//
+//	new-with-params: static func(norm: norm-type, cross-check: bool) -> BF-matcher
+//
+//go:nosplit
+func BFMatcherNewWithParams(norm NormType, crossCheck bool) (result BFMatcher) {
+	norm0 := (uint32)(norm)
+	crossCheck0 := cm.BoolToU32(crossCheck)
+	result0 := wasmimport_BFMatcherNewWithParams((uint32)(norm0), (uint32)(crossCheck0))
 	result = cm.Reinterpret[BFMatcher]((uint32)(result0))
 	return
 }

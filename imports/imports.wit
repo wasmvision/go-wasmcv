@@ -755,6 +755,7 @@ interface features2d {
 		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
 	}
+	enum ORB-score-type { ORB-HARRIS, ORB-FAST }
 
 	/// ORB-detector is a wrapper around the cv::ORB algorithm.
 	resource ORB-detector {
@@ -784,6 +785,12 @@ interface features2d {
 		/// For further details, please see:
 		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
+
+		/// Returns a new ORB-detector.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/db/d95/classcv_1_1ORB.html
+		new-with-params: static func(features: u32, scale: f32, levels: u32, edge-threshold: u32, first: u32, WTAK: u32, score-type: ORB-score-type, patch-size: u32, fast-threshold: u32) -> ORB-detector;
 	}
 
 	/// SIFT-detector is a wrapper around the cv::SIFT algorithm.
@@ -815,6 +822,17 @@ interface features2d {
 		/// https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 		detect-and-compute: func(src: mat, mask: mat) -> detector-result;
 	}
+	enum norm-type {
+		NORM-NONE,
+		NONE-INF,
+		NORM-L1,
+		NORM-NONE2,
+		NORM-L2,
+		NORM-L2SQR,
+		NORM-HAMMING,
+		NORM-HAMMING2,
+		NORM-RELATIVE
+	}
 
 	/// BF-matcher is a wrapper around the cv::BFMatcher algorithm.
 	resource BF-matcher {
@@ -838,6 +856,12 @@ interface features2d {
 		/// For further details, please see:
 		/// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
 		match: func(query: mat, train: mat) -> list<d-match>;
+
+		/// Returns a new BF-matcher.
+		///
+		/// For further details, please see:
+		/// https://docs.opencv.org/4.x/d3/da1/classcv_1_1BFMatcher.html#abe0bb11749b30d97f60d6ade665617bd
+		new-with-params: static func(norm: norm-type, cross-check: bool) -> BF-matcher;
 	}
 
 	/// Flann-based-matcher is a wrapper around the cv::BFMatcher algorithm.

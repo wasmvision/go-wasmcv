@@ -88,6 +88,10 @@ func wasmimport_ORBDetectorResourceDrop(self0 uint32)
 //go:noescape
 func wasmimport_NewORBDetector(name0 *uint8, name1 uint32) (result0 uint32)
 
+//go:wasmimport wasm:cv/features2d [static]ORB-detector.new-with-params
+//go:noescape
+func wasmimport_ORBDetectorNewWithParams(features0 uint32, scale0 float32, levels0 uint32, edgeThreshold0 uint32, first0 uint32, wtak0 uint32, scoreType0 uint32, patchSize0 uint32, fastThreshold0 uint32) (result0 uint32)
+
 //go:wasmimport wasm:cv/features2d [method]ORB-detector.close
 //go:noescape
 func wasmimport_ORBDetectorClose(self0 uint32)
@@ -135,6 +139,10 @@ func wasmimport_BFMatcherResourceDrop(self0 uint32)
 //go:wasmimport wasm:cv/features2d [constructor]BF-matcher
 //go:noescape
 func wasmimport_NewBFMatcher(name0 *uint8, name1 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/features2d [static]BF-matcher.new-with-params
+//go:noescape
+func wasmimport_BFMatcherNewWithParams(norm0 uint32, crossCheck0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/features2d [method]BF-matcher.KNN-match
 //go:noescape
