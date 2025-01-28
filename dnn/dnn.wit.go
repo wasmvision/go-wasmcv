@@ -65,7 +65,7 @@ const (
 	NetBackendTypeNetBackendCuda
 )
 
-var stringsNetBackendType = [6]string{
+var _NetBackendTypeStrings = [6]string{
 	"net-backend-default",
 	"net-backend-halide",
 	"net-backend-openvino",
@@ -76,8 +76,21 @@ var stringsNetBackendType = [6]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e NetBackendType) String() string {
-	return stringsNetBackendType[e]
+	return _NetBackendTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e NetBackendType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *NetBackendType) UnmarshalText(text []byte) error {
+	return _NetBackendTypeUnmarshalCase(e, text)
+}
+
+var _NetBackendTypeUnmarshalCase = cm.CaseUnmarshaler[NetBackendType](_NetBackendTypeStrings[:])
 
 // NetTargetType represents the enum "wasm:cv/dnn#net-target-type".
 //
@@ -104,7 +117,7 @@ const (
 	NetTargetTypeNetTargetCudaFp16
 )
 
-var stringsNetTargetType = [8]string{
+var _NetTargetTypeStrings = [8]string{
 	"net-target-cpu",
 	"net-target-fp32",
 	"net-target-fp16",
@@ -117,8 +130,21 @@ var stringsNetTargetType = [8]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e NetTargetType) String() string {
-	return stringsNetTargetType[e]
+	return _NetTargetTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e NetTargetType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *NetTargetType) UnmarshalText(text []byte) error {
+	return _NetTargetTypeUnmarshalCase(e, text)
+}
+
+var _NetTargetTypeUnmarshalCase = cm.CaseUnmarshaler[NetTargetType](_NetTargetTypeStrings[:])
 
 // Layer represents the imported resource "wasm:cv/dnn#layer".
 //
@@ -237,7 +263,7 @@ func (self Net) Close() {
 func (self Net) Empty() (result bool) {
 	self0 := cm.Reinterpret[uint32](self)
 	result0 := wasmimport_NetEmpty((uint32)(self0))
-	result = cm.U32ToBool((uint32)(result0))
+	result = (bool)(cm.U32ToBool((uint32)(result0)))
 	return
 }
 
@@ -362,8 +388,8 @@ func BlobFromImage(image Mat, scaleFactor float32, size Size, mean Scalar, swapR
 	scaleFactor0 := (float32)(scaleFactor)
 	size0, size1 := lower_Size(size)
 	mean0, mean1, mean2, mean3 := lower_Scalar(mean)
-	swapRb0 := cm.BoolToU32(swapRb)
-	crop0 := cm.BoolToU32(crop)
+	swapRb0 := (uint32)(cm.BoolToU32(swapRb))
+	crop0 := (uint32)(cm.BoolToU32(crop))
 	result0 := wasmimport_BlobFromImage((uint32)(image0), (float32)(scaleFactor0), (uint32)(size0), (uint32)(size1), (float32)(mean0), (float32)(mean1), (float32)(mean2), (float32)(mean3), (uint32)(swapRb0), (uint32)(crop0))
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return
@@ -409,10 +435,10 @@ func BlobRectsToImageRects(params BlobParams, blobRects cm.List[Rect], imageSize
 // wasmimport_BlobRectsToImageRects_params represents the flattened function params for [wasmimport_BlobRectsToImageRects].
 // See the Canonical ABI flattening rules for more information.
 type wasmimport_BlobRectsToImageRects_params struct {
-	_         cm.HostLayout
-	params    BlobParams
-	blobRects cm.List[Rect]
-	imageSize Size
+	_         cm.HostLayout `json:"-"`
+	params    BlobParams    `json:"params"`
+	blobRects cm.List[Rect] `json:"blob-rects"`
+	imageSize Size          `json:"image-size"`
 }
 
 // NMSBoxes represents the imported function "NMS-boxes".

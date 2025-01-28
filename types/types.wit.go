@@ -17,9 +17,9 @@ import (
 //		y: s32,
 //	}
 type Size struct {
-	_ cm.HostLayout
-	X int32
-	Y int32
+	_ cm.HostLayout `json:"-"`
+	X int32         `json:"x"`
+	Y int32         `json:"y"`
 }
 
 // Point represents the type alias "wasm:cv/types#point".
@@ -38,11 +38,11 @@ type Point = Size
 //		val4: f32,
 //	}
 type Scalar struct {
-	_    cm.HostLayout
-	Val1 float32
-	Val2 float32
-	Val3 float32
-	Val4 float32
+	_    cm.HostLayout `json:"-"`
+	Val1 float32       `json:"val1"`
+	Val2 float32       `json:"val2"`
+	Val3 float32       `json:"val3"`
+	Val4 float32       `json:"val4"`
 }
 
 // Rect represents the record "wasm:cv/types#rect".
@@ -55,9 +55,9 @@ type Scalar struct {
 //		max: size,
 //	}
 type Rect struct {
-	_   cm.HostLayout
-	Min Size
-	Max Size
+	_   cm.HostLayout `json:"-"`
+	Min Size          `json:"min"`
+	Max Size          `json:"max"`
 }
 
 // RGBA represents the record "wasm:cv/types#RGBA".
@@ -71,11 +71,11 @@ type Rect struct {
 //		a: u8,
 //	}
 type RGBA struct {
-	_ cm.HostLayout
-	R uint8
-	G uint8
-	B uint8
-	A uint8
+	_ cm.HostLayout `json:"-"`
+	R uint8         `json:"r"`
+	G uint8         `json:"g"`
+	B uint8         `json:"b"`
+	A uint8         `json:"a"`
 }
 
 // BorderType represents the enum "wasm:cv/types#border-type".
@@ -105,7 +105,7 @@ const (
 	BorderTypeBorderIsolated
 )
 
-var stringsBorderType = [8]string{
+var _BorderTypeStrings = [8]string{
 	"border-constant",
 	"border-replicate",
 	"border-reflect",
@@ -118,8 +118,21 @@ var stringsBorderType = [8]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e BorderType) String() string {
-	return stringsBorderType[e]
+	return _BorderTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e BorderType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *BorderType) UnmarshalText(text []byte) error {
+	return _BorderTypeUnmarshalCase(e, text)
+}
+
+var _BorderTypeUnmarshalCase = cm.CaseUnmarshaler[BorderType](_BorderTypeStrings[:])
 
 // AdaptiveThresholdType represents the enum "wasm:cv/types#adaptive-threshold-type".
 //
@@ -136,15 +149,28 @@ const (
 	AdaptiveThresholdTypeAdaptiveThresholdGaussian
 )
 
-var stringsAdaptiveThresholdType = [2]string{
+var _AdaptiveThresholdTypeStrings = [2]string{
 	"adaptive-threshold-mean",
 	"adaptive-threshold-gaussian",
 }
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e AdaptiveThresholdType) String() string {
-	return stringsAdaptiveThresholdType[e]
+	return _AdaptiveThresholdTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e AdaptiveThresholdType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *AdaptiveThresholdType) UnmarshalText(text []byte) error {
+	return _AdaptiveThresholdTypeUnmarshalCase(e, text)
+}
+
+var _AdaptiveThresholdTypeUnmarshalCase = cm.CaseUnmarshaler[AdaptiveThresholdType](_AdaptiveThresholdTypeStrings[:])
 
 // ThresholdType represents the enum "wasm:cv/types#threshold-type".
 //
@@ -173,7 +199,7 @@ const (
 	ThresholdTypeTthresholdTriangle
 )
 
-var stringsThresholdType = [8]string{
+var _ThresholdTypeStrings = [8]string{
 	"threshold-binary",
 	"threshold-binary-inv",
 	"threshold-trunc",
@@ -186,8 +212,21 @@ var stringsThresholdType = [8]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e ThresholdType) String() string {
-	return stringsThresholdType[e]
+	return _ThresholdTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e ThresholdType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *ThresholdType) UnmarshalText(text []byte) error {
+	return _ThresholdTypeUnmarshalCase(e, text)
+}
+
+var _ThresholdTypeUnmarshalCase = cm.CaseUnmarshaler[ThresholdType](_ThresholdTypeStrings[:])
 
 // DataLayoutType represents the enum "wasm:cv/types#data-layout-type".
 //
@@ -214,7 +253,7 @@ const (
 	DataLayoutTypeDataLayoutPlanar
 )
 
-var stringsDataLayoutType = [7]string{
+var _DataLayoutTypeStrings = [7]string{
 	"data-layout-unknown",
 	"data-layout-nd",
 	"data-layout-nchw",
@@ -226,8 +265,21 @@ var stringsDataLayoutType = [7]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e DataLayoutType) String() string {
-	return stringsDataLayoutType[e]
+	return _DataLayoutTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e DataLayoutType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *DataLayoutType) UnmarshalText(text []byte) error {
+	return _DataLayoutTypeUnmarshalCase(e, text)
+}
+
+var _DataLayoutTypeUnmarshalCase = cm.CaseUnmarshaler[DataLayoutType](_DataLayoutTypeStrings[:])
 
 // PaddingModeType represents the enum "wasm:cv/types#padding-mode-type".
 //
@@ -244,7 +296,7 @@ const (
 	PaddingModeTypePaddingModeLetterbox
 )
 
-var stringsPaddingModeType = [3]string{
+var _PaddingModeTypeStrings = [3]string{
 	"padding-mode-null",
 	"padding-mode-crop-center",
 	"padding-mode-letterbox",
@@ -252,8 +304,21 @@ var stringsPaddingModeType = [3]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e PaddingModeType) String() string {
-	return stringsPaddingModeType[e]
+	return _PaddingModeTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e PaddingModeType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *PaddingModeType) UnmarshalText(text []byte) error {
+	return _PaddingModeTypeUnmarshalCase(e, text)
+}
+
+var _PaddingModeTypeUnmarshalCase = cm.CaseUnmarshaler[PaddingModeType](_PaddingModeTypeStrings[:])
 
 // BlobParams represents the record "wasm:cv/types#blob-params".
 //
@@ -268,15 +333,15 @@ func (e PaddingModeType) String() string {
 //		border: scalar,
 //	}
 type BlobParams struct {
-	_           cm.HostLayout
-	ScaleFactor float32
-	Size        Size
-	Mean        Scalar
-	SwapRB      bool
-	Ddepth      uint8
-	DataLayout  DataLayoutType
-	PaddingMode PaddingModeType
-	Border      Scalar
+	_           cm.HostLayout   `json:"-"`
+	ScaleFactor float32         `json:"scale-factor"`
+	Size        Size            `json:"size"`
+	Mean        Scalar          `json:"mean"`
+	SwapRB      bool            `json:"swap-RB"`
+	Ddepth      uint8           `json:"ddepth"`
+	DataLayout  DataLayoutType  `json:"data-layout"`
+	PaddingMode PaddingModeType `json:"padding-mode"`
+	Border      Scalar          `json:"border"`
 }
 
 // MixMaxLocResult represents the record "wasm:cv/types#mix-max-loc-result".
@@ -288,11 +353,11 @@ type BlobParams struct {
 //		max-loc: size,
 //	}
 type MixMaxLocResult struct {
-	_      cm.HostLayout
-	MinVal float32
-	MaxVal float32
-	MinLoc Size
-	MaxLoc Size
+	_      cm.HostLayout `json:"-"`
+	MinVal float32       `json:"min-val"`
+	MaxVal float32       `json:"max-val"`
+	MinLoc Size          `json:"min-loc"`
+	MaxLoc Size          `json:"max-loc"`
 }
 
 // HersheyFontType represents the enum "wasm:cv/types#hershey-font-type".
@@ -322,7 +387,7 @@ const (
 	HersheyFontTypeHersheyFontItalic
 )
 
-var stringsHersheyFontType = [9]string{
+var _HersheyFontTypeStrings = [9]string{
 	"hershey-font-simplex",
 	"hershey-font-plain",
 	"hershey-font-duplex",
@@ -336,8 +401,21 @@ var stringsHersheyFontType = [9]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e HersheyFontType) String() string {
-	return stringsHersheyFontType[e]
+	return _HersheyFontTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e HersheyFontType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *HersheyFontType) UnmarshalText(text []byte) error {
+	return _HersheyFontTypeUnmarshalCase(e, text)
+}
+
+var _HersheyFontTypeUnmarshalCase = cm.CaseUnmarshaler[HersheyFontType](_HersheyFontTypeStrings[:])
 
 // InterpolationType represents the enum "wasm:cv/types#interpolation-type".
 //
@@ -358,7 +436,7 @@ const (
 	InterpolationTypeInterpolationLanczos4
 )
 
-var stringsInterpolationType = [5]string{
+var _InterpolationTypeStrings = [5]string{
 	"interpolation-nearest",
 	"interpolation-linear",
 	"interpolation-cubic",
@@ -368,8 +446,21 @@ var stringsInterpolationType = [5]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e InterpolationType) String() string {
-	return stringsInterpolationType[e]
+	return _InterpolationTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e InterpolationType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *InterpolationType) UnmarshalText(text []byte) error {
+	return _InterpolationTypeUnmarshalCase(e, text)
+}
+
+var _InterpolationTypeUnmarshalCase = cm.CaseUnmarshaler[InterpolationType](_InterpolationTypeStrings[:])
 
 // ColorCoversionType represents the enum "wasm:cv/types#color-coversion-type".
 //
@@ -420,7 +511,7 @@ const (
 	ColorCoversionTypeColorRGBAToGray
 )
 
-var stringsColorCoversionType = [20]string{
+var _ColorCoversionTypeStrings = [20]string{
 	"color-BGR-to-BGRA",
 	"color-RGB-to-RGBA",
 	"color-BGRA-to-BGR",
@@ -445,8 +536,21 @@ var stringsColorCoversionType = [20]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e ColorCoversionType) String() string {
-	return stringsColorCoversionType[e]
+	return _ColorCoversionTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e ColorCoversionType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *ColorCoversionType) UnmarshalText(text []byte) error {
+	return _ColorCoversionTypeUnmarshalCase(e, text)
+}
+
+var _ColorCoversionTypeUnmarshalCase = cm.CaseUnmarshaler[ColorCoversionType](_ColorCoversionTypeStrings[:])
 
 // MorphShape represents the enum "wasm:cv/types#morph-shape".
 //
@@ -463,7 +567,7 @@ const (
 	MorphShapeMorphEllipse
 )
 
-var stringsMorphShape = [3]string{
+var _MorphShapeStrings = [3]string{
 	"morph-rect",
 	"morph-cross",
 	"morph-ellipse",
@@ -471,8 +575,21 @@ var stringsMorphShape = [3]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e MorphShape) String() string {
-	return stringsMorphShape[e]
+	return _MorphShapeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e MorphShape) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *MorphShape) UnmarshalText(text []byte) error {
+	return _MorphShapeUnmarshalCase(e, text)
+}
+
+var _MorphShapeUnmarshalCase = cm.CaseUnmarshaler[MorphShape](_MorphShapeStrings[:])
 
 // KeyPoint represents the record "wasm:cv/types#key-point".
 //
@@ -486,14 +603,14 @@ func (e MorphShape) String() string {
 //		class-id: s32,
 //	}
 type KeyPoint struct {
-	_        cm.HostLayout
-	X        float32
-	Y        float32
-	Size     float32
-	Angle    float32
-	Response float32
-	Octave   int32
-	ClassID  int32
+	_        cm.HostLayout `json:"-"`
+	X        float32       `json:"x"`
+	Y        float32       `json:"y"`
+	Size     float32       `json:"size"`
+	Angle    float32       `json:"angle"`
+	Response float32       `json:"response"`
+	Octave   int32         `json:"octave"`
+	ClassID  int32         `json:"class-id"`
 }
 
 // DMatch represents the record "wasm:cv/types#d-match".
@@ -510,9 +627,9 @@ type KeyPoint struct {
 //		distance: f64,
 //	}
 type DMatch struct {
-	_        cm.HostLayout
-	QueryIdx uint32
-	TrainIdx uint32
-	ImgIdx   uint32
-	Distance float64
+	_        cm.HostLayout `json:"-"`
+	QueryIdx uint32        `json:"query-idx"`
+	TrainIdx uint32        `json:"train-idx"`
+	ImgIdx   uint32        `json:"img-idx"`
+	Distance float64       `json:"distance"`
 }

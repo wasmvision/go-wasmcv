@@ -43,7 +43,7 @@ const (
 	MattypeCv64f
 )
 
-var stringsMattype = [7]string{
+var _MattypeStrings = [7]string{
 	"cv8u",
 	"cv8s",
 	"cv16u",
@@ -55,8 +55,21 @@ var stringsMattype = [7]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e Mattype) String() string {
-	return stringsMattype[e]
+	return _MattypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e Mattype) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *Mattype) UnmarshalText(text []byte) error {
+	return _MattypeUnmarshalCase(e, text)
+}
+
+var _MattypeUnmarshalCase = cm.CaseUnmarshaler[Mattype](_MattypeStrings[:])
 
 // Mat represents the imported resource "wasm:cv/mat#mat".
 //
@@ -266,7 +279,7 @@ func (self Mat) Elemsize() (result uint32) {
 func (self Mat) Empty() (result bool) {
 	self0 := cm.Reinterpret[uint32](self)
 	result0 := wasmimport_MatEmpty((uint32)(self0))
-	result = cm.U32ToBool((uint32)(result0))
+	result = (bool)(cm.U32ToBool((uint32)(result0)))
 	return
 }
 

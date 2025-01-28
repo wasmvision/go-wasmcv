@@ -30,8 +30,6 @@ func process(image mat.Mat) mat.Mat {
 
 	return image
 }
-
-func main() {}
 ```
 
 Install the `wasmcv` package into your Go package:

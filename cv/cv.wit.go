@@ -698,7 +698,7 @@ func Lut(src Mat, wblut Mat) (result Mat) {
 func ReduceArgMax(src Mat, axis uint32, lastIndex bool) (result Mat) {
 	src0 := cm.Reinterpret[uint32](src)
 	axis0 := (uint32)(axis)
-	lastIndex0 := cm.BoolToU32(lastIndex)
+	lastIndex0 := (uint32)(cm.BoolToU32(lastIndex))
 	result0 := wasmimport_ReduceArgMax((uint32)(src0), (uint32)(axis0), (uint32)(lastIndex0))
 	result = cm.Reinterpret[Mat]((uint32)(result0))
 	return

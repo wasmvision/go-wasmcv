@@ -129,7 +129,7 @@ func (self CascadeClassifier) Load(file string) (result bool) {
 	self0 := cm.Reinterpret[uint32](self)
 	file0, file1 := cm.LowerString(file)
 	result0 := wasmimport_CascadeClassifierLoad((uint32)(self0), (*uint8)(file0), (uint32)(file1))
-	result = cm.U32ToBool((uint32)(result0))
+	result = (bool)(cm.U32ToBool((uint32)(result0)))
 	return
 }
 
@@ -221,7 +221,7 @@ func (self HOGDescriptor) DetectMultiScaleWithParams(image Mat, hitThreshold flo
 	padding0, padding1 := lower_Size(padding)
 	scale0 := (float64)(scale)
 	finalThreshold0 := (float64)(finalThreshold)
-	useMeanshiftGrouping0 := cm.BoolToU32(useMeanshiftGrouping)
+	useMeanshiftGrouping0 := (uint32)(cm.BoolToU32(useMeanshiftGrouping))
 	wasmimport_HOGDescriptorDetectMultiScaleWithParams((uint32)(self0), (uint32)(image0), (float64)(hitThreshold0), (uint32)(winStride0), (uint32)(winStride1), (uint32)(padding0), (uint32)(padding1), (float64)(scale0), (float64)(finalThreshold0), (uint32)(useMeanshiftGrouping0), &result)
 	return
 }
@@ -425,15 +425,28 @@ const (
 	FaceDistanceTypeFaceDistanceNormL2
 )
 
-var stringsFaceDistanceType = [2]string{
+var _FaceDistanceTypeStrings = [2]string{
 	"face-distance-type-cosine",
 	"face-distance-norm-l2",
 }
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e FaceDistanceType) String() string {
-	return stringsFaceDistanceType[e]
+	return _FaceDistanceTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e FaceDistanceType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *FaceDistanceType) UnmarshalText(text []byte) error {
+	return _FaceDistanceTypeUnmarshalCase(e, text)
+}
+
+var _FaceDistanceTypeUnmarshalCase = cm.CaseUnmarshaler[FaceDistanceType](_FaceDistanceTypeStrings[:])
 
 // FaceRecognizerSF represents the imported resource "wasm:cv/objdetect#face-recognizer-SF".
 //

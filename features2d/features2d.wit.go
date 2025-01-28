@@ -26,17 +26,16 @@ type DMatch = types.DMatch
 
 // DetectorResult represents the imported record "wasm:cv/features2d#detector-result".
 //
-// rect is a rectangle with integer coordinates.
-// It is represented by the top-left corner and the bottom-right corner.
+// detector-result returns the keypoints and descripts for a detector.
 //
 //	record detector-result {
 //		kps: list<key-point>,
 //		desc: mat,
 //	}
 type DetectorResult struct {
-	_    cm.HostLayout
-	Kps  cm.List[KeyPoint]
-	Desc Mat
+	_    cm.HostLayout     `json:"-"`
+	Kps  cm.List[KeyPoint] `json:"kps"`
+	Desc Mat               `json:"desc"`
 }
 
 // AKAZEDetector represents the imported resource "wasm:cv/features2d#AKAZE-detector".
@@ -358,15 +357,28 @@ const (
 	ORBScoreTypeORBFAST
 )
 
-var stringsORBScoreType = [2]string{
+var _ORBScoreTypeStrings = [2]string{
 	"ORB-HARRIS",
 	"ORB-FAST",
 }
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e ORBScoreType) String() string {
-	return stringsORBScoreType[e]
+	return _ORBScoreTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e ORBScoreType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *ORBScoreType) UnmarshalText(text []byte) error {
+	return _ORBScoreTypeUnmarshalCase(e, text)
+}
+
+var _ORBScoreTypeUnmarshalCase = cm.CaseUnmarshaler[ORBScoreType](_ORBScoreTypeStrings[:])
 
 // ORBDetector represents the imported resource "wasm:cv/features2d#ORB-detector".
 //
@@ -626,7 +638,7 @@ const (
 	NormTypeNORMRELATIVE
 )
 
-var stringsNormType = [9]string{
+var _NormTypeStrings = [9]string{
 	"NORM-NONE",
 	"NONE-INF",
 	"NORM-L1",
@@ -640,8 +652,21 @@ var stringsNormType = [9]string{
 
 // String implements [fmt.Stringer], returning the enum case name of e.
 func (e NormType) String() string {
-	return stringsNormType[e]
+	return _NormTypeStrings[e]
 }
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e NormType) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *NormType) UnmarshalText(text []byte) error {
+	return _NormTypeUnmarshalCase(e, text)
+}
+
+var _NormTypeUnmarshalCase = cm.CaseUnmarshaler[NormType](_NormTypeStrings[:])
 
 // BFMatcher represents the imported resource "wasm:cv/features2d#BF-matcher".
 //
@@ -690,7 +715,7 @@ func NewBFMatcher(name string) (result BFMatcher) {
 //go:nosplit
 func BFMatcherNewWithParams(norm NormType, crossCheck bool) (result BFMatcher) {
 	norm0 := (uint32)(norm)
-	crossCheck0 := cm.BoolToU32(crossCheck)
+	crossCheck0 := (uint32)(cm.BoolToU32(crossCheck))
 	result0 := wasmimport_BFMatcherNewWithParams((uint32)(norm0), (uint32)(crossCheck0))
 	result = cm.Reinterpret[BFMatcher]((uint32)(result0))
 	return
