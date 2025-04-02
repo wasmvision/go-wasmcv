@@ -9,6 +9,11 @@ import (
 	"wasmcv.org/wasm/cv/types"
 )
 
+// ErrorResult represents the type alias "wasm:cv/cv#error-result".
+//
+// See [types.ErrorResult] for more information.
+type ErrorResult = types.ErrorResult
+
 // BorderType represents the type alias "wasm:cv/cv#border-type".
 //
 // See [types.BorderType] for more information.
@@ -88,16 +93,16 @@ type Mattype = mat.Mattype
 // https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga0a165a3ca093fd488ac709fdf10c05b2
 //
 //	arrowed-line: func(img: borrow<mat>, point1: point, point2: point, c: RGBA, thickness:
-//	u8)
+//	u8) -> result<_, error-result>
 //
 //go:nosplit
-func ArrowedLine(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
+func ArrowedLine(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) (result cm.Result[ErrorResult, struct{}, ErrorResult]) {
 	img0 := cm.Reinterpret[uint32](img)
 	point10, point11 := lower_Size(point1)
 	point20, point21 := lower_Size(point2)
 	c0, c1, c2, c3 := lower_RGBA(c)
 	thickness0 := (uint32)(thickness)
-	wasmimport_ArrowedLine((uint32)(img0), (uint32)(point10), (uint32)(point11), (uint32)(point20), (uint32)(point21), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	wasmimport_ArrowedLine((uint32)(img0), (uint32)(point10), (uint32)(point11), (uint32)(point20), (uint32)(point21), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0), &result)
 	return
 }
 
@@ -108,15 +113,16 @@ func ArrowedLine(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d6/d6e/group__imgproc__draw.html#ga07d2f74cadcf8e305e810ce8f3d1e1b7
 //
-//	rectangle: func(img: borrow<mat>, r: rect, c: RGBA, thickness: u8)
+//	rectangle: func(img: borrow<mat>, r: rect, c: RGBA, thickness: u8) -> result<_,
+//	error-result>
 //
 //go:nosplit
-func Rectangle(img Mat, r Rect, c RGBA, thickness uint8) {
+func Rectangle(img Mat, r Rect, c RGBA, thickness uint8) (result cm.Result[ErrorResult, struct{}, ErrorResult]) {
 	img0 := cm.Reinterpret[uint32](img)
 	r0, r1, r2, r3 := lower_Rect(r)
 	c0, c1, c2, c3 := lower_RGBA(c)
 	thickness0 := (uint32)(thickness)
-	wasmimport_Rectangle((uint32)(img0), (uint32)(r0), (uint32)(r1), (uint32)(r2), (uint32)(r3), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	wasmimport_Rectangle((uint32)(img0), (uint32)(r0), (uint32)(r1), (uint32)(r2), (uint32)(r3), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0), &result)
 	return
 }
 
@@ -128,16 +134,16 @@ func Rectangle(img Mat, r Rect, c RGBA, thickness uint8) {
 // https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf10604b069374903dbd0f0488cb43670
 //
 //	circle: func(img: borrow<mat>, center: point, radius: u32, c: RGBA, thickness:
-//	u8)
+//	u8) -> result<_, error-result>
 //
 //go:nosplit
-func Circle(img Mat, center Point, radius uint32, c RGBA, thickness uint8) {
+func Circle(img Mat, center Point, radius uint32, c RGBA, thickness uint8) (result cm.Result[ErrorResult, struct{}, ErrorResult]) {
 	img0 := cm.Reinterpret[uint32](img)
 	center0, center1 := lower_Size(center)
 	radius0 := (uint32)(radius)
 	c0, c1, c2, c3 := lower_RGBA(c)
 	thickness0 := (uint32)(thickness)
-	wasmimport_Circle((uint32)(img0), (uint32)(center0), (uint32)(center1), (uint32)(radius0), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	wasmimport_Circle((uint32)(img0), (uint32)(center0), (uint32)(center1), (uint32)(radius0), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0), &result)
 	return
 }
 
@@ -149,16 +155,16 @@ func Circle(img Mat, center Point, radius uint32, c RGBA, thickness uint8) {
 // https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga7078a9fae8c7e7d13d24dac2520ae4a2
 //
 //	line: func(img: borrow<mat>, point1: point, point2: point, c: RGBA, thickness:
-//	u8)
+//	u8) -> result<_, error-result>
 //
 //go:nosplit
-func Line(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
+func Line(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) (result cm.Result[ErrorResult, struct{}, ErrorResult]) {
 	img0 := cm.Reinterpret[uint32](img)
 	point10, point11 := lower_Size(point1)
 	point20, point21 := lower_Size(point2)
 	c0, c1, c2, c3 := lower_RGBA(c)
 	thickness0 := (uint32)(thickness)
-	wasmimport_Line((uint32)(img0), (uint32)(point10), (uint32)(point11), (uint32)(point20), (uint32)(point21), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	wasmimport_Line((uint32)(img0), (uint32)(point10), (uint32)(point11), (uint32)(point20), (uint32)(point21), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0), &result)
 	return
 }
 
@@ -173,10 +179,10 @@ func Line(img Mat, point1 Point, point2 Point, c RGBA, thickness uint8) {
 // http://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga5126f47f883d730f633d74f07456c576
 //
 //	put-text: func(img: borrow<mat>, text: string, org: point, font-face: hershey-font-type,
-//	font-scale: f64, c: RGBA, thickness: s32)
+//	font-scale: f64, c: RGBA, thickness: s32) -> result<_, error-result>
 //
 //go:nosplit
-func PutText(img Mat, text string, org Point, fontFace HersheyFontType, fontScale float64, c RGBA, thickness int32) {
+func PutText(img Mat, text string, org Point, fontFace HersheyFontType, fontScale float64, c RGBA, thickness int32) (result cm.Result[ErrorResult, struct{}, ErrorResult]) {
 	img0 := cm.Reinterpret[uint32](img)
 	text0, text1 := cm.LowerString(text)
 	org0, org1 := lower_Size(org)
@@ -184,7 +190,7 @@ func PutText(img Mat, text string, org Point, fontFace HersheyFontType, fontScal
 	fontScale0 := (float64)(fontScale)
 	c0, c1, c2, c3 := lower_RGBA(c)
 	thickness0 := (uint32)(thickness)
-	wasmimport_PutText((uint32)(img0), (*uint8)(text0), (uint32)(text1), (uint32)(org0), (uint32)(org1), (uint32)(fontFace0), (float64)(fontScale0), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0))
+	wasmimport_PutText((uint32)(img0), (*uint8)(text0), (uint32)(text1), (uint32)(org0), (uint32)(org1), (uint32)(fontFace0), (float64)(fontScale0), (uint32)(c0), (uint32)(c1), (uint32)(c2), (uint32)(c3), (uint32)(thickness0), &result)
 	return
 }
 
@@ -197,18 +203,17 @@ func PutText(img Mat, text string, org Point, fontFace HersheyFontType, fontScal
 // https://docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3
 //
 //	adaptive-threshold: func(src: mat, max-value: f32, adaptive-type: adaptive-threshold-type,
-//	threshold-type: threshold-type, block-size: u32, c: f32) -> mat
+//	threshold-type: threshold-type, block-size: u32, c: f32) -> result<mat, error-result>
 //
 //go:nosplit
-func AdaptiveThreshold(src Mat, maxValue float32, adaptiveType AdaptiveThresholdType, thresholdType ThresholdType, blockSize uint32, c float32) (result Mat) {
+func AdaptiveThreshold(src Mat, maxValue float32, adaptiveType AdaptiveThresholdType, thresholdType ThresholdType, blockSize uint32, c float32) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	maxValue0 := (float32)(maxValue)
 	adaptiveType0 := (uint32)(adaptiveType)
 	thresholdType0 := (uint32)(thresholdType)
 	blockSize0 := (uint32)(blockSize)
 	c0 := (float32)(c)
-	result0 := wasmimport_AdaptiveThreshold((uint32)(src0), (float32)(maxValue0), (uint32)(adaptiveType0), (uint32)(thresholdType0), (uint32)(blockSize0), (float32)(c0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_AdaptiveThreshold((uint32)(src0), (float32)(maxValue0), (uint32)(adaptiveType0), (uint32)(thresholdType0), (uint32)(blockSize0), (float32)(c0), &result)
 	return
 }
 
@@ -219,14 +224,13 @@ func AdaptiveThreshold(src Mat, maxValue float32, adaptiveType AdaptiveThreshold
 // For further details, please see:
 // https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
 //
-//	blur: func(src: mat, k-size: size) -> mat
+//	blur: func(src: mat, k-size: size) -> result<mat, error-result>
 //
 //go:nosplit
-func Blur(src Mat, kSize Size) (result Mat) {
+func Blur(src Mat, kSize Size) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	kSize0, kSize1 := lower_Size(kSize)
-	result0 := wasmimport_Blur((uint32)(src0), (uint32)(kSize0), (uint32)(kSize1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Blur((uint32)(src0), (uint32)(kSize0), (uint32)(kSize1), &result)
 	return
 }
 
@@ -237,15 +241,14 @@ func Blur(src Mat, kSize Size) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gad533230ebf2d42509547d514f7d3fbc3
 //
-//	box-filter: func(src: mat, depth: u32, k-size: size) -> mat
+//	box-filter: func(src: mat, depth: u32, k-size: size) -> result<mat, error-result>
 //
 //go:nosplit
-func BoxFilter(src Mat, depth uint32, kSize Size) (result Mat) {
+func BoxFilter(src Mat, depth uint32, kSize Size) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	depth0 := (uint32)(depth)
 	kSize0, kSize1 := lower_Size(kSize)
-	result0 := wasmimport_BoxFilter((uint32)(src0), (uint32)(depth0), (uint32)(kSize0), (uint32)(kSize1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_BoxFilter((uint32)(src0), (uint32)(depth0), (uint32)(kSize0), (uint32)(kSize1), &result)
 	return
 }
 
@@ -262,15 +265,14 @@ func BoxFilter(src Mat, depth uint32, kSize Size) (result Mat) {
 // For further details, please see:
 // http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga04723e007ed888ddf11d9ba04e2232de
 //
-//	canny: func(src: mat, threshold1: f32, threshold2: f32) -> mat
+//	canny: func(src: mat, threshold1: f32, threshold2: f32) -> result<mat, error-result>
 //
 //go:nosplit
-func Canny(src Mat, threshold1 float32, threshold2 float32) (result Mat) {
+func Canny(src Mat, threshold1 float32, threshold2 float32) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	threshold10 := (float32)(threshold1)
 	threshold20 := (float32)(threshold2)
-	result0 := wasmimport_Canny((uint32)(src0), (float32)(threshold10), (float32)(threshold20))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Canny((uint32)(src0), (float32)(threshold10), (float32)(threshold20), &result)
 	return
 }
 
@@ -281,14 +283,13 @@ func Canny(src Mat, threshold1 float32, threshold2 float32) (result Mat) {
 // For further details, please see:
 // http://docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
 //
-//	cvt-color: func(src: mat, code: color-coversion-type) -> mat
+//	cvt-color: func(src: mat, code: color-coversion-type) -> result<mat, error-result>
 //
 //go:nosplit
-func CvtColor(src Mat, code ColorCoversionType) (result Mat) {
+func CvtColor(src Mat, code ColorCoversionType) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	code0 := (uint32)(code)
-	result0 := wasmimport_CvtColor((uint32)(src0), (uint32)(code0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_CvtColor((uint32)(src0), (uint32)(code0), &result)
 	return
 }
 
@@ -299,14 +300,13 @@ func CvtColor(src Mat, code ColorCoversionType) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga4ff0f3318642c4f469d0e11f242f3b6c
 //
-//	dilate: func(src: mat, kernel: mat) -> mat
+//	dilate: func(src: mat, kernel: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func Dilate(src Mat, kernel Mat) (result Mat) {
+func Dilate(src Mat, kernel Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	kernel0 := cm.Reinterpret[uint32](kernel)
-	result0 := wasmimport_Dilate((uint32)(src0), (uint32)(kernel0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Dilate((uint32)(src0), (uint32)(kernel0), &result)
 	return
 }
 
@@ -317,14 +317,13 @@ func Dilate(src Mat, kernel Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaeb1e0c1033e3f6b891a25d0511362aeb
 //
-//	erode: func(src: mat, kernel: mat) -> mat
+//	erode: func(src: mat, kernel: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func Erode(src Mat, kernel Mat) (result Mat) {
+func Erode(src Mat, kernel Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	kernel0 := cm.Reinterpret[uint32](kernel)
-	result0 := wasmimport_Erode((uint32)(src0), (uint32)(kernel0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Erode((uint32)(src0), (uint32)(kernel0), &result)
 	return
 }
 
@@ -335,13 +334,12 @@ func Erode(src Mat, kernel Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga7e54091f0c937d49bf84152a16f76d6e
 //
-//	equalize-hist: func(src: mat) -> mat
+//	equalize-hist: func(src: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func EqualizeHist(src Mat) (result Mat) {
+func EqualizeHist(src Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
-	result0 := wasmimport_EqualizeHist((uint32)(src0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_EqualizeHist((uint32)(src0), &result)
 	return
 }
 
@@ -353,17 +351,16 @@ func EqualizeHist(src Mat) (result Mat) {
 // https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#gae8bdcd9154ed5ca3cbc1766d960f45c1
 //
 //	gaussian-blur: func(src: mat, size: size, sigma-x: f32, sigma-y: f32, border: border-type)
-//	-> mat
+//	-> result<mat, error-result>
 //
 //go:nosplit
-func GaussianBlur(src Mat, size Size, sigmaX float32, sigmaY float32, border BorderType) (result Mat) {
+func GaussianBlur(src Mat, size Size, sigmaX float32, sigmaY float32, border BorderType) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	size0, size1 := lower_Size(size)
 	sigmaX0 := (float32)(sigmaX)
 	sigmaY0 := (float32)(sigmaY)
 	border0 := (uint32)(border)
-	result0 := wasmimport_GaussianBlur((uint32)(src0), (uint32)(size0), (uint32)(size1), (float32)(sigmaX0), (float32)(sigmaY0), (uint32)(border0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_GaussianBlur((uint32)(src0), (uint32)(size0), (uint32)(size1), (float32)(sigmaX0), (float32)(sigmaY0), (uint32)(border0), &result)
 	return
 }
 
@@ -375,14 +372,13 @@ func GaussianBlur(src Mat, size Size, sigmaX float32, sigmaY float32, border Bor
 // For further details, please see:
 // https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
 //
-//	get-structuring-element: func(shape: morph-shape, size: size) -> mat
+//	get-structuring-element: func(shape: morph-shape, size: size) -> result<mat, error-result>
 //
 //go:nosplit
-func GetStructuringElement(shape MorphShape, size Size) (result Mat) {
+func GetStructuringElement(shape MorphShape, size Size) (result cm.Result[string, Mat, ErrorResult]) {
 	shape0 := (uint32)(shape)
 	size0, size1 := lower_Size(size)
-	result0 := wasmimport_GetStructuringElement((uint32)(shape0), (uint32)(size0), (uint32)(size1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_GetStructuringElement((uint32)(shape0), (uint32)(size0), (uint32)(size1), &result)
 	return
 }
 
@@ -395,16 +391,16 @@ func GetStructuringElement(shape MorphShape, size Size) (result Mat) {
 // For further details, please see:
 // http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga46b4e588934f6c8dfd509cc6e0e4545a
 //
-//	hough-lines: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat
+//	hough-lines: func(src: mat, rho: f64, theta: f64, threshold: s32) -> result<mat,
+//	error-result>
 //
 //go:nosplit
-func HoughLines(src Mat, rho float64, theta float64, threshold int32) (result Mat) {
+func HoughLines(src Mat, rho float64, theta float64, threshold int32) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	rho0 := (float64)(rho)
 	theta0 := (float64)(theta)
 	threshold0 := (uint32)(threshold)
-	result0 := wasmimport_HoughLines((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_HoughLines((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0), &result)
 	return
 }
 
@@ -417,16 +413,16 @@ func HoughLines(src Mat, rho float64, theta float64, threshold int32) (result Ma
 // For further details, please see:
 // http://docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb
 //
-//	hough-lines-p: func(src: mat, rho: f64, theta: f64, threshold: s32) -> mat
+//	hough-lines-p: func(src: mat, rho: f64, theta: f64, threshold: s32) -> result<mat,
+//	error-result>
 //
 //go:nosplit
-func HoughLinesP(src Mat, rho float64, theta float64, threshold int32) (result Mat) {
+func HoughLinesP(src Mat, rho float64, theta float64, threshold int32) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	rho0 := (float64)(rho)
 	theta0 := (float64)(theta)
 	threshold0 := (uint32)(threshold)
-	result0 := wasmimport_HoughLinesP((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_HoughLinesP((uint32)(src0), (float64)(rho0), (float64)(theta0), (uint32)(threshold0), &result)
 	return
 }
 
@@ -437,14 +433,13 @@ func HoughLinesP(src Mat, rho float64, theta float64, threshold int32) (result M
 // For further details, please see:
 // https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9
 //
-//	median-blur: func(src: mat, k-size: size) -> mat
+//	median-blur: func(src: mat, k-size: size) -> result<mat, error-result>
 //
 //go:nosplit
-func MedianBlur(src Mat, kSize Size) (result Mat) {
+func MedianBlur(src Mat, kSize Size) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	kSize0, kSize1 := lower_Size(kSize)
-	result0 := wasmimport_MedianBlur((uint32)(src0), (uint32)(kSize0), (uint32)(kSize1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MedianBlur((uint32)(src0), (uint32)(kSize0), (uint32)(kSize1), &result)
 	return
 }
 
@@ -461,17 +456,16 @@ func MedianBlur(src Mat, kSize Size) (result Mat) {
 // https://docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga47a974309e9102f5f08231edc7e7529d
 //
 //	resize: func(src: mat, size: size, fx: f32, fy: f32, interp: interpolation-type)
-//	-> mat
+//	-> result<mat, error-result>
 //
 //go:nosplit
-func Resize(src Mat, size Size, fx float32, fy float32, interp InterpolationType) (result Mat) {
+func Resize(src Mat, size Size, fx float32, fy float32, interp InterpolationType) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	size0, size1 := lower_Size(size)
 	fx0 := (float32)(fx)
 	fy0 := (float32)(fy)
 	interp0 := (uint32)(interp)
-	result0 := wasmimport_Resize((uint32)(src0), (uint32)(size0), (uint32)(size1), (float32)(fx0), (float32)(fy0), (uint32)(interp0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Resize((uint32)(src0), (uint32)(size0), (uint32)(size1), (float32)(fx0), (float32)(fy0), (uint32)(interp0), &result)
 	return
 }
 
@@ -483,16 +477,15 @@ func Resize(src Mat, size Size, fx float32, fy float32, interp InterpolationType
 // https://docs.opencv.org/3.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
 //
 //	threshold: func(src: mat, thresh: f32, max-value: f32, threshold-type: threshold-type)
-//	-> mat
+//	-> result<mat, error-result>
 //
 //go:nosplit
-func Threshold(src Mat, thresh float32, maxValue float32, thresholdType ThresholdType) (result Mat) {
+func Threshold(src Mat, thresh float32, maxValue float32, thresholdType ThresholdType) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	thresh0 := (float32)(thresh)
 	maxValue0 := (float32)(maxValue)
 	thresholdType0 := (uint32)(thresholdType)
-	result0 := wasmimport_Threshold((uint32)(src0), (float32)(thresh0), (float32)(maxValue0), (uint32)(thresholdType0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Threshold((uint32)(src0), (float32)(thresh0), (float32)(maxValue0), (uint32)(thresholdType0), &result)
 	return
 }
 
@@ -503,14 +496,13 @@ func Threshold(src Mat, thresh float32, maxValue float32, thresholdType Threshol
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab1b1274b4a563be34cdfa55b8919a4ec
 //
-//	transpose-ND: func(src: mat, order: list<s32>) -> mat
+//	transpose-ND: func(src: mat, order: list<s32>) -> result<mat, error-result>
 //
 //go:nosplit
-func TransposeND(src Mat, order cm.List[int32]) (result Mat) {
+func TransposeND(src Mat, order cm.List[int32]) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	order0, order1 := cm.LowerList(order)
-	result0 := wasmimport_TransposeND((uint32)(src0), (*int32)(order0), (uint32)(order1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_TransposeND((uint32)(src0), (*int32)(order0), (uint32)(order1), &result)
 	return
 }
 
@@ -522,14 +514,13 @@ func TransposeND(src Mat, order cm.List[int32]) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.0.0/d9/d0c/group__calib3d.html#ga27865b1d26bac9ce91efaee83e94d4dd
 //
-//	estimate-affine2d: func(frm: mat, to: mat) -> mat
+//	estimate-affine2d: func(frm: mat, to: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func EstimateAffine2d(frm Mat, to Mat) (result Mat) {
+func EstimateAffine2d(frm Mat, to Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	frm0 := cm.Reinterpret[uint32](frm)
 	to0 := cm.Reinterpret[uint32](to)
-	result0 := wasmimport_EstimateAffine2d((uint32)(frm0), (uint32)(to0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_EstimateAffine2d((uint32)(frm0), (uint32)(to0), &result)
 	return
 }
 
@@ -540,15 +531,14 @@ func EstimateAffine2d(frm Mat, to Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga0203d9ee5fcd28d40dbc4a1ea4451983
 //
-//	warp-affine: func(src: mat, m: mat, size: size) -> mat
+//	warp-affine: func(src: mat, m: mat, size: size) -> result<mat, error-result>
 //
 //go:nosplit
-func WarpAffine(src Mat, m Mat, size Size) (result Mat) {
+func WarpAffine(src Mat, m Mat, size Size) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	m0 := cm.Reinterpret[uint32](m)
 	size0, size1 := lower_Size(size)
-	result0 := wasmimport_WarpAffine((uint32)(src0), (uint32)(m0), (uint32)(size0), (uint32)(size1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_WarpAffine((uint32)(src0), (uint32)(m0), (uint32)(size0), (uint32)(size1), &result)
 	return
 }
 
@@ -559,15 +549,15 @@ func WarpAffine(src Mat, m Mat, size Size) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
 //
-//	get-rotation-matrix2d: func(center: point, angle: f64, scale: f64) -> mat
+//	get-rotation-matrix2d: func(center: point, angle: f64, scale: f64) -> result<mat,
+//	error-result>
 //
 //go:nosplit
-func GetRotationMatrix2d(center Point, angle float64, scale float64) (result Mat) {
+func GetRotationMatrix2d(center Point, angle float64, scale float64) (result cm.Result[string, Mat, ErrorResult]) {
 	center0, center1 := lower_Size(center)
 	angle0 := (float64)(angle)
 	scale0 := (float64)(scale)
-	result0 := wasmimport_GetRotationMatrix2d((uint32)(center0), (uint32)(center1), (float64)(angle0), (float64)(scale0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_GetRotationMatrix2d((uint32)(center0), (uint32)(center1), (float64)(angle0), (float64)(scale0), &result)
 	return
 }
 
@@ -578,14 +568,13 @@ func GetRotationMatrix2d(center Point, angle float64, scale float64) (result Mat
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
 //
-//	add: func(src1: mat, src2: mat) -> mat
+//	add: func(src1: mat, src2: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func Add(src1 Mat, src2 Mat) (result Mat) {
+func Add(src1 Mat, src2 Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src10 := cm.Reinterpret[uint32](src1)
 	src20 := cm.Reinterpret[uint32](src2)
-	result0 := wasmimport_Add((uint32)(src10), (uint32)(src20))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Add((uint32)(src10), (uint32)(src20), &result)
 	return
 }
 
@@ -597,17 +586,16 @@ func Add(src1 Mat, src2 Mat) (result Mat) {
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gafafb2513349db3bcff51f54ee5592a19
 //
 //	add-weighted: func(src1: mat, alpha: f64, src2: mat, beta: f64, gamma: f64) ->
-//	mat
+//	result<mat, error-result>
 //
 //go:nosplit
-func AddWeighted(src1 Mat, alpha float64, src2 Mat, beta float64, gamma float64) (result Mat) {
+func AddWeighted(src1 Mat, alpha float64, src2 Mat, beta float64, gamma float64) (result cm.Result[string, Mat, ErrorResult]) {
 	src10 := cm.Reinterpret[uint32](src1)
 	alpha0 := (float64)(alpha)
 	src20 := cm.Reinterpret[uint32](src2)
 	beta0 := (float64)(beta)
 	gamma0 := (float64)(gamma)
-	result0 := wasmimport_AddWeighted((uint32)(src10), (float64)(alpha0), (uint32)(src20), (float64)(beta0), (float64)(gamma0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_AddWeighted((uint32)(src10), (float64)(alpha0), (uint32)(src20), (float64)(beta0), (float64)(gamma0), &result)
 	return
 }
 
@@ -618,13 +606,12 @@ func AddWeighted(src1 Mat, alpha float64, src2 Mat, beta float64, gamma float64)
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
 //
-//	exp: func(src: mat) -> mat
+//	exp: func(src: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func Exp(src Mat) (result Mat) {
+func Exp(src Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
-	result0 := wasmimport_Exp((uint32)(src0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Exp((uint32)(src0), &result)
 	return
 }
 
@@ -635,14 +622,13 @@ func Exp(src Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
 //
-//	hconcat: func(src1: mat, src2: mat) -> mat
+//	hconcat: func(src1: mat, src2: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func Hconcat(src1 Mat, src2 Mat) (result Mat) {
+func Hconcat(src1 Mat, src2 Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src10 := cm.Reinterpret[uint32](src1)
 	src20 := cm.Reinterpret[uint32](src2)
-	result0 := wasmimport_Hconcat((uint32)(src10), (uint32)(src20))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Hconcat((uint32)(src10), (uint32)(src20), &result)
 	return
 }
 
@@ -653,14 +639,13 @@ func Hconcat(src1 Mat, src2 Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga744f53b69f6e4f12156cdde4e76aed27
 //
-//	vconcat: func(src1: mat, src2: mat) -> mat
+//	vconcat: func(src1: mat, src2: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func Vconcat(src1 Mat, src2 Mat) (result Mat) {
+func Vconcat(src1 Mat, src2 Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src10 := cm.Reinterpret[uint32](src1)
 	src20 := cm.Reinterpret[uint32](src2)
-	result0 := wasmimport_Vconcat((uint32)(src10), (uint32)(src20))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Vconcat((uint32)(src10), (uint32)(src20), &result)
 	return
 }
 
@@ -674,14 +659,13 @@ func Vconcat(src1 Mat, src2 Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
 //
-//	lut: func(src: mat, wblut: mat) -> mat
+//	lut: func(src: mat, wblut: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func Lut(src Mat, wblut Mat) (result Mat) {
+func Lut(src Mat, wblut Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	wblut0 := cm.Reinterpret[uint32](wblut)
-	result0 := wasmimport_Lut((uint32)(src0), (uint32)(wblut0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_Lut((uint32)(src0), (uint32)(wblut0), &result)
 	return
 }
 
@@ -692,14 +676,13 @@ func Lut(src Mat, wblut Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
 //
-//	reduce-arg-max: func(src: mat, axis: u32, last-index: bool) -> mat
+//	reduce-arg-max: func(src: mat, axis: u32, last-index: bool) -> result<mat, error-result>
 //
 //go:nosplit
-func ReduceArgMax(src Mat, axis uint32, lastIndex bool) (result Mat) {
+func ReduceArgMax(src Mat, axis uint32, lastIndex bool) (result cm.Result[string, Mat, ErrorResult]) {
 	src0 := cm.Reinterpret[uint32](src)
 	axis0 := (uint32)(axis)
 	lastIndex0 := (uint32)(cm.BoolToU32(lastIndex))
-	result0 := wasmimport_ReduceArgMax((uint32)(src0), (uint32)(axis0), (uint32)(lastIndex0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_ReduceArgMax((uint32)(src0), (uint32)(axis0), (uint32)(lastIndex0), &result)
 	return
 }

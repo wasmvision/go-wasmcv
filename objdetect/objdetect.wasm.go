@@ -22,11 +22,11 @@ func wasmimport_CascadeClassifierClose(self0 uint32)
 
 //go:wasmimport wasm:cv/objdetect [method]cascade-classifier.detect-multi-scale
 //go:noescape
-func wasmimport_CascadeClassifierDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[Rect])
+func wasmimport_CascadeClassifierDetectMultiScale(self0 uint32, image0 uint32, result *cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [method]cascade-classifier.detect-multi-scale-with-params
 //go:noescape
-func wasmimport_CascadeClassifierDetectMultiScaleWithParams(self0 uint32, image0 uint32, scale0 float64, minNeighbors0 uint32, flags0 uint32, minSize0 uint32, minSize1 uint32, maxSize0 uint32, maxSize1 uint32, result *cm.List[Rect])
+func wasmimport_CascadeClassifierDetectMultiScaleWithParams(self0 uint32, image0 uint32, scale0 float64, minNeighbors0 uint32, flags0 uint32, minSize0 uint32, minSize1 uint32, maxSize0 uint32, maxSize1 uint32, result *cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [method]cascade-classifier.load
 //go:noescape
@@ -46,11 +46,11 @@ func wasmimport_HOGDescriptorClose(self0 uint32)
 
 //go:wasmimport wasm:cv/objdetect [method]HOG-descriptor.detect-multi-scale
 //go:noescape
-func wasmimport_HOGDescriptorDetectMultiScale(self0 uint32, image0 uint32, result *cm.List[Rect])
+func wasmimport_HOGDescriptorDetectMultiScale(self0 uint32, image0 uint32, result *cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [method]HOG-descriptor.detect-multi-scale-with-params
 //go:noescape
-func wasmimport_HOGDescriptorDetectMultiScaleWithParams(self0 uint32, image0 uint32, hitThreshold0 float64, winStride0 uint32, winStride1 uint32, padding0 uint32, padding1 uint32, scale0 float64, finalThreshold0 float64, useMeanshiftGrouping0 uint32, result *cm.List[Rect])
+func wasmimport_HOGDescriptorDetectMultiScaleWithParams(self0 uint32, image0 uint32, hitThreshold0 float64, winStride0 uint32, winStride1 uint32, padding0 uint32, padding1 uint32, scale0 float64, finalThreshold0 float64, useMeanshiftGrouping0 uint32, result *cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [resource-drop]face-detector-YN
 //go:noescape
@@ -70,7 +70,7 @@ func wasmimport_FaceDetectorYNClose(self0 uint32)
 
 //go:wasmimport wasm:cv/objdetect [method]face-detector-YN.detect
 //go:noescape
-func wasmimport_FaceDetectorYNDetect(self0 uint32, input0 uint32) (result0 uint32)
+func wasmimport_FaceDetectorYNDetect(self0 uint32, input0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [method]face-detector-YN.get-input-size
 //go:noescape
@@ -118,7 +118,7 @@ func wasmimport_FaceRecognizerSFNewWithParams(model0 *uint8, model1 uint32, conf
 
 //go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.align-crop
 //go:noescape
-func wasmimport_FaceRecognizerSFAlignCrop(self0 uint32, src0 uint32, faceBox0 uint32) (result0 uint32)
+func wasmimport_FaceRecognizerSFAlignCrop(self0 uint32, src0 uint32, faceBox0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.close
 //go:noescape
@@ -126,12 +126,12 @@ func wasmimport_FaceRecognizerSFClose(self0 uint32)
 
 //go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.feature
 //go:noescape
-func wasmimport_FaceRecognizerSFFeature(self0 uint32, aligned0 uint32) (result0 uint32)
+func wasmimport_FaceRecognizerSFFeature(self0 uint32, aligned0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.match
 //go:noescape
-func wasmimport_FaceRecognizerSFMatch(self0 uint32, face10 uint32, face20 uint32) (result0 float32)
+func wasmimport_FaceRecognizerSFMatch(self0 uint32, face10 uint32, face20 uint32, result *cm.Result[string, float32, ErrorResult])
 
 //go:wasmimport wasm:cv/objdetect [method]face-recognizer-SF.match-with-params
 //go:noescape
-func wasmimport_FaceRecognizerSFMatchWithParams(self0 uint32, face10 uint32, face20 uint32, distance0 uint32) (result0 float32)
+func wasmimport_FaceRecognizerSFMatchWithParams(self0 uint32, face10 uint32, face20 uint32, distance0 uint32, result *cm.Result[string, float32, ErrorResult])

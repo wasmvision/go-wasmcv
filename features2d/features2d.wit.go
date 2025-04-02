@@ -14,6 +14,11 @@ import (
 // See [mat.Mat] for more information.
 type Mat = mat.Mat
 
+// ErrorResult represents the type alias "wasm:cv/features2d#error-result".
+//
+// See [types.ErrorResult] for more information.
+type ErrorResult = types.ErrorResult
+
 // KeyPoint represents the type alias "wasm:cv/features2d#key-point".
 //
 // See [types.KeyPoint] for more information.
@@ -93,10 +98,11 @@ func (self AKAZEDetector) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
 //
-//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result
+//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> result<detector-result,
+//	error-result>
 //
 //go:nosplit
-func (self AKAZEDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result DetectorResult) {
+func (self AKAZEDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -112,10 +118,10 @@ func (self AKAZEDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (res
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
 //
-//	detect: func(src: mat) -> list<key-point>
+//	detect: func(src: mat) -> result<list<key-point>, error-result>
 //
 //go:nosplit
-func (self AKAZEDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
+func (self AKAZEDetector) Detect(src Mat) (result cm.Result[cm.List[KeyPoint], cm.List[KeyPoint], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	wasmimport_AKAZEDetectorDetect((uint32)(self0), (uint32)(src0), &result)
@@ -129,10 +135,10 @@ func (self AKAZEDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 //
-//	detect-and-compute: func(src: mat, mask: mat) -> detector-result
+//	detect-and-compute: func(src: mat, mask: mat) -> result<detector-result, error-result>
 //
 //go:nosplit
-func (self AKAZEDetector) DetectAndCompute(src Mat, mask Mat) (result DetectorResult) {
+func (self AKAZEDetector) DetectAndCompute(src Mat, mask Mat) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -195,10 +201,11 @@ func (self BRISKDetector) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
 //
-//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result
+//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> result<detector-result,
+//	error-result>
 //
 //go:nosplit
-func (self BRISKDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result DetectorResult) {
+func (self BRISKDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -214,10 +221,10 @@ func (self BRISKDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (res
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
 //
-//	detect: func(src: mat) -> list<key-point>
+//	detect: func(src: mat) -> result<list<key-point>, error-result>
 //
 //go:nosplit
-func (self BRISKDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
+func (self BRISKDetector) Detect(src Mat) (result cm.Result[cm.List[KeyPoint], cm.List[KeyPoint], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	wasmimport_BRISKDetectorDetect((uint32)(self0), (uint32)(src0), &result)
@@ -231,10 +238,10 @@ func (self BRISKDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 //
-//	detect-and-compute: func(src: mat, mask: mat) -> detector-result
+//	detect-and-compute: func(src: mat, mask: mat) -> result<detector-result, error-result>
 //
 //go:nosplit
-func (self BRISKDetector) DetectAndCompute(src Mat, mask Mat) (result DetectorResult) {
+func (self BRISKDetector) DetectAndCompute(src Mat, mask Mat) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -297,10 +304,11 @@ func (self KAZEDetector) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
 //
-//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result
+//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> result<detector-result,
+//	error-result>
 //
 //go:nosplit
-func (self KAZEDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result DetectorResult) {
+func (self KAZEDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -316,10 +324,10 @@ func (self KAZEDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (resu
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
 //
-//	detect: func(src: mat) -> list<key-point>
+//	detect: func(src: mat) -> result<list<key-point>, error-result>
 //
 //go:nosplit
-func (self KAZEDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
+func (self KAZEDetector) Detect(src Mat) (result cm.Result[cm.List[KeyPoint], cm.List[KeyPoint], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	wasmimport_KAZEDetectorDetect((uint32)(self0), (uint32)(src0), &result)
@@ -333,10 +341,10 @@ func (self KAZEDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 //
-//	detect-and-compute: func(src: mat, mask: mat) -> detector-result
+//	detect-and-compute: func(src: mat, mask: mat) -> result<detector-result, error-result>
 //
 //go:nosplit
-func (self KAZEDetector) DetectAndCompute(src Mat, mask Mat) (result DetectorResult) {
+func (self KAZEDetector) DetectAndCompute(src Mat, mask Mat) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -462,10 +470,11 @@ func (self ORBDetector) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
 //
-//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result
+//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> result<detector-result,
+//	error-result>
 //
 //go:nosplit
-func (self ORBDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result DetectorResult) {
+func (self ORBDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -481,10 +490,10 @@ func (self ORBDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (resul
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
 //
-//	detect: func(src: mat) -> list<key-point>
+//	detect: func(src: mat) -> result<list<key-point>, error-result>
 //
 //go:nosplit
-func (self ORBDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
+func (self ORBDetector) Detect(src Mat) (result cm.Result[cm.List[KeyPoint], cm.List[KeyPoint], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	wasmimport_ORBDetectorDetect((uint32)(self0), (uint32)(src0), &result)
@@ -498,10 +507,10 @@ func (self ORBDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 //
-//	detect-and-compute: func(src: mat, mask: mat) -> detector-result
+//	detect-and-compute: func(src: mat, mask: mat) -> result<detector-result, error-result>
 //
 //go:nosplit
-func (self ORBDetector) DetectAndCompute(src Mat, mask Mat) (result DetectorResult) {
+func (self ORBDetector) DetectAndCompute(src Mat, mask Mat) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -564,10 +573,11 @@ func (self SIFTDetector) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#ab3cce8d56f4fc5e1d530b5931e1e8dc0
 //
-//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> detector-result
+//	compute: func(src: mat, mask: mat, kps: list<key-point>) -> result<detector-result,
+//	error-result>
 //
 //go:nosplit
-func (self SIFTDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result DetectorResult) {
+func (self SIFTDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -583,10 +593,10 @@ func (self SIFTDetector) Compute(src Mat, mask Mat, kps cm.List[KeyPoint]) (resu
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
 //
-//	detect: func(src: mat) -> list<key-point>
+//	detect: func(src: mat) -> result<list<key-point>, error-result>
 //
 //go:nosplit
-func (self SIFTDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
+func (self SIFTDetector) Detect(src Mat) (result cm.Result[cm.List[KeyPoint], cm.List[KeyPoint], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	wasmimport_SIFTDetectorDetect((uint32)(self0), (uint32)(src0), &result)
@@ -600,10 +610,10 @@ func (self SIFTDetector) Detect(src Mat) (result cm.List[KeyPoint]) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
 //
-//	detect-and-compute: func(src: mat, mask: mat) -> detector-result
+//	detect-and-compute: func(src: mat, mask: mat) -> result<detector-result, error-result>
 //
 //go:nosplit
-func (self SIFTDetector) DetectAndCompute(src Mat, mask Mat) (result DetectorResult) {
+func (self SIFTDetector) DetectAndCompute(src Mat, mask Mat) (result cm.Result[DetectorResultShape, DetectorResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	mask0 := cm.Reinterpret[uint32](mask)
@@ -728,10 +738,11 @@ func BFMatcherNewWithParams(norm NormType, crossCheck bool) (result BFMatcher) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
 //
-//	KNN-match: func(query: mat, train: mat, k: u32) -> list<list<d-match>>
+//	KNN-match: func(query: mat, train: mat, k: u32) -> result<list<list<d-match>>,
+//	error-result>
 //
 //go:nosplit
-func (self BFMatcher) KNNMatch(query Mat, train Mat, k uint32) (result cm.List[cm.List[DMatch]]) {
+func (self BFMatcher) KNNMatch(query Mat, train Mat, k uint32) (result cm.Result[cm.List[cm.List[DMatch]], cm.List[cm.List[DMatch]], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	query0 := cm.Reinterpret[uint32](query)
 	train0 := cm.Reinterpret[uint32](train)
@@ -760,10 +771,10 @@ func (self BFMatcher) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
 //
-//	match: func(query: mat, train: mat) -> list<d-match>
+//	match: func(query: mat, train: mat) -> result<list<d-match>, error-result>
 //
 //go:nosplit
-func (self BFMatcher) Match(query Mat, train Mat) (result cm.List[DMatch]) {
+func (self BFMatcher) Match(query Mat, train Mat) (result cm.Result[cm.List[DMatch], cm.List[DMatch], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	query0 := cm.Reinterpret[uint32](query)
 	train0 := cm.Reinterpret[uint32](train)
@@ -813,10 +824,11 @@ func NewFlannBasedMatcher(name string) (result FlannBasedMatcher) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
 //
-//	KNN-match: func(query: mat, train: mat, k: u32) -> list<list<d-match>>
+//	KNN-match: func(query: mat, train: mat, k: u32) -> result<list<list<d-match>>,
+//	error-result>
 //
 //go:nosplit
-func (self FlannBasedMatcher) KNNMatch(query Mat, train Mat, k uint32) (result cm.List[cm.List[DMatch]]) {
+func (self FlannBasedMatcher) KNNMatch(query Mat, train Mat, k uint32) (result cm.Result[cm.List[cm.List[DMatch]], cm.List[cm.List[DMatch]], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	query0 := cm.Reinterpret[uint32](query)
 	train0 := cm.Reinterpret[uint32](train)

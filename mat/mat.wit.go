@@ -10,6 +10,11 @@ import (
 	"wasmcv.org/wasm/cv/types"
 )
 
+// ErrorResult represents the type alias "wasm:cv/mat#error-result".
+//
+// See [types.ErrorResult] for more information.
+type ErrorResult = types.ErrorResult
+
 // MixMaxLocResult represents the type alias "wasm:cv/mat#mix-max-loc-result".
 //
 // See [types.MixMaxLocResult] for more information.
@@ -108,13 +113,12 @@ func NewMat(id uint32) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
 //
-//	merge: static func(mv: list<mat>) -> mat
+//	merge: static func(mv: list<mat>) -> result<mat, error-result>
 //
 //go:nosplit
-func MatMerge(mv cm.List[Mat]) (result Mat) {
+func MatMerge(mv cm.List[Mat]) (result cm.Result[string, Mat, ErrorResult]) {
 	mv0, mv1 := cm.LowerList(mv)
-	result0 := wasmimport_MatMerge((*Mat)(mv0), (uint32)(mv1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatMerge((*Mat)(mv0), (uint32)(mv1), &result)
 	return
 }
 
@@ -138,15 +142,14 @@ func MatNewWithSize(cols uint32, rows uint32, mattype Mattype) (result Mat) {
 //
 // zeros returns a zero array of the specified size and type.
 //
-//	zeros: static func(cols: u32, rows: u32, mattype: mattype) -> mat
+//	zeros: static func(cols: u32, rows: u32, mattype: mattype) -> result<mat, error-result>
 //
 //go:nosplit
-func MatZeros(cols uint32, rows uint32, mattype Mattype) (result Mat) {
+func MatZeros(cols uint32, rows uint32, mattype Mattype) (result cm.Result[string, Mat, ErrorResult]) {
 	cols0 := (uint32)(cols)
 	rows0 := (uint32)(rows)
 	mattype0 := (uint32)(mattype)
-	result0 := wasmimport_MatZeros((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatZeros((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0), &result)
 	return
 }
 
@@ -182,14 +185,13 @@ func (self Mat) Close() {
 // col creates a matrix header for the specified matrix column.
 // The underlying data of the new matrix is shared with the original matrix.
 //
-//	col: func(col: u32) -> mat
+//	col: func(col: u32) -> result<mat, error-result>
 //
 //go:nosplit
-func (self Mat) Col(col uint32) (result Mat) {
+func (self Mat) Col(col uint32) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	col0 := (uint32)(col)
-	result0 := wasmimport_MatCol((uint32)(self0), (uint32)(col0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatCol((uint32)(self0), (uint32)(col0), &result)
 	return
 }
 
@@ -200,15 +202,14 @@ func (self Mat) Col(col uint32) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aadc8f9210fe4dec50513746c246fa8d9
 //
-//	col-range: func(start: u32, end: u32) -> mat
+//	col-range: func(start: u32, end: u32) -> result<mat, error-result>
 //
 //go:nosplit
-func (self Mat) ColRange(start uint32, end uint32) (result Mat) {
+func (self Mat) ColRange(start uint32, end uint32) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	start0 := (uint32)(start)
 	end0 := (uint32)(end)
-	result0 := wasmimport_MatColRange((uint32)(self0), (uint32)(start0), (uint32)(end0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatColRange((uint32)(self0), (uint32)(start0), (uint32)(end0), &result)
 	return
 }
 
@@ -230,14 +231,13 @@ func (self Mat) Cols() (result uint32) {
 //
 // ConvertTo converts Mat into destination Mat.
 //
-//	convert-to: func(mattype: mattype) -> mat
+//	convert-to: func(mattype: mattype) -> result<mat, error-result>
 //
 //go:nosplit
-func (self Mat) ConvertTo(mattype Mattype) (result Mat) {
+func (self Mat) ConvertTo(mattype Mattype) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	mattype0 := (uint32)(mattype)
-	result0 := wasmimport_MatConvertTo((uint32)(self0), (uint32)(mattype0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatConvertTo((uint32)(self0), (uint32)(mattype0), &result)
 	return
 }
 
@@ -451,10 +451,10 @@ func (self Mat) Mattype() (result Mattype) {
 // For further details, please see:
 // https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
 //
-//	min-max-loc: func() -> mix-max-loc-result
+//	min-max-loc: func() -> result<mix-max-loc-result, error-result>
 //
 //go:nosplit
-func (self Mat) MinMaxLoc() (result MixMaxLocResult) {
+func (self Mat) MinMaxLoc() (result cm.Result[MixMaxLocResultShape, MixMaxLocResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_MatMinMaxLoc((uint32)(self0), &result)
 	return
@@ -485,15 +485,14 @@ func (self Mat) Region(rect Rect) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a4eb96e3251417fa88b78e2abd6cfd7d8
 //
-//	reshape: func(channels: u32, rows: u32) -> mat
+//	reshape: func(channels: u32, rows: u32) -> result<mat, error-result>
 //
 //go:nosplit
-func (self Mat) Reshape(channels uint32, rows uint32) (result Mat) {
+func (self Mat) Reshape(channels uint32, rows uint32) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	channels0 := (uint32)(channels)
 	rows0 := (uint32)(rows)
-	result0 := wasmimport_MatReshape((uint32)(self0), (uint32)(channels0), (uint32)(rows0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatReshape((uint32)(self0), (uint32)(channels0), (uint32)(rows0), &result)
 	return
 }
 
@@ -502,14 +501,13 @@ func (self Mat) Reshape(channels uint32, rows uint32) (result Mat) {
 // row creates a matrix header for the specified matrix row.
 // The underlying data of the new matrix is shared with the original matrix.
 //
-//	row: func(row: u32) -> mat
+//	row: func(row: u32) -> result<mat, error-result>
 //
 //go:nosplit
-func (self Mat) Row(row uint32) (result Mat) {
+func (self Mat) Row(row uint32) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	row0 := (uint32)(row)
-	result0 := wasmimport_MatRow((uint32)(self0), (uint32)(row0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatRow((uint32)(self0), (uint32)(row0), &result)
 	return
 }
 
@@ -520,15 +518,14 @@ func (self Mat) Row(row uint32) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aa6542193430356ad631a9beabc624107
 //
-//	row-range: func(start: u32, end: u32) -> mat
+//	row-range: func(start: u32, end: u32) -> result<mat, error-result>
 //
 //go:nosplit
-func (self Mat) RowRange(start uint32, end uint32) (result Mat) {
+func (self Mat) RowRange(start uint32, end uint32) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	start0 := (uint32)(start)
 	end0 := (uint32)(end)
-	result0 := wasmimport_MatRowRange((uint32)(self0), (uint32)(start0), (uint32)(end0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_MatRowRange((uint32)(self0), (uint32)(start0), (uint32)(end0), &result)
 	return
 }
 

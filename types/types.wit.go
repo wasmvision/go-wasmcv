@@ -7,6 +7,11 @@ import (
 	"go.bytecodealliance.org/cm"
 )
 
+// ErrorResult represents the string "wasm:cv/types#error-result".
+//
+//	type error-result = string
+type ErrorResult string
+
 // Size represents the record "wasm:cv/types#size".
 //
 // size is a 2-element integer vector.

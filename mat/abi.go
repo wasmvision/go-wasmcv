@@ -3,8 +3,16 @@
 package mat
 
 import (
+	"go.bytecodealliance.org/cm"
+	"unsafe"
 	"wasmcv.org/wasm/cv/types"
 )
+
+// MixMaxLocResultShape is used for storage in variant or result types.
+type MixMaxLocResultShape struct {
+	_     cm.HostLayout
+	shape [unsafe.Sizeof(MixMaxLocResult{})]byte
+}
 
 func lower_Size(v types.Size) (f0 uint32, f1 uint32) {
 	f0 = (uint32)(v.X)

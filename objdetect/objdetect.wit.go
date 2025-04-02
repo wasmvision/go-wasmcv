@@ -14,6 +14,11 @@ import (
 // See [mat.Mat] for more information.
 type Mat = mat.Mat
 
+// ErrorResult represents the type alias "wasm:cv/objdetect#error-result".
+//
+// See [types.ErrorResult] for more information.
+type ErrorResult = types.ErrorResult
+
 // Size represents the type alias "wasm:cv/objdetect#size".
 //
 // See [types.Size] for more information.
@@ -80,10 +85,10 @@ func (self CascadeClassifier) Close() {
 // For further details, please see:
 // http://docs.opencv.org/master/d1/de5/classcv_1_1CascadeClassifier.html#aaf8181cb63968136476ec4204ffca498
 //
-//	detect-multi-scale: func(image: mat) -> list<rect>
+//	detect-multi-scale: func(image: mat) -> result<list<rect>, error-result>
 //
 //go:nosplit
-func (self CascadeClassifier) DetectMultiScale(image Mat) (result cm.List[Rect]) {
+func (self CascadeClassifier) DetectMultiScale(image Mat) (result cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	wasmimport_CascadeClassifierDetectMultiScale((uint32)(self0), (uint32)(image0), &result)
@@ -100,10 +105,10 @@ func (self CascadeClassifier) DetectMultiScale(image Mat) (result cm.List[Rect])
 // http://docs.opencv.org/master/d1/de5/classcv_1_1CascadeClassifier.html#aaf8181cb63968136476ec4204ffca498
 //
 //	detect-multi-scale-with-params: func(image: mat, scale: f64, min-neighbors: u32,
-//	%flags: u32, min-size: size, max-size: size) -> list<rect>
+//	%flags: u32, min-size: size, max-size: size) -> result<list<rect>, error-result>
 //
 //go:nosplit
-func (self CascadeClassifier) DetectMultiScaleWithParams(image Mat, scale float64, minNeighbors uint32, flags uint32, minSize Size, maxSize Size) (result cm.List[Rect]) {
+func (self CascadeClassifier) DetectMultiScaleWithParams(image Mat, scale float64, minNeighbors uint32, flags uint32, minSize Size, maxSize Size) (result cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	scale0 := (float64)(scale)
@@ -189,10 +194,10 @@ func (self HOGDescriptor) Close() {
 // For further details, please see:
 // https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a660e5cd036fd5ddf0f5767b352acd948
 //
-//	detect-multi-scale: func(image: mat) -> list<rect>
+//	detect-multi-scale: func(image: mat) -> result<list<rect>, error-result>
 //
 //go:nosplit
-func (self HOGDescriptor) DetectMultiScale(image Mat) (result cm.List[Rect]) {
+func (self HOGDescriptor) DetectMultiScale(image Mat) (result cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	wasmimport_HOGDescriptorDetectMultiScale((uint32)(self0), (uint32)(image0), &result)
@@ -210,10 +215,10 @@ func (self HOGDescriptor) DetectMultiScale(image Mat) (result cm.List[Rect]) {
 //
 //	detect-multi-scale-with-params: func(image: mat, hit-threshold: f64, win-stride:
 //	size, padding: size, scale: f64, final-threshold: f64, use-meanshift-grouping:
-//	bool) -> list<rect>
+//	bool) -> result<list<rect>, error-result>
 //
 //go:nosplit
-func (self HOGDescriptor) DetectMultiScaleWithParams(image Mat, hitThreshold float64, winStride Size, padding Size, scale float64, finalThreshold float64, useMeanshiftGrouping bool) (result cm.List[Rect]) {
+func (self HOGDescriptor) DetectMultiScaleWithParams(image Mat, hitThreshold float64, winStride Size, padding Size, scale float64, finalThreshold float64, useMeanshiftGrouping bool) (result cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	image0 := cm.Reinterpret[uint32](image)
 	hitThreshold0 := (float64)(hitThreshold)
@@ -306,14 +311,13 @@ func (self FaceDetectorYN) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#ac05bd075ca3e6edc0e328927aae6f45b
 //
-//	detect: func(input: mat) -> mat
+//	detect: func(input: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func (self FaceDetectorYN) Detect(input Mat) (result Mat) {
+func (self FaceDetectorYN) Detect(input Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	input0 := cm.Reinterpret[uint32](input)
-	result0 := wasmimport_FaceDetectorYNDetect((uint32)(self0), (uint32)(input0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_FaceDetectorYNDetect((uint32)(self0), (uint32)(input0), &result)
 	return
 }
 
@@ -510,15 +514,14 @@ func FaceRecognizerSFNewWithParams(model string, config string, backendID uint32
 // For further details, please see:
 // https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a84492908abecbc9362b4ddc8d46b8345
 //
-//	align-crop: func(src: mat, face-box: mat) -> mat
+//	align-crop: func(src: mat, face-box: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func (self FaceRecognizerSF) AlignCrop(src Mat, faceBox Mat) (result Mat) {
+func (self FaceRecognizerSF) AlignCrop(src Mat, faceBox Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	src0 := cm.Reinterpret[uint32](src)
 	faceBox0 := cm.Reinterpret[uint32](faceBox)
-	result0 := wasmimport_FaceRecognizerSFAlignCrop((uint32)(self0), (uint32)(src0), (uint32)(faceBox0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_FaceRecognizerSFAlignCrop((uint32)(self0), (uint32)(src0), (uint32)(faceBox0), &result)
 	return
 }
 
@@ -542,14 +545,13 @@ func (self FaceRecognizerSF) Close() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#ab1b4a3c12213e89091a490c573dc5aba
 //
-//	feature: func(aligned: mat) -> mat
+//	feature: func(aligned: mat) -> result<mat, error-result>
 //
 //go:nosplit
-func (self FaceRecognizerSF) Feature(aligned Mat) (result Mat) {
+func (self FaceRecognizerSF) Feature(aligned Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	aligned0 := cm.Reinterpret[uint32](aligned)
-	result0 := wasmimport_FaceRecognizerSFFeature((uint32)(self0), (uint32)(aligned0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_FaceRecognizerSFFeature((uint32)(self0), (uint32)(aligned0), &result)
 	return
 }
 
@@ -560,15 +562,14 @@ func (self FaceRecognizerSF) Feature(aligned Mat) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a2f0362ca1e64320a1f3ba7e1386d0219
 //
-//	match: func(face1: mat, face2: mat) -> f32
+//	match: func(face1: mat, face2: mat) -> result<f32, error-result>
 //
 //go:nosplit
-func (self FaceRecognizerSF) Match(face1 Mat, face2 Mat) (result float32) {
+func (self FaceRecognizerSF) Match(face1 Mat, face2 Mat) (result cm.Result[string, float32, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	face10 := cm.Reinterpret[uint32](face1)
 	face20 := cm.Reinterpret[uint32](face2)
-	result0 := wasmimport_FaceRecognizerSFMatch((uint32)(self0), (uint32)(face10), (uint32)(face20))
-	result = (float32)((float32)(result0))
+	wasmimport_FaceRecognizerSFMatch((uint32)(self0), (uint32)(face10), (uint32)(face20), &result)
 	return
 }
 
@@ -580,15 +581,14 @@ func (self FaceRecognizerSF) Match(face1 Mat, face2 Mat) (result float32) {
 // https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a2f0362ca1e64320a1f3ba7e1386d0219
 //
 //	match-with-params: func(face1: mat, face2: mat, distance: face-distance-type) ->
-//	f32
+//	result<f32, error-result>
 //
 //go:nosplit
-func (self FaceRecognizerSF) MatchWithParams(face1 Mat, face2 Mat, distance FaceDistanceType) (result float32) {
+func (self FaceRecognizerSF) MatchWithParams(face1 Mat, face2 Mat, distance FaceDistanceType) (result cm.Result[string, float32, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	face10 := cm.Reinterpret[uint32](face1)
 	face20 := cm.Reinterpret[uint32](face2)
 	distance0 := (uint32)(distance)
-	result0 := wasmimport_FaceRecognizerSFMatchWithParams((uint32)(self0), (uint32)(face10), (uint32)(face20), (uint32)(distance0))
-	result = (float32)((float32)(result0))
+	wasmimport_FaceRecognizerSFMatchWithParams((uint32)(self0), (uint32)(face10), (uint32)(face20), (uint32)(distance0), &result)
 	return
 }

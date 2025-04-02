@@ -18,7 +18,7 @@ func wasmimport_NewMat(id0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/mat [static]mat.merge
 //go:noescape
-func wasmimport_MatMerge(mv0 *Mat, mv1 uint32) (result0 uint32)
+func wasmimport_MatMerge(mv0 *Mat, mv1 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [static]mat.new-with-size
 //go:noescape
@@ -26,7 +26,7 @@ func wasmimport_MatNewWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (res
 
 //go:wasmimport wasm:cv/mat [static]mat.zeros
 //go:noescape
-func wasmimport_MatZeros(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
+func wasmimport_MatZeros(cols0 uint32, rows0 uint32, mattype0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.clone
 //go:noescape
@@ -38,11 +38,11 @@ func wasmimport_MatClose(self0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.col
 //go:noescape
-func wasmimport_MatCol(self0 uint32, col0 uint32) (result0 uint32)
+func wasmimport_MatCol(self0 uint32, col0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.col-range
 //go:noescape
-func wasmimport_MatColRange(self0 uint32, start0 uint32, end0 uint32) (result0 uint32)
+func wasmimport_MatColRange(self0 uint32, start0 uint32, end0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.cols
 //go:noescape
@@ -50,7 +50,7 @@ func wasmimport_MatCols(self0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.convert-to
 //go:noescape
-func wasmimport_MatConvertTo(self0 uint32, mattype0 uint32) (result0 uint32)
+func wasmimport_MatConvertTo(self0 uint32, mattype0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.copy-to
 //go:noescape
@@ -106,7 +106,7 @@ func wasmimport_MatMattype(self0 uint32) (result0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.min-max-loc
 //go:noescape
-func wasmimport_MatMinMaxLoc(self0 uint32, result *MixMaxLocResult)
+func wasmimport_MatMinMaxLoc(self0 uint32, result *cm.Result[MixMaxLocResultShape, MixMaxLocResult, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.region
 //go:noescape
@@ -114,15 +114,15 @@ func wasmimport_MatRegion(self0 uint32, rect0 uint32, rect1 uint32, rect2 uint32
 
 //go:wasmimport wasm:cv/mat [method]mat.reshape
 //go:noescape
-func wasmimport_MatReshape(self0 uint32, channels0 uint32, rows0 uint32) (result0 uint32)
+func wasmimport_MatReshape(self0 uint32, channels0 uint32, rows0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.row
 //go:noescape
-func wasmimport_MatRow(self0 uint32, row0 uint32) (result0 uint32)
+func wasmimport_MatRow(self0 uint32, row0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.row-range
 //go:noescape
-func wasmimport_MatRowRange(self0 uint32, start0 uint32, end0 uint32) (result0 uint32)
+func wasmimport_MatRowRange(self0 uint32, start0 uint32, end0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/mat [method]mat.rows
 //go:noescape

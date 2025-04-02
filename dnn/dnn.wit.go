@@ -14,6 +14,11 @@ import (
 // See [mat.Mat] for more information.
 type Mat = mat.Mat
 
+// ErrorResult represents the type alias "wasm:cv/dnn#error-result".
+//
+// See [types.ErrorResult] for more information.
+type ErrorResult = types.ErrorResult
+
 // Size represents the type alias "wasm:cv/dnn#size".
 //
 // See [types.Size] for more information.
@@ -173,14 +178,27 @@ func NewLayer() (result Layer) {
 	return
 }
 
+// Close represents the imported method "close".
+//
+// Close the layer
+//
+//	close: func()
+//
+//go:nosplit
+func (self Layer) Close() {
+	self0 := cm.Reinterpret[uint32](self)
+	wasmimport_LayerClose((uint32)(self0))
+	return
+}
+
 // GetName represents the imported method "get-name".
 //
 // GetName returns the name of the layer.
 //
-//	get-name: func() -> string
+//	get-name: func() -> result<string, error-result>
 //
 //go:nosplit
-func (self Layer) GetName() (result string) {
+func (self Layer) GetName() (result cm.Result[string, string, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_LayerGetName((uint32)(self0), &result)
 	return
@@ -209,14 +227,13 @@ func (self Net) ResourceDrop() {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga138439da76f26266fdefec9723f6c5cd
 //
-//	read: static func(model: string, config: string) -> net
+//	read: static func(model: string, config: string) -> result<net, error-result>
 //
 //go:nosplit
-func NetRead(model string, config string) (result Net) {
+func NetRead(model string, config string) (result cm.Result[string, Net, ErrorResult]) {
 	model0, model1 := cm.LowerString(model)
 	config0, config1 := cm.LowerString(config)
-	result0 := wasmimport_NetRead((*uint8)(model0), (uint32)(model1), (*uint8)(config0), (uint32)(config1))
-	result = cm.Reinterpret[Net]((uint32)(result0))
+	wasmimport_NetRead((*uint8)(model0), (uint32)(model1), (*uint8)(config0), (uint32)(config1), &result)
 	return
 }
 
@@ -227,13 +244,12 @@ func NetRead(model string, config string) (result Net) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga9198ecaac7c32ddf0aa7a1bcbd359567
 //
-//	read-from-ONNX: static func(model: string) -> net
+//	read-from-ONNX: static func(model: string) -> result<net, error-result>
 //
 //go:nosplit
-func NetReadFromONNX(model string) (result Net) {
+func NetReadFromONNX(model string) (result cm.Result[string, Net, ErrorResult]) {
 	model0, model1 := cm.LowerString(model)
-	result0 := wasmimport_NetReadFromONNX((*uint8)(model0), (uint32)(model1))
-	result = cm.Reinterpret[Net]((uint32)(result0))
+	wasmimport_NetReadFromONNX((*uint8)(model0), (uint32)(model1), &result)
 	return
 }
 
@@ -274,14 +290,13 @@ func (self Net) Empty() (result bool) {
 // For further details, please see:
 // https://docs.opencv.org/trunk/db/d30/classcv_1_1dnn_1_1Net.html#a98ed94cb6ef7063d3697259566da310b
 //
-//	forward: func(output-name: string) -> mat
+//	forward: func(output-name: string) -> result<mat, error-result>
 //
 //go:nosplit
-func (self Net) Forward(outputName string) (result Mat) {
+func (self Net) Forward(outputName string) (result cm.Result[string, Mat, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	outputName0, outputName1 := cm.LowerString(outputName)
-	result0 := wasmimport_NetForward((uint32)(self0), (*uint8)(outputName0), (uint32)(outputName1))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_NetForward((uint32)(self0), (*uint8)(outputName0), (uint32)(outputName1), &result)
 	return
 }
 
@@ -292,10 +307,10 @@ func (self Net) Forward(outputName string) (result Mat) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#afe22e099b60a2883e220645391f68d4c
 //
-//	forward-layers: func(output-names: list<string>) -> list<mat>
+//	forward-layers: func(output-names: list<string>) -> result<list<mat>, error-result>
 //
 //go:nosplit
-func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.List[Mat]) {
+func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.Result[cm.List[Mat], cm.List[Mat], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	outputNames0, outputNames1 := cm.LowerList(outputNames)
 	wasmimport_NetForwardLayers((uint32)(self0), (*string)(outputNames0), (uint32)(outputNames1), &result)
@@ -309,14 +324,13 @@ func (self Net) ForwardLayers(outputNames cm.List[string]) (result cm.List[Mat])
 // For further details, please see:
 // https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#ac944d7f2d3ead5ef9b1b2fa3885f3ff1
 //
-//	get-layer: func(id: u32) -> layer
+//	get-layer: func(id: u32) -> result<layer, error-result>
 //
 //go:nosplit
-func (self Net) GetLayer(id uint32) (result Layer) {
+func (self Net) GetLayer(id uint32) (result cm.Result[string, Layer, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	id0 := (uint32)(id)
-	result0 := wasmimport_NetGetLayer((uint32)(self0), (uint32)(id0))
-	result = cm.Reinterpret[Layer]((uint32)(result0))
+	wasmimport_NetGetLayer((uint32)(self0), (uint32)(id0), &result)
 	return
 }
 
@@ -327,10 +341,10 @@ func (self Net) GetLayer(id uint32) (result Layer) {
 // For further details, please see:
 // hhttps://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a38e67098ae4ae5906bf8d8ea72199c2e
 //
-//	get-layer-names: func() -> list<string>
+//	get-layer-names: func() -> result<list<string>, error-result>
 //
 //go:nosplit
-func (self Net) GetLayerNames() (result cm.List[string]) {
+func (self Net) GetLayerNames() (result cm.Result[cm.List[string], cm.List[string], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_NetGetLayerNames((uint32)(self0), &result)
 	return
@@ -343,10 +357,10 @@ func (self Net) GetLayerNames() (result cm.List[string]) {
 // For further details, please see:
 // https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#ae26f0c29b3733d15d0482098ef9053e3
 //
-//	get-unconnected-out-layers: func() -> list<u32>
+//	get-unconnected-out-layers: func() -> result<list<u32>, error-result>
 //
 //go:nosplit
-func (self Net) GetUnconnectedOutLayers() (result cm.List[uint32]) {
+func (self Net) GetUnconnectedOutLayers() (result cm.Result[cm.List[uint32], cm.List[uint32], ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_NetGetUnconnectedOutLayers((uint32)(self0), &result)
 	return
@@ -359,14 +373,14 @@ func (self Net) GetUnconnectedOutLayers() (result cm.List[uint32]) {
 // For further details, please see:
 // https://docs.opencv.org/trunk/db/d30/classcv_1_1dnn_1_1Net.html#a672a08ae76444d75d05d7bfea3e4a328
 //
-//	set-input: func(input: mat, name: string)
+//	set-input: func(input: mat, name: string) -> result<_, error-result>
 //
 //go:nosplit
-func (self Net) SetInput(input Mat, name string) {
+func (self Net) SetInput(input Mat, name string) (result cm.Result[ErrorResult, struct{}, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	input0 := cm.Reinterpret[uint32](input)
 	name0, name1 := cm.LowerString(name)
-	wasmimport_NetSetInput((uint32)(self0), (uint32)(input0), (*uint8)(name0), (uint32)(name1))
+	wasmimport_NetSetInput((uint32)(self0), (uint32)(input0), (*uint8)(name0), (uint32)(name1), &result)
 	return
 }
 
@@ -380,18 +394,17 @@ func (self Net) SetInput(input Mat, name string) {
 // https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga29f34df9376379a603acd8df581ac8d7
 //
 //	blob-from-image: func(image: mat, scale-factor: f32, size: size, mean: scalar,
-//	swap-rb: bool, crop: bool) -> mat
+//	swap-rb: bool, crop: bool) -> result<mat, error-result>
 //
 //go:nosplit
-func BlobFromImage(image Mat, scaleFactor float32, size Size, mean Scalar, swapRb bool, crop bool) (result Mat) {
+func BlobFromImage(image Mat, scaleFactor float32, size Size, mean Scalar, swapRb bool, crop bool) (result cm.Result[string, Mat, ErrorResult]) {
 	image0 := cm.Reinterpret[uint32](image)
 	scaleFactor0 := (float32)(scaleFactor)
 	size0, size1 := lower_Size(size)
 	mean0, mean1, mean2, mean3 := lower_Scalar(mean)
 	swapRb0 := (uint32)(cm.BoolToU32(swapRb))
 	crop0 := (uint32)(cm.BoolToU32(crop))
-	result0 := wasmimport_BlobFromImage((uint32)(image0), (float32)(scaleFactor0), (uint32)(size0), (uint32)(size1), (float32)(mean0), (float32)(mean1), (float32)(mean2), (float32)(mean3), (uint32)(swapRb0), (uint32)(crop0))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_BlobFromImage((uint32)(image0), (float32)(scaleFactor0), (uint32)(size0), (uint32)(size1), (float32)(mean0), (float32)(mean1), (float32)(mean2), (float32)(mean3), (uint32)(swapRb0), (uint32)(crop0), &result)
 	return
 }
 
@@ -404,14 +417,14 @@ func BlobFromImage(image Mat, scaleFactor float32, size Size, mean Scalar, swapR
 // For further details, please see:
 // https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga29f34df9376379a603acd8df581ac8d7
 //
-//	blob-from-image-with-params: func(image: mat, params: blob-params) -> mat
+//	blob-from-image-with-params: func(image: mat, params: blob-params) -> result<mat,
+//	error-result>
 //
 //go:nosplit
-func BlobFromImageWithParams(image Mat, params BlobParams) (result Mat) {
+func BlobFromImageWithParams(image Mat, params BlobParams) (result cm.Result[string, Mat, ErrorResult]) {
 	image0 := cm.Reinterpret[uint32](image)
 	params0, params1, params2, params3, params4, params5, params6, params7, params8, params9, params10, params11, params12, params13, params14 := lower_BlobParams(params)
-	result0 := wasmimport_BlobFromImageWithParams((uint32)(image0), (float32)(params0), (uint32)(params1), (uint32)(params2), (float32)(params3), (float32)(params4), (float32)(params5), (float32)(params6), (uint32)(params7), (uint32)(params8), (uint32)(params9), (uint32)(params10), (float32)(params11), (float32)(params12), (float32)(params13), (float32)(params14))
-	result = cm.Reinterpret[Mat]((uint32)(result0))
+	wasmimport_BlobFromImageWithParams((uint32)(image0), (float32)(params0), (uint32)(params1), (uint32)(params2), (float32)(params3), (float32)(params4), (float32)(params5), (float32)(params6), (uint32)(params7), (uint32)(params8), (uint32)(params9), (uint32)(params10), (float32)(params11), (float32)(params12), (float32)(params13), (float32)(params14), &result)
 	return
 }
 
@@ -423,10 +436,10 @@ func BlobFromImageWithParams(image Mat, params BlobParams) (result Mat) {
 // https://docs.opencv.org/4.4.0/d6/d0f/group__dnn.html#ga9d118d70a1659af729d01b10233213ee
 //
 //	blob-rects-to-image-rects: func(params: blob-params, blob-rects: list<rect>, image-size:
-//	size) -> list<rect>
+//	size) -> result<list<rect>, error-result>
 //
 //go:nosplit
-func BlobRectsToImageRects(params BlobParams, blobRects cm.List[Rect], imageSize Size) (result cm.List[Rect]) {
+func BlobRectsToImageRects(params BlobParams, blobRects cm.List[Rect], imageSize Size) (result cm.Result[cm.List[Rect], cm.List[Rect], ErrorResult]) {
 	params_ := wasmimport_BlobRectsToImageRects_params{params: params, blobRects: blobRects, imageSize: imageSize}
 	wasmimport_BlobRectsToImageRects(&params_, &result)
 	return
@@ -449,10 +462,10 @@ type wasmimport_BlobRectsToImageRects_params struct {
 // https://docs.opencv.org/4.4.0/d6/d0f/group__dnn.html#ga9d118d70a1659af729d01b10233213ee
 //
 //	NMS-boxes: func(bboxes: list<rect>, scores: list<f32>, score-threshold: f32, nms-threshold:
-//	f32) -> list<s32>
+//	f32) -> result<list<u32>, error-result>
 //
 //go:nosplit
-func NMSBoxes(bboxes cm.List[Rect], scores cm.List[float32], scoreThreshold float32, nmsThreshold float32) (result cm.List[int32]) {
+func NMSBoxes(bboxes cm.List[Rect], scores cm.List[float32], scoreThreshold float32, nmsThreshold float32) (result cm.Result[cm.List[uint32], cm.List[uint32], ErrorResult]) {
 	bboxes0, bboxes1 := cm.LowerList(bboxes)
 	scores0, scores1 := cm.LowerList(scores)
 	scoreThreshold0 := (float32)(scoreThreshold)
