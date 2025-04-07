@@ -669,6 +669,26 @@ func Lut(src Mat, wblut Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	return
 }
 
+// Reduce represents the imported function "reduce".
+//
+// reduce reduces the matrix to a vector.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
+//
+//	reduce: func(src: mat, dim: u32, reduce-type: u32, depth-type: u32) -> result<mat,
+//	error-result>
+//
+//go:nosplit
+func Reduce(src Mat, dim uint32, reduceType uint32, depthType uint32) (result cm.Result[string, Mat, ErrorResult]) {
+	src0 := cm.Reinterpret[uint32](src)
+	dim0 := (uint32)(dim)
+	reduceType0 := (uint32)(reduceType)
+	depthType0 := (uint32)(depthType)
+	wasmimport_Reduce((uint32)(src0), (uint32)(dim0), (uint32)(reduceType0), (uint32)(depthType0), &result)
+	return
+}
+
 // ReduceArgMax represents the imported function "reduce-arg-max".
 //
 // reduce-arg-max finds indices of max elements along provided axis.
@@ -684,5 +704,42 @@ func ReduceArgMax(src Mat, axis uint32, lastIndex bool) (result cm.Result[string
 	axis0 := (uint32)(axis)
 	lastIndex0 := (uint32)(cm.BoolToU32(lastIndex))
 	wasmimport_ReduceArgMax((uint32)(src0), (uint32)(axis0), (uint32)(lastIndex0), &result)
+	return
+}
+
+// Normalize represents the imported function "normalize".
+//
+// normalize normalizes the norm or value range of an array.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga87eef7ee3970f86906d69a92cbf064bd
+//
+//	normalize: func(src: mat, alpha: f32, beta: f32, norm-type: u32) -> result<mat,
+//	error-result>
+//
+//go:nosplit
+func Normalize(src Mat, alpha float32, beta float32, normType uint32) (result cm.Result[string, Mat, ErrorResult]) {
+	src0 := cm.Reinterpret[uint32](src)
+	alpha0 := (float32)(alpha)
+	beta0 := (float32)(beta)
+	normType0 := (uint32)(normType)
+	wasmimport_Normalize((uint32)(src0), (float32)(alpha0), (float32)(beta0), (uint32)(normType0), &result)
+	return
+}
+
+// Norm represents the imported function "norm".
+//
+// norm calculates the norm of an array.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
+//
+//	norm: func(src: mat, norm-type: u32) -> result<f32, error-result>
+//
+//go:nosplit
+func Norm(src Mat, normType uint32) (result cm.Result[string, float32, ErrorResult]) {
+	src0 := cm.Reinterpret[uint32](src)
+	normType0 := (uint32)(normType)
+	wasmimport_Norm((uint32)(src0), (uint32)(normType0), &result)
 	return
 }

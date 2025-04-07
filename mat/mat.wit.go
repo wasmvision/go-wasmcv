@@ -153,6 +153,34 @@ func MatZeros(cols uint32, rows uint32, mattype Mattype) (result cm.Result[strin
 	return
 }
 
+// AddFloat represents the imported method "add-float".
+//
+// AddFloat adds a float value to each element in the Mat. Performs addition in place.
+//
+//	add-float: func(val: f32)
+//
+//go:nosplit
+func (self Mat) AddFloat(val float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (float32)(val)
+	wasmimport_MatAddFloat((uint32)(self0), (float32)(val0))
+	return
+}
+
+// AddUchar represents the imported method "add-uchar".
+//
+// AddUChar adds a u8 value to each element in the Mat. Performs addition in place.
+//
+//	add-uchar: func(val: u8)
+//
+//go:nosplit
+func (self Mat) AddUchar(val uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (uint32)(val)
+	wasmimport_MatAddUchar((uint32)(self0), (uint32)(val0))
+	return
+}
+
 // Clone represents the imported method "clone".
 //
 // Clone returns a cloned full copy of the Mat.
@@ -231,6 +259,9 @@ func (self Mat) Cols() (result uint32) {
 //
 // ConvertTo converts Mat into destination Mat.
 //
+// For further details, please see:
+// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#adf88c60c5b4980e05bb556080916978b
+//
 //	convert-to: func(mattype: mattype) -> result<mat, error-result>
 //
 //go:nosplit
@@ -238,6 +269,26 @@ func (self Mat) ConvertTo(mattype Mattype) (result cm.Result[string, Mat, ErrorR
 	self0 := cm.Reinterpret[uint32](self)
 	mattype0 := (uint32)(mattype)
 	wasmimport_MatConvertTo((uint32)(self0), (uint32)(mattype0), &result)
+	return
+}
+
+// ConvertToWithParams represents the imported method "convert-to-with-params".
+//
+// ConvertToWithParams converts Mat into destination Mat using additional params.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#adf88c60c5b4980e05bb556080916978b
+//
+//	convert-to-with-params: func(mattype: mattype, alpha: f32, beta: f32) -> result<mat,
+//	error-result>
+//
+//go:nosplit
+func (self Mat) ConvertToWithParams(mattype Mattype, alpha float32, beta float32) (result cm.Result[string, Mat, ErrorResult]) {
+	self0 := cm.Reinterpret[uint32](self)
+	mattype0 := (uint32)(mattype)
+	alpha0 := (float32)(alpha)
+	beta0 := (float32)(beta)
+	wasmimport_MatConvertToWithParams((uint32)(self0), (uint32)(mattype0), (float32)(alpha0), (float32)(beta0), &result)
 	return
 }
 
@@ -252,6 +303,36 @@ func (self Mat) CopyTo(dst Mat) {
 	self0 := cm.Reinterpret[uint32](self)
 	dst0 := cm.Reinterpret[uint32](dst)
 	wasmimport_MatCopyTo((uint32)(self0), (uint32)(dst0))
+	return
+}
+
+// DivideFloat represents the imported method "divide-float".
+//
+// DivideFloat divides each element in the Mat by a float value. Performs division
+// in place.
+//
+//	divide-float: func(val: f32)
+//
+//go:nosplit
+func (self Mat) DivideFloat(val float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (float32)(val)
+	wasmimport_MatDivideFloat((uint32)(self0), (float32)(val0))
+	return
+}
+
+// DivideUchar represents the imported method "divide-uchar".
+//
+// DivideUChar divides each element in the Mat by a u8 value. Performs division in
+// place.
+//
+//	divide-uchar: func(val: u8)
+//
+//go:nosplit
+func (self Mat) DivideUchar(val uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (uint32)(val)
+	wasmimport_MatDivideUchar((uint32)(self0), (uint32)(val0))
 	return
 }
 
@@ -457,6 +538,36 @@ func (self Mat) Mattype() (result Mattype) {
 func (self Mat) MinMaxLoc() (result cm.Result[MixMaxLocResultShape, MixMaxLocResult, ErrorResult]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_MatMinMaxLoc((uint32)(self0), &result)
+	return
+}
+
+// MultiplyFloat represents the imported method "multiply-float".
+//
+// MultiplyFloat multiplies each element in the Mat by a float value. Performs multiplication
+// in place.
+//
+//	multiply-float: func(val: f32)
+//
+//go:nosplit
+func (self Mat) MultiplyFloat(val float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (float32)(val)
+	wasmimport_MatMultiplyFloat((uint32)(self0), (float32)(val0))
+	return
+}
+
+// MultiplyUchar represents the imported method "multiply-uchar".
+//
+// MultiplyUChar multiplies each element in the Mat by a u8 value. Performs multiplication
+// in place.
+//
+//	multiply-uchar: func(val: u8)
+//
+//go:nosplit
+func (self Mat) MultiplyUchar(val uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (uint32)(val)
+	wasmimport_MatMultiplyUchar((uint32)(self0), (uint32)(val0))
 	return
 }
 
@@ -667,5 +778,35 @@ func (self Mat) Step() (result uint32) {
 	self0 := cm.Reinterpret[uint32](self)
 	result0 := wasmimport_MatStep((uint32)(self0))
 	result = (uint32)((uint32)(result0))
+	return
+}
+
+// SubtractFloat represents the imported method "subtract-float".
+//
+// SubtractFloat subtracts a float value from each element in the Mat. Performs subtraction
+// in place.
+//
+//	subtract-float: func(val: f32)
+//
+//go:nosplit
+func (self Mat) SubtractFloat(val float32) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (float32)(val)
+	wasmimport_MatSubtractFloat((uint32)(self0), (float32)(val0))
+	return
+}
+
+// SubtractUchar represents the imported method "subtract-uchar".
+//
+// SubtractUChar subtracts a u8 value from each element in the Mat. Performs subtraction
+// in place.
+//
+//	subtract-uchar: func(val: u8)
+//
+//go:nosplit
+func (self Mat) SubtractUchar(val uint8) {
+	self0 := cm.Reinterpret[uint32](self)
+	val0 := (uint32)(val)
+	wasmimport_MatSubtractUchar((uint32)(self0), (uint32)(val0))
 	return
 }

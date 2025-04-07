@@ -28,6 +28,14 @@ func wasmimport_MatNewWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (res
 //go:noescape
 func wasmimport_MatZeros(cols0 uint32, rows0 uint32, mattype0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
+//go:wasmimport wasm:cv/mat [method]mat.add-float
+//go:noescape
+func wasmimport_MatAddFloat(self0 uint32, val0 float32)
+
+//go:wasmimport wasm:cv/mat [method]mat.add-uchar
+//go:noescape
+func wasmimport_MatAddUchar(self0 uint32, val0 uint32)
+
 //go:wasmimport wasm:cv/mat [method]mat.clone
 //go:noescape
 func wasmimport_MatClone(self0 uint32) (result0 uint32)
@@ -52,9 +60,21 @@ func wasmimport_MatCols(self0 uint32) (result0 uint32)
 //go:noescape
 func wasmimport_MatConvertTo(self0 uint32, mattype0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
+//go:wasmimport wasm:cv/mat [method]mat.convert-to-with-params
+//go:noescape
+func wasmimport_MatConvertToWithParams(self0 uint32, mattype0 uint32, alpha0 float32, beta0 float32, result *cm.Result[string, Mat, ErrorResult])
+
 //go:wasmimport wasm:cv/mat [method]mat.copy-to
 //go:noescape
 func wasmimport_MatCopyTo(self0 uint32, dst0 uint32)
+
+//go:wasmimport wasm:cv/mat [method]mat.divide-float
+//go:noescape
+func wasmimport_MatDivideFloat(self0 uint32, val0 float32)
+
+//go:wasmimport wasm:cv/mat [method]mat.divide-uchar
+//go:noescape
+func wasmimport_MatDivideUchar(self0 uint32, val0 uint32)
 
 //go:wasmimport wasm:cv/mat [method]mat.elemsize
 //go:noescape
@@ -108,6 +128,14 @@ func wasmimport_MatMattype(self0 uint32) (result0 uint32)
 //go:noescape
 func wasmimport_MatMinMaxLoc(self0 uint32, result *cm.Result[MixMaxLocResultShape, MixMaxLocResult, ErrorResult])
 
+//go:wasmimport wasm:cv/mat [method]mat.multiply-float
+//go:noescape
+func wasmimport_MatMultiplyFloat(self0 uint32, val0 float32)
+
+//go:wasmimport wasm:cv/mat [method]mat.multiply-uchar
+//go:noescape
+func wasmimport_MatMultiplyUchar(self0 uint32, val0 uint32)
+
 //go:wasmimport wasm:cv/mat [method]mat.region
 //go:noescape
 func wasmimport_MatRegion(self0 uint32, rect0 uint32, rect1 uint32, rect2 uint32, rect3 uint32) (result0 uint32)
@@ -159,3 +187,11 @@ func wasmimport_MatSize(self0 uint32, result *cm.List[uint32])
 //go:wasmimport wasm:cv/mat [method]mat.step
 //go:noescape
 func wasmimport_MatStep(self0 uint32) (result0 uint32)
+
+//go:wasmimport wasm:cv/mat [method]mat.subtract-float
+//go:noescape
+func wasmimport_MatSubtractFloat(self0 uint32, val0 float32)
+
+//go:wasmimport wasm:cv/mat [method]mat.subtract-uchar
+//go:noescape
+func wasmimport_MatSubtractUchar(self0 uint32, val0 uint32)

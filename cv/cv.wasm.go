@@ -128,6 +128,18 @@ func wasmimport_Vconcat(src10 uint32, src20 uint32, result *cm.Result[string, Ma
 //go:noescape
 func wasmimport_Lut(src0 uint32, wblut0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
+//go:wasmimport wasm:cv/cv reduce
+//go:noescape
+func wasmimport_Reduce(src0 uint32, dim0 uint32, reduceType0 uint32, depthType0 uint32, result *cm.Result[string, Mat, ErrorResult])
+
 //go:wasmimport wasm:cv/cv reduce-arg-max
 //go:noescape
 func wasmimport_ReduceArgMax(src0 uint32, axis0 uint32, lastIndex0 uint32, result *cm.Result[string, Mat, ErrorResult])
+
+//go:wasmimport wasm:cv/cv normalize
+//go:noescape
+func wasmimport_Normalize(src0 uint32, alpha0 float32, beta0 float32, normType0 uint32, result *cm.Result[string, Mat, ErrorResult])
+
+//go:wasmimport wasm:cv/cv norm
+//go:noescape
+func wasmimport_Norm(src0 uint32, normType0 uint32, result *cm.Result[string, float32, ErrorResult])
