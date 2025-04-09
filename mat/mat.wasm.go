@@ -24,6 +24,10 @@ func wasmimport_MatMerge(mv0 *Mat, mv1 uint32, result *cm.Result[string, Mat, Er
 //go:noescape
 func wasmimport_MatNewWithSize(cols0 uint32, rows0 uint32, mattype0 uint32) (result0 uint32)
 
+//go:wasmimport wasm:cv/mat [static]mat.ones
+//go:noescape
+func wasmimport_MatOnes(cols0 uint32, rows0 uint32, mattype0 uint32, result *cm.Result[string, Mat, ErrorResult])
+
 //go:wasmimport wasm:cv/mat [static]mat.zeros
 //go:noescape
 func wasmimport_MatZeros(cols0 uint32, rows0 uint32, mattype0 uint32, result *cm.Result[string, Mat, ErrorResult])

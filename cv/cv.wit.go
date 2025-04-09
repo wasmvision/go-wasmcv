@@ -599,6 +599,23 @@ func AddWeighted(src1 Mat, alpha float64, src2 Mat, beta float64, gamma float64)
 	return
 }
 
+// Divide represents the imported function "divide".
+//
+// divide performs per-element division of two arrays.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga6db555d30115642fedae0cda05604874
+//
+//	divide: func(src1: mat, src2: mat) -> result<mat, error-result>
+//
+//go:nosplit
+func Divide(src1 Mat, src2 Mat) (result cm.Result[string, Mat, ErrorResult]) {
+	src10 := cm.Reinterpret[uint32](src1)
+	src20 := cm.Reinterpret[uint32](src2)
+	wasmimport_Divide((uint32)(src10), (uint32)(src20), &result)
+	return
+}
+
 // Exp represents the imported function "exp".
 //
 // exp calculates the exponent of every array element.
@@ -669,6 +686,23 @@ func Lut(src Mat, wblut Mat) (result cm.Result[string, Mat, ErrorResult]) {
 	return
 }
 
+// Multiply represents the imported function "multiply".
+//
+// multiply performs per-element multiplication of two arrays.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga979d898a58d7f61c53003e162e7ad89f
+//
+//	multiply: func(src1: mat, src2: mat) -> result<mat, error-result>
+//
+//go:nosplit
+func Multiply(src1 Mat, src2 Mat) (result cm.Result[string, Mat, ErrorResult]) {
+	src10 := cm.Reinterpret[uint32](src1)
+	src20 := cm.Reinterpret[uint32](src2)
+	wasmimport_Multiply((uint32)(src10), (uint32)(src20), &result)
+	return
+}
+
 // Reduce represents the imported function "reduce".
 //
 // reduce reduces the matrix to a vector.
@@ -704,6 +738,23 @@ func ReduceArgMax(src Mat, axis uint32, lastIndex bool) (result cm.Result[string
 	axis0 := (uint32)(axis)
 	lastIndex0 := (uint32)(cm.BoolToU32(lastIndex))
 	wasmimport_ReduceArgMax((uint32)(src0), (uint32)(axis0), (uint32)(lastIndex0), &result)
+	return
+}
+
+// Subtract represents the imported function "subtract".
+//
+// subtract calculates the per-element sum of two arrays.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaa0f00d98b4b5edeaeb7b8333b2de353b
+//
+//	subtract: func(src1: mat, src2: mat) -> result<mat, error-result>
+//
+//go:nosplit
+func Subtract(src1 Mat, src2 Mat) (result cm.Result[string, Mat, ErrorResult]) {
+	src10 := cm.Reinterpret[uint32](src1)
+	src20 := cm.Reinterpret[uint32](src2)
+	wasmimport_Subtract((uint32)(src10), (uint32)(src20), &result)
 	return
 }
 

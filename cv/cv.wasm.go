@@ -112,6 +112,10 @@ func wasmimport_Add(src10 uint32, src20 uint32, result *cm.Result[string, Mat, E
 //go:noescape
 func wasmimport_AddWeighted(src10 uint32, alpha0 float64, src20 uint32, beta0 float64, gamma0 float64, result *cm.Result[string, Mat, ErrorResult])
 
+//go:wasmimport wasm:cv/cv divide
+//go:noescape
+func wasmimport_Divide(src10 uint32, src20 uint32, result *cm.Result[string, Mat, ErrorResult])
+
 //go:wasmimport wasm:cv/cv exp
 //go:noescape
 func wasmimport_Exp(src0 uint32, result *cm.Result[string, Mat, ErrorResult])
@@ -128,6 +132,10 @@ func wasmimport_Vconcat(src10 uint32, src20 uint32, result *cm.Result[string, Ma
 //go:noescape
 func wasmimport_Lut(src0 uint32, wblut0 uint32, result *cm.Result[string, Mat, ErrorResult])
 
+//go:wasmimport wasm:cv/cv multiply
+//go:noescape
+func wasmimport_Multiply(src10 uint32, src20 uint32, result *cm.Result[string, Mat, ErrorResult])
+
 //go:wasmimport wasm:cv/cv reduce
 //go:noescape
 func wasmimport_Reduce(src0 uint32, dim0 uint32, reduceType0 uint32, depthType0 uint32, result *cm.Result[string, Mat, ErrorResult])
@@ -135,6 +143,10 @@ func wasmimport_Reduce(src0 uint32, dim0 uint32, reduceType0 uint32, depthType0 
 //go:wasmimport wasm:cv/cv reduce-arg-max
 //go:noescape
 func wasmimport_ReduceArgMax(src0 uint32, axis0 uint32, lastIndex0 uint32, result *cm.Result[string, Mat, ErrorResult])
+
+//go:wasmimport wasm:cv/cv subtract
+//go:noescape
+func wasmimport_Subtract(src10 uint32, src20 uint32, result *cm.Result[string, Mat, ErrorResult])
 
 //go:wasmimport wasm:cv/cv normalize
 //go:noescape

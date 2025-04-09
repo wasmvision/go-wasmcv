@@ -138,6 +138,24 @@ func MatNewWithSize(cols uint32, rows uint32, mattype Mattype) (result Mat) {
 	return
 }
 
+// MatOnes represents the imported static function "ones".
+//
+// ones returns an array of the specified size and type populated with 1.
+//
+// For further details, please see:
+// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a5e10227b777425407986727e2d26fcdc
+//
+//	ones: static func(cols: u32, rows: u32, mattype: mattype) -> result<mat, error-result>
+//
+//go:nosplit
+func MatOnes(cols uint32, rows uint32, mattype Mattype) (result cm.Result[string, Mat, ErrorResult]) {
+	cols0 := (uint32)(cols)
+	rows0 := (uint32)(rows)
+	mattype0 := (uint32)(mattype)
+	wasmimport_MatOnes((uint32)(cols0), (uint32)(rows0), (uint32)(mattype0), &result)
+	return
+}
+
 // MatZeros represents the imported static function "zeros".
 //
 // zeros returns a zero array of the specified size and type.
